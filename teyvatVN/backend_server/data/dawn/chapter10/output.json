@@ -1,0 +1,79 @@
+{
+  "title": "Echoes Beneath Stone",
+  "characters": [
+    "Diluc",
+    "Jean"
+  ],
+  "backgrounds": [
+    "Statue of the Seven (Mondstadt)"
+  ],
+  "setting_narration": "The gentle twilight of Mondstadt draped itself over the city, painting the sky in hues of orange and purple. At the foot of the magnificent Anemo God's statue, two figures stood in quiet contemplation: Diluc Ragnvindr, the Wine Tycoon, and Jean Gunnhildr, the Acting Grand Master. A cool breeze carried the scent of cecilias from Starfell Lake, a stark contrast to the heavy silence between them.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "Jean sighed softly, her gaze fixed on the distant horizon, as if searching for answers in the fading light."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(thoughtfully)",
+      "line": "The past often feels heavier at times like these, doesn't it? Especially when you think of paths not taken, or... people who once walked beside you."
+    },
+    {
+      "type": "narration",
+      "text": "Diluc remained silent for a moment, his arms crossed over his chest, his expression unreadable as always. Only the slight tensing of his jaw betrayed any reaction."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(gruffly)",
+      "line": "Regret is a luxury few of us can afford, Jean. The present demands our attention."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(softly)",
+      "line": "Perhaps. But acknowledging what was, allows us to better understand what is. Do you ever think of... them? The people who held a piece of your heart, before duty claimed so much of it?"
+    },
+    {
+      "type": "narration",
+      "text": "A longer silence followed, punctuated only by the distant sounds of Mondstadt. Diluc finally turned his head slightly, his eyes momentarily meeting hers before drifting back to the statue."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(voice low)",
+      "line": "Every choice leaves a scar. And some scars... they remind you not of the wound, but of what was lost. A warmth, a promise... an impossible future."
+    },
+    {
+      "type": "narration",
+      "text": "Jean watched him, seeing a flicker of something she rarely witnessed in the stoic man – a profound, almost ancient sorrow."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(sympathetically)",
+      "line": "I understand. I've known that feeling myself. The quiet ache of remembering a laughter, a touch, a dream that faded with the dawn. Sometimes, the burden of protection leaves little room for personal happiness."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(looking away)",
+      "line": "Such is the path we chose. Or rather, the path that chose us."
+    },
+    {
+      "type": "narration",
+      "text": "The breeze picked up, rustling Jean's cape. She offered a small, sad smile, a silent acknowledgement of their shared understanding, and the unspoken weight of their respective pasts."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(resigned but hopeful)",
+      "line": "But even in that, there is strength, Diluc. We carry their memory, and it fuels our resolve."
+    },
+    {
+      "type": "narration",
+      "text": "Diluc didn't reply directly, but his shoulders seemed to relax imperceptibly. He stood there, a formidable silhouette against the fading light, his gaze fixed on the eternal symbol of freedom, perhaps finding a quiet solace in its unyielding presence, and in the shared, unspoken burdens with the woman beside him."
+    }
+  ]
+}

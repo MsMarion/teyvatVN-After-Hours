@@ -144,6 +144,17 @@ export default function StoryPage() {
       if (result.status === "success" && result.data) {
         // Store the complete chapter data
         setGeneratedStory(result.data);
+
+        // Auto-select background based on AI's choice
+        if (result.data.backgrounds && result.data.backgrounds.length > 0) {
+          const bgName = result.data.backgrounds[0];
+          const matchedBg = backgrounds.find(bg => bg.name === bgName);
+          if (matchedBg) {
+            setSelectedBackground(matchedBg);
+            console.log(`Auto-selected background: ${bgName}`);
+          }
+        }
+
         // Also save to localStorage
         localStorage.setItem("latestResult", JSON.stringify(result.data));
         localStorage.setItem("latestPrompt", prompt);

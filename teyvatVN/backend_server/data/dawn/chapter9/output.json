@@ -1,0 +1,85 @@
+{
+  "title": "Echoes in the Embers",
+  "characters": [
+    "Diluc",
+    "Jean"
+  ],
+  "backgrounds": [
+    "Angel's Share Tavern (Evening)"
+  ],
+  "setting_narration": "The Angel's Share Tavern is unusually quiet tonight. Most patrons have long departed, leaving only a faint hum of residual chatter and the clinking of clean glasses. The warm glow of the fireplace casts long, dancing shadows across the polished wooden tables. Diluc stands behind the bar, meticulously wiping it down, while Jean sits at a secluded booth, nursing a glass of grape juice, a rare moment of peace for the Acting Grand Master.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "The only sounds are the crackling fire and the soft, rhythmic swipe of Diluc's cloth. Jean sighs, a sound barely audible in the quiet expanse."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(pensively)",
+      "line": "It's peaceful tonight, isn't it? A stark contrast to the usual chaos."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(without looking up)",
+      "line": "It has its moments. Most people prefer the chaos, it seems."
+    },
+    {
+      "type": "narration",
+      "text": "Jean takes a small sip of her juice, her gaze drifting towards the flickering flames in the hearth. A faint, melancholic smile touches her lips."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(softly)",
+      "line": "Sometimes, I miss the days when peace was a given, not a luxury. Before duties, before expectations..."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(finally looking at her, a hint of understanding in his eyes)",
+      "line": "Before the world decided who we were meant to be, instead of who we wished to be."
+    },
+    {
+      "type": "narration",
+      "text": "A comfortable silence settles between them, laden with unspoken histories and shared burdens. Jean traces the rim of her glass."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(a wistful smile)",
+      "line": "I remember a time when I thought I had everything figured out. Love, future, family... how naive I was."
+    },
+    {
+      "type": "narration",
+      "text": "Diluc sets the cleaned glass down with a soft click. His expression remains guarded, but his gaze is distant, lost in his own memories."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(calmly)",
+      "line": "Youthful certainty is a powerful illusion. It teaches us the most painful lessons."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(a small, self-deprecating laugh)",
+      "line": "Indeed. Do you ever... wonder about them? The ones who were part of those 'youthful certainties'?"
+    },
+    {
+      "type": "narration",
+      "text": "Diluc's eyes narrow slightly, a flicker of something unreadable passing through them before settling back into their usual stoicism. He turns to wipe the counter near her booth."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(low voice)",
+      "line": "Wondering changes nothing, Jean. The past is fixed. The future, however, demands our attention."
+    },
+    {
+      "type": "narration",
+      "text": "Jean looks at him, a silent understanding passing between them. He doesn't need to elaborate; his answer speaks volumes about his own past. The embers in the fireplace cast long, lingering shadows, mirroring the echoes of their shared, complicated histories."
+    }
+  ]
+}
