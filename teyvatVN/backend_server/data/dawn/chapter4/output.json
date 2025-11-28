@@ -1,0 +1,91 @@
+{
+  "title": "Whispers of Crimson and Frost",
+  "characters": [
+    "Diluc",
+    "Kaeya"
+  ],
+  "backgrounds": [
+    "Angel's Share Interior"
+  ],
+  "setting_narration": "The usual boisterous clamor of Angel's Share has been replaced by a heavy, almost suffocating quiet. Only a few patrons remain, huddled at the bar, casting nervous glances towards a secluded table. There, under the dim glow of a single lantern, Diluc Ragnvindr and Kaeya Alberich sit opposite each other, two brothers separated by more than just a table. The air itself feels charged, thick with unspoken words and the ghost of a shared, fractured past.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "Diluc swirls the amber liquid in his glass, his gaze fixed on Kaeya, who leans back in his chair, a faint, unreadable smile playing on his lips."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(coldly)",
+      "line": "Still playing the fool, Kaeya? Or have you finally decided to drop the act for once?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(lightly, shrugging)",
+      "line": "My, my, brother. Always so dramatic. Is this about the latest shipment of Dandelion Wine? I assure you, my palate is as discerning as ever."
+    },
+    {
+      "type": "narration",
+      "text": "Diluc sets his glass down with a soft, ominous thud. His eyes narrow, glinting like rubies in the low light."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(voice dropping dangerously low)",
+      "line": "This isn't about wine, Kaeya. This is about that night. About everything you said – and everything you didn't."
+    },
+    {
+      "type": "narration",
+      "text": "Kaeya's smile falters, just for a fraction of a second. He straightens slightly, his single visible eye losing some of its usual mirth, replaced by a flicker of caution."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(calmly, though a hint of tension in his tone)",
+      "line": "The past is best left buried, Diluc. We've both moved on, haven't we? Or at least, tried to."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(leaning forward, intensity rising)",
+      "line": "Not when the 'past' continues to haunt every shadow in this city. You spoke of your... heritage, that night. But you conveniently omitted a crucial detail, didn't you? A detail that would have changed everything."
+    },
+    {
+      "type": "narration",
+      "text": "A heavy silence descends. Kaeya's composure visibly cracks, a grim line forming on his lips. His eye darts away for a moment, then meets Diluc's, a desperate sort of resignation in its depths."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(softly, almost a whisper)",
+      "line": "What are you talking about?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(angrily, revealing a hidden document)",
+      "line": "This! A dispatch, found buried in the old Knights of Favonius archives, dated mere days after… Father’s death. An anonymous report about an 'unregistered foreign agent' making contact with Abyss Order remnants near Stormterror's Lair. An agent whose description… matches yours precisely."
+    },
+    {
+      "type": "narration",
+      "text": "Kaeya's breath hitches. The color drains from his face, and the usual cavalier mask shatters, revealing genuine shock and fear."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(voice trembling slightly)",
+      "line": "That’s… that’s impossible. A fabrication, a lie to sow discord. I was… grieving, like you."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(standing abruptly, chair scraping loudly)",
+      "line": "Grieving? Or reporting back? Did you use our tragedy, Kaeya? Did you use the chaos of that time to further Khaenri'ah's agenda? Tell me! Was my father's death just an 'opportunity' for your homeland to gain an advantage?"
+    },
+    {
+      "type": "narration",
+      "text": "The weight of the accusation hangs in the air, thick and suffocating. Kaeya sits frozen, his face a canvas of conflicting emotions – guilt, sorrow, and a profound, wordless regret. The quiet patrons stare, now openly watching the silent, explosive confrontation unfold between the two brothers, a wound reopened, bleeding old, forgotten secrets into the hushed night."
+    }
+  ]
+}

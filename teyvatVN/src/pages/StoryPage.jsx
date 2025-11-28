@@ -6,6 +6,7 @@ import "./StoryPage.css";
 // Assuming you have this context and data file set up
 import { useCharacters } from "../context/CharacterContext";
 import { characterDatabase } from "../data/characterData.js";
+import SegmentNavigator from "../components/SegmentNavigator";
 
 // Import your assets
 import quillIcon from "../assets/images/quill.png";
@@ -17,7 +18,7 @@ import bg3 from "../assets/background/statue-of-seven-day.png";
 export default function StoryPage() {
   const [prompt, setPrompt] = useState("");
   const [selectedBackground, setSelectedBackground] = useState(null);
-  const [generatedStory, setGeneratedStory] = useState("");
+  const [generatedStory, setGeneratedStory] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -38,53 +39,50 @@ export default function StoryPage() {
   ];
 
   const handleGenerate = async () => {
-    const character1 = localStorage.getItem("character1");
-    const character2 = localStorage.getItem("character2");
-    
+    const username = localStorage.getItem("currentUser") || "dawn";
+
     if (!prompt) {
       alert("Please enter a prompt!");
       return;
     }
 
     setIsLoading(true);
-    setGeneratedStory(""); // Clear previous story
+    setGeneratedStory(null); // Clear previous story
 
     try {
       console.log("Generating story...");
-      const response = await fetch("http://localhost:4000/api/dawn/chapter1", {
+      const response = await fetch("http://localhost:4000/api/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           prompt: prompt,
-          char1: character1,
-          char2: character2,
-          background: selectedBackground,
+          username: username,
         }),
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorData = await response.json();
+        throw new Error(errorData.detail || "Generation failed");
       }
 
-      const data = await response.json();
-      console.log("Story generated:", data);
+      const result = await response.json();
+      console.log("Story generated:", result);
 
-      if (data.status === "success" && data.data && data.data.segments) {
-        // Format the segments for display
-        // Assuming segments is a list of objects with 'output_segment'
-        const storyText = data.data.segments
-          .map(seg => seg.output_segment)
-          .join("\n\n");
-        setGeneratedStory(storyText);
+      if (result.status === "success" && result.data) {
+        // Store the complete chapter data
+        setGeneratedStory(result.data);
+        // Also save to localStorage
+        localStorage.setItem("latestResult", JSON.stringify(result.data));
+        localStorage.setItem("latestPrompt", prompt);
       } else {
-        setGeneratedStory("Failed to generate story structure.");
+        alert("Failed to generate story structure.");
       }
 
     } catch (error) {
       console.error("Error generating story:", error);
-      alert("Failed to generate story. Check console for details.");
+      alert(`Failed to generate story: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
@@ -121,8 +119,8 @@ export default function StoryPage() {
           <section className="story-title-section">
             <h1>Story</h1>
             <p>
-              Here’s where the magic happens. Drop your duo anywhere you want.
-              Mondstadt? College? Outer space? It’s your story — you decide!
+              Here's where the magic happens. Drop your duo anywhere you want.
+              Mondstadt? College? Outer space? It's your story — you decide!
             </p>
           </section>
 
@@ -132,9 +130,8 @@ export default function StoryPage() {
               {backgrounds.map((bg) => (
                 <div
                   key={bg.name}
-                  className={`background-card ${
-                    selectedBackground?.name === bg.name ? "selected" : ""
-                  }`}
+                  className={`background-card ${selectedBackground?.name === bg.name ? "selected" : ""
+                    }`}
                   onClick={() => setSelectedBackground(bg)}
                 >
                   <img src={bg.src} alt={bg.name} />
@@ -200,8 +197,15 @@ export default function StoryPage() {
           {isLoading && (
             <div className="loading-indicator">Generating your story...</div>
           )}
+
           {generatedStory && (
-            <pre className="story-output">{generatedStory}</pre>
+            <section className="generated-story-section">
+              <h3>Generated Story: {generatedStory.title}</h3>
+              <p className="setting-narration">{generatedStory.setting_narration}</p>
+              <div className="story-display">
+                <SegmentNavigator segments={generatedStory.segments} />
+              </div>
+            </section>
           )}
 
           {/* Action buttons are back */}
