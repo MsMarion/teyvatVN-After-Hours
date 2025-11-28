@@ -78,9 +78,15 @@ export default function StoryPage() {
 
   const { selectedCharacters } = useCharacters();
 
-  // Redirect if no characters are selected
+  // Redirect if no characters are selected (check localStorage first for persistence)
   useEffect(() => {
-    if (!selectedCharacters || selectedCharacters.length < 2) {
+    // Check if characters are in localStorage (persisted selection)
+    const char1 = localStorage.getItem("character1");
+    const char2 = localStorage.getItem("character2");
+    const hasPersistedCharacters = char1 && char2;
+
+    // Only redirect if no characters in context AND no persisted characters
+    if ((!selectedCharacters || selectedCharacters.length < 2) && !hasPersistedCharacters) {
       alert("Please select your characters first!");
       navigate("/characters");
     }
