@@ -1,0 +1,77 @@
+{
+  "title": "Crimson Twilight Confessions",
+  "characters": [
+    "Diluc",
+    "Jean"
+  ],
+  "backgrounds": [
+    "Angel's Share Tavern"
+  ],
+  "setting_narration": "The Angel's Share Tavern is unusually quiet tonight, the usual boisterous laughter replaced by the soft crackle of a dying hearth fire. Dust motes dance in the amber glow of the lamps, casting long, wavering shadows across the polished wooden tables. The air is thick with the scent of dandelion wine and aged oak, a comforting hush settling over the otherwise lively establishment.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "Diluc stands behind the bar, meticulously polishing a wine glass, his movements precise and practiced. Jean sits alone at a corner table, a half-finished glass of grape juice before her, gazing absently into the flickering flames of the fireplace."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(softly, a faint smile)",
+      "line": "It's peaceful tonight, isn't it? A rare commodity in Mondstadt."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(without looking up)",
+      "line": "Perhaps the city is simply tired. Even its inhabitants require rest."
+    },
+    {
+      "type": "narration",
+      "text": "Jean lets out a small, wistful sigh, tracing the rim of her glass with a fingertip. Her gaze drifts from the fire to Diluc, who continues his work with an almost meditative focus."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(pensive)",
+      "line": "Rest... or perhaps reflection. Nights like these often bring back memories, don't they? Things we've long put aside."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(pauses his polishing, a subtle shift in his posture)",
+      "line": "Some memories are best left undisturbed."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(gentle, almost rhetorical)",
+      "line": "Even the ones that brought great joy, or perhaps, great lessons? The people we shared those moments with..."
+    },
+    {
+      "type": "narration",
+      "text": "A silence hangs between them, stretched thin by unspoken thoughts. Diluc finally sets the glass down, his eyes briefly meeting Jean's across the quiet room. There's a flicker of something unreadable in their depths before he looks away, wiping his hands on a clean cloth."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(voice low, almost a murmur)",
+      "line": "The past shapes us. For better or worse. But it doesn't define the present."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(nods slowly, understanding)",
+      "line": "No, it doesn't. But sometimes... it's good to acknowledge the paths we've walked, and the people we've walked them with. To remember the warmth, even if the flame has long since died."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(a faint, almost imperceptible curl of his lips, a rare, fleeting hint of wistfulness)",
+      "line": "Indeed. Some warmth lingers longer than others."
+    },
+    {
+      "type": "narration",
+      "text": "He turns back to the bar, but his movements are a little less rigid now, a fraction softer. Jean watches him for another moment, a gentle, knowing expression on her face, before she too turns back to the hearth, the quiet memories of the evening settling around them both like a comforting, bittersweet shroud."
+    }
+  ]
+}

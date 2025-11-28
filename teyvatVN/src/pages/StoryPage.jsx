@@ -111,13 +111,24 @@ export default function StoryPage() {
 
     try {
       console.log("Generating story...");
+
+      // Get selected characters from localStorage
+      const char1 = localStorage.getItem("character1");
+      const char2 = localStorage.getItem("character2");
+
+      // Build enhanced prompt with character context
+      const characterContext = char1 && char2
+        ? `Characters: ${char1} and ${char2}. `
+        : "";
+      const enhancedPrompt = characterContext + prompt;
+
       const response = await fetch("http://localhost:4000/api/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          prompt: prompt,
+          prompt: enhancedPrompt,
           username: username,
         }),
       });
