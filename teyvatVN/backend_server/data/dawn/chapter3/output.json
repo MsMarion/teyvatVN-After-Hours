@@ -1,0 +1,87 @@
+{
+  "title": "Whispers of Distant Memories",
+  "characters": [
+    "Aether",
+    "Diluc"
+  ],
+  "backgrounds": [
+    "Angel's Share"
+  ],
+  "setting_narration": "The Angel's Share tavern, usually bustling, is quiet now. The last echoes of the Windblume Festival's joyous cacophony have faded, leaving behind only the soft hum of the night and the clinking of bottles. Only a few patrons linger, nursing their final drinks, while the distant, faint sounds of Mondstadt's late-night revelry occasionally drift through the open door, a testament to the city's festive spirit.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "The tavern owner, Diluc Ragnvindr, meticulously wipes down the counter, his movements precise and unhurried. The faint scent of dandelions and a hint of fine wine lingers in the air. Just as he finishes, the door creaks open, and the Traveler, Aether, steps inside."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Aether",
+      "expression_action": "(looking around, a little tired)",
+      "line": "Still open, Diluc? I thought for sure everyone would have gone home after the festival's main events."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(calmly, without looking up immediately)",
+      "line": "Some prefer the quiet of the night. A few still wish for one last drink before the celebrations fully conclude. What can I get for you, Traveler?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Aether",
+      "expression_action": "(approaching the counter, a thoughtful expression)",
+      "line": "Just a small glass of grape juice tonight. It's been a long day, even for me."
+    },
+    {
+      "type": "narration",
+      "text": "Diluc nods, preparing the drink with practiced ease. The clink of ice against glass is the only sound for a moment. Aether watches him, a strange sense of déjà vu washing over them, stronger than usual."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Aether",
+      "expression_action": "(softly, almost to themselves)",
+      "line": "You know, sometimes... when I look at you, I feel like I've known you for much longer than my time here in Teyvat. Not just known, but truly understood a deep sorrow within you."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(pauses, glass in hand, eyes narrowed slightly)",
+      "line": "Many people believe they understand me, Traveler. Most are mistaken. What makes your perception different?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Aether",
+      "expression_action": "(meeting his gaze, a hint of something ancient in their eyes)",
+      "line": "It's not something I saw here. It's... a memory. Or perhaps, an echo of a memory from another place, another time. A memory of a crimson knight, burdened by a world's despair, yet still striving to protect, even when all seemed lost."
+    },
+    {
+      "type": "narration",
+      "text": "Diluc's hand tightens imperceptibly on the glass. A flicker of surprise, quickly masked, crosses his face. He places the grape juice before Aether, his usual stoic composure showing a slight crack."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(lowering his voice, eyes searching Aether's)",
+      "line": "A crimson knight... That is an interesting choice of words. One I haven't heard in a very long time, and certainly not from anyone in Mondstadt."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Aether",
+      "expression_action": "(taking a sip, a sad smile)",
+      "line": "Some bonds transcend worlds, Diluc. And some burdens, too. Even across the void, the essence of a protector, the will to fight for what's right, can leave an imprint. I recognized that spirit in you, the moment I truly saw beyond the wine tycoon and the Darknight Hero."
+    },
+    {
+      "type": "narration",
+      "text": "A silence hangs in the air, heavy with unspoken questions and profound, unexpected recognition. Diluc studies Aether for a long moment, a rare vulnerability in his usually guarded eyes."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(after a beat, a faint, almost imperceptible nod)",
+      "line": "Then perhaps... we have more in common than either of us could have imagined, Traveler. Thank you for the insight."
+    },
+    {
+      "type": "narration",
+      "text": "Aether simply sips their drink, a knowing look in their eyes. The Windblume Festival's joy might be fading, but a new, deeper mystery has just begun to bloom in the quiet corners of Angel's Share."
+    }
+  ]
+}

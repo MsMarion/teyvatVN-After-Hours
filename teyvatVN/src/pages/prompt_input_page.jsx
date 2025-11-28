@@ -6,43 +6,62 @@ import { useEffect } from "react";
 
 export default function PromptInputPage() {
   const [prompt, setPrompt] = useState("");
-  const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
-  
-    useEffect(() => {
+
+  useEffect(() => {
     const user = localStorage.getItem("currentUser");
     if (!user) {
-    navigate("/login");
+      navigate("/login");
     }
-    }, [navigate]);
+  }, [navigate]);
 
 
-  const handleGenerate = () => {
-  const mockOutput = {
-    title: "Generated Scene Title",
-    characters: ["CharacterA", "CharacterB"],
-    backgrounds: ["Background1", "Background2"],
-    setting_narration: "A vivid scene description appears here.",
-    segments: [
-      {
-        type: "dialogue",
-        speaker: "CharacterA",
-        expression_action: "(smirking)",
-        line: "We finally meet again.",
-      },
-      {
-        type: "narration",
-        text: "The wind howls in the distance.",
-      },
-    ],
+  const handleGenerate = async () => {
+    if (!prompt.trim()) {
+      setError("Please enter a prompt");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const username = localStorage.getItem("currentUser") || "dawn";
+
+      const response = await fetch("http://localhost:4000/api/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: prompt,
+          username: username,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || "Generation failed");
+      }
+
+      const result = await response.json();
+
+      // Save to localStorage for TestScenePage to display
+      localStorage.setItem("latestResult", JSON.stringify(result.data));
+      localStorage.setItem("latestPrompt", prompt);
+
+      // Navigate to test scene page
+      navigate("/test_scene");
+
+    } catch (err) {
+      console.error("Generation error:", err);
+      setError(err.message || "Failed to generate scene. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
-
-  // 🔐 Save prompt and result to localStorage
-  localStorage.setItem("latestPrompt", prompt);
-  localStorage.setItem("latestResult", JSON.stringify(mockOutput));
-
-  setResult(mockOutput);
-};
 
 
 
@@ -55,18 +74,32 @@ export default function PromptInputPage() {
         placeholder="Enter your story prompt here..."
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
+        disabled={loading}
       />
 
       <button
         onClick={handleGenerate}
-        className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded"
+        disabled={loading}
+        className={`mt-4 px-4 py-2 rounded ${loading
+          ? "bg-gray-600 cursor-not-allowed"
+          : "bg-indigo-600 hover:bg-indigo-700"
+          } text-white`}
       >
-        Generate
+        {loading ? "Generating..." : "Generate"}
       </button>
 
-      {result && (
-        <div className="mt-6 p-4 bg-gray-900 text-green-400 rounded overflow-auto text-sm whitespace-pre-wrap max-h-96">
-          {JSON.stringify(result, null, 2)}
+      {error && (
+        <div className="mt-4 p-4 bg-red-900 text-red-200 rounded">
+          {error}
+        </div>
+      )}
+
+      {loading && (
+        <div className="mt-6 p-4 bg-gray-900 text-blue-400 rounded">
+          <div className="flex items-center">
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-400 mr-3"></div>
+            <span>Generating your visual novel scene...</span>
+          </div>
         </div>
       )}
     </div>

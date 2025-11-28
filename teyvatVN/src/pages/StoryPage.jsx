@@ -38,31 +38,56 @@ export default function StoryPage() {
   ];
 
   const handleGenerate = async () => {
-    // ... API call logic would go here ...
     const character1 = localStorage.getItem("character1");
     const character2 = localStorage.getItem("character2");
-    console.log("Generating story...");
-    console.log("Story logging information so that it can do the api calls in the backend")
-    console.log("prompt is ", prompt)
-    console.log("char1 is ", character1)
-    console.log("char2 is ", character2)
-    console.log("background is ", selectedBackground)
     
-    //send api call with these data as it is. todo later
-    await fetch("http://localhost:4000/api/dawn/chapter1", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        prompt: prompt,
-        char1: character1,
-        char2: character2,
-        background: selectedBackground,
-      }),
-    });
+    if (!prompt) {
+      alert("Please enter a prompt!");
+      return;
+    }
 
+    setIsLoading(true);
+    setGeneratedStory(""); // Clear previous story
 
+    try {
+      console.log("Generating story...");
+      const response = await fetch("http://localhost:4000/api/dawn/chapter1", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: prompt,
+          char1: character1,
+          char2: character2,
+          background: selectedBackground,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Story generated:", data);
+
+      if (data.status === "success" && data.data && data.data.segments) {
+        // Format the segments for display
+        // Assuming segments is a list of objects with 'output_segment'
+        const storyText = data.data.segments
+          .map(seg => seg.output_segment)
+          .join("\n\n");
+        setGeneratedStory(storyText);
+      } else {
+        setGeneratedStory("Failed to generate story structure.");
+      }
+
+    } catch (error) {
+      console.error("Error generating story:", error);
+      alert("Failed to generate story. Check console for details.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleReset = () => {

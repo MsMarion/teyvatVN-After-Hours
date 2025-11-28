@@ -1,73 +1,79 @@
-from google import genai
-from google.genai import types
-import vertexai
-from vertexai.generative_models import GenerativeModel, Part, SafetySetting
-from vertexai.preview.prompts import Prompt
-import base64
+import google.generativeai as genai
 import os
 import time
 import json
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] ='vision_key.json'
+import re
+from dotenv import load_dotenv
+
+load_dotenv()
+
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+if GEMINI_API_KEY:
+    genai.configure(api_key=GEMINI_API_KEY)
+else:
+    print("Warning: GEMINI_API_KEY not found in environment variables.")
+
+def clean_json_string(json_str):
+    """Clean markdown code blocks from string to extract JSON."""
+    if "```json" in json_str:
+        json_str = json_str.split("```json")[1].split("```")[0]
+    elif "```" in json_str:
+        json_str = json_str.split("```")[1].split("```")[0]
+    return json_str.strip()
 
 # assume beats are a list of details
 def generate_beat_details(beats, chapter_data):
-    list_of_details = {}
+    list_of_details = []
     previous_beat = None
-    next_beat = None
+    
+    # Ensure beats is a list
+    if isinstance(beats, str):
+        try:
+            beats = json.loads(clean_json_string(beats))
+        except json.JSONDecodeError:
+            print("Failed to parse beats JSON")
+            return []
+            
+    if not isinstance(beats, list):
+        print(f"Beats is not a list: {type(beats)}")
+        return []
 
-    for beat in beats:
-        model = "gemini-2.5-flash-001"
+    print(f"Generating details for {len(beats)} beats...")
+
+    for i, beat in enumerate(beats):
         current_beat = beat
-        next_beat = beat
-
-
-        system_instructions = r"""
+        next_beat = beats[i+1] if i < len(beats) - 1 else None
         
+        print(f"Processing beat {i+1}/{len(beats)}")
+
+        # Extract variables
+        if isinstance(chapter_data, str):
+             try:
+                chapter_data = json.loads(chapter_data)
+             except:
+                pass # Handle as dict or fail later
+
+        characters = chapter_data.get("characters", ["Diluc", "Kaeya"])
+        start_setting = chapter_data.get("start_setting", "Angel's Share")
+        story_direction = chapter_data.get("story_direction", "")
+
+        
+        system_instructions = r"""
         **Role:** You are a descriptive novelist and scene director. Your task is to expand a single key event ("beat") into a detailed and immersive narrative segment.
 
         **Objective:** Flesh out the `current_beat_outline` into a full narrative segment. Your description must:
 
-        1. **Transition from the Previous:** Use the `previous_beat_output` as your starting point. Ensure a smooth continuation of action, mood, and character positioning. For example, if the previous beat ended with a character staring at a glass, this beat should begin with that action before introducing a new one.
-        2. **Detail the Current:** Fully realize the `Key_Event` of the `current_beat_outline`. Describe the sensory details of the location, the specific actions and body language of the characters, and their internal feelings related to this exact moment.
+        1. **Transition from the Previous:** Use the `previous_beat_output` as your starting point. Ensure a smooth continuation of action, mood, and character positioning.
+        2. **Detail the Current:** Fully realize the `Key_Event` of the `current_beat_outline`. Describe the sensory details, specific actions, and internal feelings.
         3. **Foreshadow the Next:** Look at the `next_beat_outline` and subtly set the stage for it.
-        * If the next beat introduces a character, you might mention a sound from the door or a shift in the atmosphere.
-        * If the next beat is a verbal jab, you might describe a character's expression hardening in preparation.
-        * This should be subtle—a hint, not a spoiler.
 
-        **Edge Case Handling:**
-        * If `previous_beat_output` is null, you are writing the **first beat**. Focus on establishing the scene from scratch.
-        * If `next_beat_outline` is null, you are writing the **last beat**. Do not foreshadow. Instead, focus on creating a powerful concluding image or feeling that gives the scene a sense of finality.
+        **IMPORTANT:** Do not write any dialogue yet unless explicitly required by the beat. Focus on building the scene and emotional subtext.
 
-
-
-        **IMPORTANT:** Do not write any dialogue. The purpose is to build the scene and the emotional subtext *before* the characters speak.
-
-        **Output Format:** The final output for this beat should be a JSON object structured as follows: ```json { "output_segment": "Your detailed narrative description for this beat goes here." }
-        
+        **Output Format:** Return ONLY a JSON object:
+        { "output_segment": "Your detailed narrative description for this beat goes here." }
         """
-        
-
-        if chapter_data is None:
-
-            # these are dynamic variables to be added
-            characters = ["Diluc", "Kaeya"]
-            start_setting = "Angel's Share"
-            story_direction = r"""
-            The Windblume Festival has just ended and the city is winding down its celebrations. Diluc's employees have returned to the winery and the city's inhabitants are all tucking in for the night. Diluc is nursing a glass of red wine alone in the tavern, no one to cut him off. The silence feels almost too much after hours of shouts accompanying him. when the door swings open, hard enough to ricochet off the tavern wall, diluc doesnt look up. he already knows who it is. it's kaeya. his smile is arrogant, sharp, annoying as always. diluc can't look away.
-            """
-        else:
-            characters = chapter_data["characters"]
-            start_setting = chapter_data["start_setting"]
-            story_direction = chapter_data["story_direction"]
-
-
-        vertexai.init(
-            project="primeval-span-452802-i9",
-            location="us-east5",
-            api_endpoint="us-east5-aiplatform.googleapis.com"
-        )
-        model = "gemini-2.5-flash-001"
 
         input_prompt = f"""
         {system_instructions}
@@ -78,98 +84,91 @@ def generate_beat_details(beats, chapter_data):
         Previous Beat: {previous_beat}
         Current Beat: {current_beat}
         Next Beat: {next_beat}
-
-        
         """
 
         generation_config = {
             "max_output_tokens": 2048,
             "temperature": 1,
             "top_p": 0.95,
-            #"response_mime_type": "application/json",
-            #"response_schema": {"type":"OBJECT","properties":{"5 Star Walk-In Review":{"type":"STRING"},"5 Star drive-In Review":{"type":"STRING"},"4 Star Walk-In Review":{"type":"STRING"},"4 Star drive-In Review":{"type":"STRING"}}},
         }
 
         safety_settings = [
-            SafetySetting(
-                category=SafetySetting.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-                threshold=SafetySetting.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE
-            ),
-            SafetySetting(
-                category=SafetySetting.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-                threshold=SafetySetting.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE
-            ),
-            SafetySetting(
-                category=SafetySetting.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-                threshold=SafetySetting.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE
-            ),
-            SafetySetting(
-                category=SafetySetting.HarmCategory.HARM_CATEGORY_HARASSMENT,
-                threshold=SafetySetting.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE
-            ),
+            {
+                "category": "HARM_CATEGORY_HATE_SPEECH",
+                "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+            },
+            {
+                "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+                "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+            },
+            {
+                "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+            },
+            {
+                "category": "HARM_CATEGORY_HARASSMENT",
+                "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+            },
         ]
-        prompt = Prompt(
-            prompt_data=[input_prompt],
-            model_name="gemini-2.0-flash-001",
-            generation_config=generation_config,
-            safety_settings=safety_settings,
-        )
+        
+        model = genai.GenerativeModel("gemini-2.5-flash-lite")
+        
+        try:
+            responses = model.generate_content(
+                input_prompt,
+                generation_config=generation_config,
+                safety_settings=safety_settings,
+            )
+            
+            response_text = responses.text
+            cleaned_json = clean_json_string(response_text)
+            segment_json = json.loads(cleaned_json)
+            
+            # Add metadata to the segment
+            segment_json["beat_index"] = i
+            segment_json["location"] = beat.get("location", "")
+            segment_json["characters"] = beat.get("Characters", [])
+            
+            list_of_details.append(segment_json)
+            previous_beat = segment_json.get("output_segment", "")
+            
+        except Exception as e:
+            print(f"Error generating beat {i}: {e}")
+            list_of_details.append({
+                "output_segment": f"Error generating segment for beat {i}.",
+                "beat_index": i
+            })
 
-        # Generate content using the assembled prompt. Change the index if you want
-        # to use a different set in the variable value list.
-        responses = prompt.generate_content(
-            contents=prompt.assemble_contents(**prompt.variables[0]),
-        )
-        list_of_details.append(responses)
+    return list_of_details
 
-
-
-def generate_beats():
-    model = "gemini-2.5-flash-001"
-    print("in ai gen")
-    with open(r"output.json", "r") as f:
-        chapter_data = json.load(f)
-    print(chapter_data)
-    # print(chapter_data)
-    print(chapter_data['story_direction'])
-
-    #return "null"
-    system_instructions = r"""
-    You are a playwright tasked with writing a dramatic chapter in play format, give the story beats in a overview manner so that others can expand upon them with more in-depth dialogue actions and narration. 
-    Your task:  
-    Generate a high-level scene outline for this chapter. Structure it as a list of multiple numbered beats. Each beat should include the location (within the setting), which characters are involved, and what key event or tension occurs. There should be an entire chapter structure with a beginning, rising action and a clear end 
-    Return in a list format that contains multiple beat jsons in the following structure:
-
-    {
-    location: "" ,
-    Characters: [],
-    Key_Event: ""
-    }
-    For locations, keep them simple, and if a location changes between beats, that in of itself is a beat, with a key_event labeled "transition"
-    """
+def generate_beats(chapter_data):
+    print("Generating beats...")
     
+    if isinstance(chapter_data, str):
+        try:
+            chapter_data = json.loads(chapter_data)
+        except:
+            pass
 
-    if chapter_data is None:
+    characters = chapter_data.get("characters", ["Diluc", "Kaeya"])
+    start_setting = chapter_data.get("start_setting", "Angel's Share")
+    story_direction = chapter_data.get("story_direction", "")
 
-        # these are dynamic variables to be added
-        characters = ["Diluc", "Kaeya"]
-        start_setting = "Angel's Share"
-        story_direction = r"""
-        The Windblume Festival has just ended and the city is winding down its celebrations. Diluc's employees have returned to the winery and the city's inhabitants are all tucking in for the night. Diluc is nursing a glass of red wine alone in the tavern, no one to cut him off. The silence feels almost too much after hours of shouts accompanying him. when the door swings open, hard enough to ricochet off the tavern wall, diluc doesnt look up. he already knows who it is. it's kaeya. his smile is arrogant, sharp, annoying as always. diluc can't look away.
-        """
-    else:
-        characters = chapter_data["characters"]
-        start_setting = chapter_data["start_setting"]
-        story_direction = chapter_data["story_direction"]
-
-    print("after reading te data")
-    print(characters)
-    vertexai.init(
-        project="primeval-span-452802-i9",
-        location="us-east5",
-        api_endpoint="us-east5-aiplatform.googleapis.com"
-    )
-    model = "gemini-2.5-flash-001"
+    system_instructions = r"""
+    You are a playwright tasked with writing a dramatic chapter in play format.
+    Your task:  
+    Generate a high-level scene outline for this chapter. Structure it as a list of multiple numbered beats. 
+    Each beat should include the location, characters involved, and the key event/tension.
+    
+    Return a JSON LIST of objects in this format:
+    [
+        {
+            "location": "Location Name",
+            "Characters": ["Char1", "Char2"],
+            "Key_Event": "Description of what happens"
+        }
+    ]
+    """
 
     input_prompt = f"""
     {system_instructions}
@@ -178,54 +177,185 @@ def generate_beats():
     * **Setting:** {start_setting}
     * **Initial Story Direction:**
     {story_direction}
-
-    
     """
 
     generation_config = {
         "max_output_tokens": 2048,
         "temperature": 1,
         "top_p": 0.95,
-        #"response_mime_type": "application/json",
-        #"response_schema": {"type":"OBJECT","properties":{"5 Star Walk-In Review":{"type":"STRING"},"5 Star drive-In Review":{"type":"STRING"},"4 Star Walk-In Review":{"type":"STRING"},"4 Star drive-In Review":{"type":"STRING"}}},
     }
 
     safety_settings = [
-        SafetySetting(
-            category=SafetySetting.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-            threshold=SafetySetting.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE
-        ),
-        SafetySetting(
-            category=SafetySetting.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-            threshold=SafetySetting.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE
-        ),
-        SafetySetting(
-            category=SafetySetting.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-            threshold=SafetySetting.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE
-        ),
-        SafetySetting(
-            category=SafetySetting.HarmCategory.HARM_CATEGORY_HARASSMENT,
-            threshold=SafetySetting.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE
-        ),
+        {
+            "category": "HARM_CATEGORY_HATE_SPEECH",
+            "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+        },
+        {
+            "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+            "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+        },
+        {
+            "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+        },
+        {
+            "category": "HARM_CATEGORY_HARASSMENT",
+            "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+        },
     ]
-    prompt = Prompt(
-        prompt_data=[input_prompt],
-        model_name="gemini-2.0-flash-001",
-        generation_config=generation_config,
-        safety_settings=safety_settings,
+    
+    model = genai.GenerativeModel("gemini-2.5-flash-lite")
+    
+    try:
+        responses = model.generate_content(
+            input_prompt,
+            generation_config=generation_config,
+            safety_settings=safety_settings,
+        )
+        return responses.text
+    except Exception as e:
+        print(f"Error generating beats: {e}")
+        return "[]"
+
+def generate_story(chapter_data):
+    """Main function to generate the full story."""
+    # 1. Generate Beats
+    beats_json_str = generate_beats(chapter_data)
+    
+    # 2. Generate Details from Beats
+    story_segments = generate_beat_details(beats_json_str, chapter_data)
+    
+    return story_segments
+
+
+def generate_chapter_from_prompt(prompt: str) -> dict:
+    """
+    Generate a complete visual novel chapter from a simple prompt.
+    Returns a properly formatted chapter with dialogue and narration segments.
+    """
+    system_instructions = """You are a visual novel scene generator. Your task is to create an engaging visual novel scene with dialogue and narration.
+
+Generate a complete scene in JSON format with the following structure:
+
+{
+  "title": "An engaging title for the scene",
+  "characters": ["Character1", "Character2"],
+  "backgrounds": ["location_name"],
+  "setting_narration": "A vivid description of the scene setting and atmosphere",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "Narrative description of what's happening"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Character1",
+      "expression_action": "(emotion or action in parentheses)",
+      "line": "What the character says"
+    }
+  ]
+}
+
+IMPORTANT RULES:
+1. Each segment must have a "type" field that is either "dialogue" or "narration"
+2. Dialogue segments MUST have: type, speaker, line (expression_action is optional)
+3. Narration segments MUST have: type, text
+4. Create a mix of dialogue and narration for an engaging scene
+5. Use expression_action to show emotions like "(nervously)", "(smiling)", "(calmly)", etc.
+6. Make the scene feel alive with sensory details and character interactions
+7. Return ONLY valid JSON, no markdown code blocks or extra text
+"""
+
+    user_prompt = f"""Create a visual novel scene based on this prompt:
+
+{prompt}
+
+Remember to output ONLY the JSON object, nothing else."""
+
+    generation_config = {
+        "max_output_tokens": 4096,
+        "temperature": 1,
+        "top_p": 0.95,
+    }
+
+    safety_settings = [
+        {
+            "category": "HARM_CATEGORY_HATE_SPEECH",
+            "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+        },
+        {
+            "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+            "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+        },
+        {
+            "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+        },
+        {
+            "category": "HARM_CATEGORY_HARASSMENT",
+            "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+        },
+    ]
+    
+    model = genai.GenerativeModel(
+        "gemini-2.5-flash",
+        system_instruction=system_instructions
     )
+    
+    try:
+        response = model.generate_content(
+            user_prompt,
+            generation_config=generation_config,
+            safety_settings=safety_settings,
+        )
+        
+        response_text = response.text
+        cleaned_json = clean_json_string(response_text)
+        chapter_data = json.loads(cleaned_json)
+        
+        # Validate the structure
+        required_fields = ["title", "characters", "backgrounds", "setting_narration", "segments"]
+        for field in required_fields:
+            if field not in chapter_data:
+                raise ValueError(f"Missing required field: {field}")
+        
+        # Validate segments
+        for i, segment in enumerate(chapter_data["segments"]):
+            if "type" not in segment:
+                raise ValueError(f"Segment {i} missing 'type' field")
+            
+            if segment["type"] == "dialogue":
+                if "speaker" not in segment or "line" not in segment:
+                    raise ValueError(f"Dialogue segment {i} missing required fields")
+            elif segment["type"] == "narration":
+                if "text" not in segment:
+                    raise ValueError(f"Narration segment {i} missing 'text' field")
+            else:
+                raise ValueError(f"Invalid segment type: {segment['type']}")
+        
+        return chapter_data
+        
+    except json.JSONDecodeError as e:
+        print(f"JSON parsing error: {e}")
+        print(f"Response text: {response_text}")
+        raise Exception(f"Failed to parse AI response as JSON: {e}")
+    except Exception as e:
+        print(f"Error generating chapter: {e}")
+        raise
 
-    # Generate content using the assembled prompt. Change the index if you want
-    # to use a different set in the variable value list.
-    print("gnerating responses")
-    responses = prompt.generate_content(
-        contents=prompt.assemble_contents(**prompt.variables[0]),
-    )
-    print(responses.text)
-
-
-    return responses.text
 
 if __name__ == "__main__":
     print("doing the testing")
-    generate_beats()
+    # Example chapter data for testing
+    test_chapter_data = {
+        "characters": ["Diluc", "Kaeya"],
+        "start_setting": "Angel's Share Tavern",
+        "story_direction": "The Windblume Festival has just ended and the city is winding down its celebrations. Diluc is nursing a glass of red wine alone in the tavern. The door swings open, and Kaeya enters with an arrogant smile."
+    }
+    
+    # Call the main story generation function
+    full_story = generate_story(test_chapter_data)
+    print("\n--- Full Story Segments ---")
+    for segment in full_story:
+        print(json.dumps(segment, indent=2))
+
