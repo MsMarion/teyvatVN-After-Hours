@@ -1,0 +1,65 @@
+{
+  "title": "A Warm Welcome (Mostly)",
+  "characters": [
+    "Elara",
+    "Kael"
+  ],
+  "backgrounds": [
+    "Elderwood Workshop"
+  ],
+  "setting_narration": "The Elderwood Workshop hums with the soft thrum of forgotten magic and the scent of aged wood and ozone. Dust motes dance in the slivers of sunlight piercing through grimy windows, illuminating shelves stacked high with arcane components, peculiar tools, and half-finished contraptions. In the center, a sturdy workbench groans under the weight of intricate clockwork.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "Elara steps cautiously over the threshold, her gaze sweeping across the chaotic yet mesmerizing array of inventions. The air crackles with a faint energy."
+    },
+    {
+      "type": "narration",
+      "text": "At the workbench, Kael, a man whose hands seem to be extensions of the metal and gears he constantly manipulates, is hunched over a small, glowing device. He mutters to himself, completely absorbed."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kael",
+      "expression_action": "(muttering intensely)",
+      "line": "Just a little... more... *pstch*... confound it!"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Elara",
+      "expression_action": "(nervously)",
+      "line": "Um... hello?"
+    },
+    {
+      "type": "narration",
+      "text": "Kael flinches, nearly dropping a delicate crystal shard. He slowly straightens, his eyes, sharp as a falcon's, fixing on Elara. A smudge of grease adorns his cheek."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kael",
+      "expression_action": "(blinking, then slightly annoyed)",
+      "line": "Hello? Is that all you have to say, girl? Who are you, and how did you get past the wards?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Elara",
+      "expression_action": "(stammering slightly)",
+      "line": "I'm Elara. I was told to report here... for the apprenticeship. And the door was just... open."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kael",
+      "expression_action": "(sighing, then wiping his hands on a rag)",
+      "line": "Ah, right. The new blood. Kael. Welcome to the workshop, I suppose. And yes, the door is often 'just open' when I'm expecting someone. It's a test of observation."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Elara",
+      "expression_action": "(a small, relieved smile)",
+      "line": "Oh. Hello, Master Kael."
+    },
+    {
+      "type": "narration",
+      "text": "Kael grunts, a sound that could mean anything from affirmation to 'don't make me regret this'. He gestures vaguely around the cluttered workshop, his attention already drifting back to the humming device on the bench."
+    }
+  ]
+}
