@@ -196,6 +196,9 @@ export default function CharacterPage() {
   const handleContinue = () => {
     if (selected.length === 2) {
       setSelectedCharacters(selected);
+      localStorage.setItem("character1", JSON.stringify(selected[0]));
+      localStorage.setItem("character2", JSON.stringify(selected[1]));
+      console.log(selected[0])
       navigate("/story");
     } else {
       alert("Please select exactly 2 characters to continue.");

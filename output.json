@@ -1,0 +1,13 @@
+{
+    "characters": [
+        "{\"name\":\"Jean\",\"image\":\"/src/assets/character-sprites/jean.png\",\"element\":\"Anemo\",\"personality\":\"Kind, Dedicated\",\"likes\":[\"Lisa\",\"Amber\"],\"dislikes\":[\"Diluc (sometimes)\",\"Barbara (sibling rivalry)\"],\"quote\":\"I must protect everyone.\"}",
+        "{\"name\":\"Diluc\",\"image\":\"/src/assets/character-sprites/diluc.webp\",\"element\":\"Pyro\",\"personality\":\"Stoic, Protective\",\"likes\":[\"Kaeya\",\"Lisa\",\"Jean\"],\"dislikes\":[\"Kaeya (it's complicated)\"],\"quote\":\"In the dark, I see the truth.\"}"
+    ],
+    "start_setting": [
+        {
+            "name": "Mondstadt Night",
+            "src": "/src/assets/background/mondstadt-night.webp"
+        }
+    ],
+    "story_direction": "test2"
+}

@@ -7,6 +7,8 @@ import base64
 import os
 import time
 import json
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] ='vision_key.json'
+DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 
 # assume beats are a list of details
 def generate_beat_details(beats, chapter_data):
@@ -122,10 +124,16 @@ def generate_beat_details(beats, chapter_data):
 
 
 
-def generate_beats(chapter_data):
+def generate_beats():
     model = "gemini-2.5-flash-001"
+    print("in ai gen")
+    with open(r"output.json", "r") as f:
+        chapter_data = json.load(f)
+    print(chapter_data)
+    # print(chapter_data)
+    print(chapter_data['story_direction'])
 
-
+    #return "null"
     system_instructions = r"""
     You are a playwright tasked with writing a dramatic chapter in play format, give the story beats in a overview manner so that others can expand upon them with more in-depth dialogue actions and narration. 
     Your task:  
@@ -154,7 +162,8 @@ def generate_beats(chapter_data):
         start_setting = chapter_data["start_setting"]
         story_direction = chapter_data["story_direction"]
 
-
+    print("after reading te data")
+    print(characters)
     vertexai.init(
         project="primeval-span-452802-i9",
         location="us-east5",
@@ -208,10 +217,15 @@ def generate_beats(chapter_data):
 
     # Generate content using the assembled prompt. Change the index if you want
     # to use a different set in the variable value list.
+    print("gnerating responses")
     responses = prompt.generate_content(
         contents=prompt.assemble_contents(**prompt.variables[0]),
     )
-    #print(responses.text)
+    print(responses.text)
 
 
     return responses.text
+
+if __name__ == "__main__":
+    print("doing the testing")
+    generate_beats()

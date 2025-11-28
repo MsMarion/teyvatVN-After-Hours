@@ -63,7 +63,7 @@ async def save_chapter(username: str, chapter_id: str, request: Request):
         prompt = body["prompt"]
         char1 = body["char1"]
         char2 = body["char2"]
-        background = body["background"]
+        background = body["background"] 
     except KeyError as e:
         raise HTTPException(status_code=400, detail=f"Missing field: {e}")
     except Exception:
@@ -72,9 +72,9 @@ async def save_chapter(username: str, chapter_id: str, request: Request):
 
 
     print(f"Prompt is {prompt}")
-    print(f"Prompt is {char1}")
-    print(f"Prompt is {char2}")
-    print(f"Prompt is {background}")
+    print(f"char1 is {char1}")
+    print(f"char2 is {char2}")
+    print(f"background is is {background}")
 
     # build input json for the actual story to be generated:
 
@@ -84,9 +84,22 @@ async def save_chapter(username: str, chapter_id: str, request: Request):
         "start_setting": [background],
         "story_direction": prompt
     }
-    beats = generate_ai_calls(chapter_input)
+    input_json = json.dumps(chapter_input)
 
-    print(beats)
+    with open("output.json", "w") as outfile:
+        json.dumps(chapter_input, outfile, indent=4)
+
+    #print(chapter_input)
+    beats = generate_ai_calls.generate_beats(input_json)
+    # output_beats = os.path.join(os.path.join(DATA_DIR, os.path.join({username}, {chapter_id})), "chapter_beats.txt")
+
+
+    # with open(output_beats, "w", encoding='utf-8') as output_file:
+    #             print(f'{beats}', file=output_file)
+
+
+    #print(beats)
+
 
 
 
