@@ -228,25 +228,21 @@ async def save_chapter(username: str, chapter_id: str, request: Request):
 
 # NEW: Simplified generation endpoint
 @app.post("/api/generate")
-async def generate_chapter(request: GenerateRequest, current_user: User = Depends(get_current_user)):
+async def generate_chapter(request: Request, generate_request: GenerateRequest, current_user: User = Depends(get_current_user)):
     """
     Generate a new chapter from a simple prompt.
     Auto-increments chapter ID and uses simplified generation.
     """
+    print("--- /api/generate endpoint called ---")
+    print("Request Headers:", request.headers)
     try:
-        prompt = request.prompt
+        prompt = generate_request.prompt
         username = current_user.username # Get username from authenticated user
         
         if not prompt or not prompt.strip():
             raise HTTPException(status_code=400, detail="Prompt cannot be empty")
         
         # The user is already validated by get_current_user
-        # if not username or not username.strip():
-        #     raise HTTPException(status_code=400, detail="Username cannot be empty")
-            
-        # # Validate user exists
-        # if not auth.get_user(username):
-        #      raise HTTPException(status_code=401, detail="User not found")
         
         # Get next chapter ID
         chapter_id = utils.get_next_chapter_id(username)
