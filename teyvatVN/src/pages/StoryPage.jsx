@@ -7,6 +7,7 @@ import "./StoryPage.css";
 // Components
 import VNTextBox from "../components/VNTextBox";
 import BackgroundSelector from "../components/BackgroundSelector";
+import Footer from "../components/Footer";
 
 // Config & Context
 import { useCharacters } from "../context/CharacterContext";
@@ -297,28 +298,7 @@ export default function StoryPage() {
         </main>
       </div>
 
-      <footer className="story-footer">
-        <div className="story-footer-content">
-          <div className="footer-text">
-            <p>
-              Built for <strong>GemiKnights</strong> 2025. Powered by Google
-              Gemini.
-            </p>
-            <p>
-              Quill pen SVG by Kangrif from{" "}
-              <a
-                href="https://thenounproject.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Noun Project
-              </a>{" "}
-              (CC BY 3.0).
-            </p>
-          </div>
-          <img src={quillIcon} alt="Quill Icon" className="footer-quill" />
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

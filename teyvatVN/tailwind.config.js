@@ -4,8 +4,24 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        quattro: ["var(--font-quattro)"],
-        solway: ["var(--font-solway)"],
+        heading: ["var(--font-heading)"],
+        body: ["var(--font-body)"],
+        quattro: ["var(--font-heading)"], // Alias for backward compatibility
+        solway: ["var(--font-body)"],     // Alias for backward compatibility
+      },
+      colors: {
+        primary: {
+          DEFAULT: "var(--color-primary)",
+          hover: "var(--color-primary-hover)",
+        },
+        secondary: {
+          DEFAULT: "var(--color-secondary)",
+        },
+        background: {
+          main: "var(--color-bg-main)",
+          light: "var(--color-bg-light)",
+          dark: "var(--color-bg-dark)",
+        },
       },
       keyframes: {
         fadeOut: {

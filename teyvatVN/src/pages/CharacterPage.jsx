@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCharacters } from "../context/CharacterContext";
 import "./CharacterPage.css";
+import Footer from "../components/Footer";
 
 // Your character imports...
 import albedoImg from "../assets/character-sprites/albedo.webp";
@@ -256,9 +257,8 @@ export default function CharacterPage() {
         {filteredCharacters.map((char) => (
           <div
             key={char.name}
-            className={`character-card ${
-              selected.find((c) => c.name === char.name) ? "selected" : ""
-            }`}
+            className={`character-card ${selected.find((c) => c.name === char.name) ? "selected" : ""
+              }`}
             onClick={() => handleOpenModal(char)}
           >
             <img src={char.image} alt={char.name} />
@@ -324,6 +324,7 @@ export default function CharacterPage() {
         Duo selected? Hit <span onClick={handleContinue}>continue</span> and let
         the adventure begin!
       </div>
+      <Footer />
     </div>
   );
 }

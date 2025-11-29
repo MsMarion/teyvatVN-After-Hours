@@ -16,6 +16,7 @@ import dividerGif from "../assets/images/73310135223dfdf5bc92d661b554fc51.gif";
 import paimonFloat1 from "../assets/images/paimonFloat1.gif";
 import paimonFloat2 from "../assets/images/paimonFloat2.gif";
 import storyExample from '../assets/images/story-example.png';
+import Footer from "../components/Footer";
 
 export default function LandingPage() {
   const videoRef = useRef(null);
@@ -119,8 +120,8 @@ export default function LandingPage() {
             </div>
 
             <div className="how-to-image">
-          <img src={storyExample} alt="Screenshot of the story page in use" />
-          </div>
+              <img src={storyExample} alt="Screenshot of the story page in use" />
+            </div>
           </div>
         </section>
 
@@ -175,28 +176,7 @@ export default function LandingPage() {
         </section>
       </main>
 
-      <footer className="footer">
-        <div className="footer-content">
-          <div className="footer-text">
-            <p>
-              Built for <strong>GemiKnights</strong> 2025. Powered by Google
-              Gemini.
-            </p>
-            <p>
-              Quill pen SVG by Kangrif from{" "}
-              <a
-                href="https://thenounproject.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Noun Project
-              </a>{" "}
-              (CC BY 3.0).
-            </p>
-          </div>
-          <img src={quillIcon} alt="Quill Icon" className="footer-quill" />
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
