@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCharacters } from "../context/CharacterContext";
 import "./CharacterPage.css";
-import Footer from "../components/Footer";
+import Layout from "../components/Layout";
+import pageBg from "../assets/background/goodNews.jpg";
 
 // Your character imports...
 import albedoImg from "../assets/character-sprites/albedo.webp";
@@ -211,120 +212,121 @@ export default function CharacterPage() {
   );
 
   return (
-    <div className="character-page-container">
-      <h1 className="page-title">Characters</h1>
-      <p className="page-description">
-        Pick two characters to star in your story. Click a card to view their
-        profile — then select your favorites to begin the journey.
-      </p>
+    <Layout className="character-page-layout" backgroundImage={pageBg}>
+      <div className="character-page-content">
+        <h1 className="page-title">Characters</h1>
+        <p className="page-description">
+          Pick two characters to star in your story. Click a card to view their
+          profile — then select your favorites to begin the journey.
+        </p>
 
-      <div className="topbar">
-        <div className="search-container">
-          <input
-            type="text"
-            className="search-input"
-            placeholder="Search for a character..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          {searchTerm && (
-            <span className="clear-search" onClick={handleClearSearch}>
-              ×
-            </span>
-          )}
-        </div>
-
-        <div className="selected-bar">
-          {selected.map((char) => (
-            <div key={char.name} className="selected-avatar">
-              <img src={char.image} alt={char.name} />
-              <span
-                onClick={() => handleDeselect(char.name)}
-                className="deselect-x"
-              >
+        <div className="topbar">
+          <div className="search-container">
+            <input
+              type="text"
+              className="search-input"
+              placeholder="Search for a character..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            {searchTerm && (
+              <span className="clear-search" onClick={handleClearSearch}>
                 ×
               </span>
+            )}
+          </div>
+
+          <div className="selected-bar">
+            {selected.map((char) => (
+              <div key={char.name} className="selected-avatar">
+                <img src={char.image} alt={char.name} />
+                <span
+                  onClick={() => handleDeselect(char.name)}
+                  className="deselect-x"
+                >
+                  ×
+                </span>
+              </div>
+            ))}
+            <span className="selected-count">{selected.length}/2</span>
+            <button className="start-over" onClick={handleStartOver}>
+              ⟳
+            </button>
+          </div>
+        </div>
+
+        <div className="character-grid">
+          {filteredCharacters.map((char) => (
+            <div
+              key={char.name}
+              className={`character-card ${selected.find((c) => c.name === char.name) ? "selected" : ""
+                }`}
+              onClick={() => handleOpenModal(char)}
+            >
+              <img src={char.image} alt={char.name} />
+              <div className="character-name">{char.name}</div>
             </div>
           ))}
-          <span className="selected-count">{selected.length}/2</span>
-          <button className="start-over" onClick={handleStartOver}>
-            ⟳
-          </button>
         </div>
-      </div>
 
-      <div className="character-grid">
-        {filteredCharacters.map((char) => (
-          <div
-            key={char.name}
-            className={`character-card ${selected.find((c) => c.name === char.name) ? "selected" : ""
-              }`}
-            onClick={() => handleOpenModal(char)}
-          >
-            <img src={char.image} alt={char.name} />
-            <div className="character-name">{char.name}</div>
-          </div>
-        ))}
-      </div>
-
-      {modalCharacter && (
-        <div className="modal-overlay" onClick={handleCloseModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={handleCloseModal}>
-              ×
-            </button>
-
-            <div className="modal-body">
-              <div className="modal-details">
-                <h2 className="modal-name">{modalCharacter.name}</h2>
-                {modalCharacter.quote && (
-                  <p className="modal-quote">“{modalCharacter.quote}”</p>
-                )}
-                <div className="modal-info">
-                  {modalCharacter.element && (
-                    <p>
-                      <strong>Element:</strong> {modalCharacter.element}
-                    </p>
-                  )}
-                  {modalCharacter.personality && (
-                    <p>
-                      <strong>Personality:</strong> {modalCharacter.personality}
-                    </p>
-                  )}
-                  {modalCharacter.likes && (
-                    <p>♡: {modalCharacter.likes.join(", ")}</p>
-                  )}
-                  {modalCharacter.dislikes && (
-                    <p>⚔: {modalCharacter.dislikes.join(", ")}</p>
-                  )}
-                </div>
-              </div>
-              <img
-                className="modal-image"
-                src={modalCharacter.image}
-                alt={modalCharacter.name}
-              />
-            </div>
-
-            <div className="modal-footer">
-              <button
-                className="select-button"
-                onClick={() => handleToggleSelection(modalCharacter)}
-              >
-                {selected.find((c) => c.name === modalCharacter.name)
-                  ? "Deselect"
-                  : "Select for Duo"}
+        {modalCharacter && (
+          <div className="modal-overlay" onClick={handleCloseModal}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <button className="modal-close" onClick={handleCloseModal}>
+                ×
               </button>
+
+              <div className="modal-body">
+                <div className="modal-details">
+                  <h2 className="modal-name">{modalCharacter.name}</h2>
+                  {modalCharacter.quote && (
+                    <p className="modal-quote">“{modalCharacter.quote}”</p>
+                  )}
+                  <div className="modal-info">
+                    {modalCharacter.element && (
+                      <p>
+                        <strong>Element:</strong> {modalCharacter.element}
+                      </p>
+                    )}
+                    {modalCharacter.personality && (
+                      <p>
+                        <strong>Personality:</strong> {modalCharacter.personality}
+                      </p>
+                    )}
+                    {modalCharacter.likes && (
+                      <p>♡: {modalCharacter.likes.join(", ")}</p>
+                    )}
+                    {modalCharacter.dislikes && (
+                      <p>⚔: {modalCharacter.dislikes.join(", ")}</p>
+                    )}
+                  </div>
+                </div>
+                <img
+                  className="modal-image"
+                  src={modalCharacter.image}
+                  alt={modalCharacter.name}
+                />
+              </div>
+
+              <div className="modal-footer">
+                <button
+                  className="select-button"
+                  onClick={() => handleToggleSelection(modalCharacter)}
+                >
+                  {selected.find((c) => c.name === modalCharacter.name)
+                    ? "Deselect"
+                    : "Select for Duo"}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <div className="continue">
-        Duo selected? Hit <span onClick={handleContinue}>continue</span> and let
-        the adventure begin!
+        <div className="continue">
+          Duo selected? Hit <span onClick={handleContinue}>continue</span> and let
+          the adventure begin!
+        </div>
       </div>
-      <Footer />
-    </div>
+    </Layout>
   );
 }
