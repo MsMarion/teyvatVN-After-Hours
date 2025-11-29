@@ -70,6 +70,28 @@ async def login(request: AuthRequest):
     return {"status": "success", "username": request.username, "token": "dummy-token-for-mvp"}
 
 
+# --- LIBRARY ENDPOINTS ---
+
+@app.get("/api/library/{username}")
+def get_library(username: str):
+    """
+    Get all chapters for a user.
+    Returns a list of chapter metadata.
+    """
+    # In a real app, we would validate the token here to ensure the requester is the user
+    if not auth.get_user(username):
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    chapters = utils.list_user_chapters(username)
+    return {
+        "status": "success",
+        "username": username,
+        "chapters": chapters,
+        "count": len(chapters)
+    }
+
+
+
 # --- STORY ENDPOINTS ---
 
 # API: Get chapter

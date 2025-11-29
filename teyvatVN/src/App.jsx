@@ -13,6 +13,7 @@ import PromptInputPage from "./pages/prompt_input_page.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import StoryPage from "./pages/StoryPage.jsx";
 import LayoutSamplePage from "./pages/LayoutSamplePage.jsx";
+import LibraryPage from "./pages/LibraryPage.jsx";
 
 import { CharacterProvider } from "./context/CharacterContext.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
@@ -53,6 +54,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <PromptInputPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/library"
+              element={
+                <ProtectedRoute>
+                  <LibraryPage />
                 </ProtectedRoute>
               }
             />

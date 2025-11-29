@@ -19,6 +19,7 @@ export default function Header() {
                 <Link to="/landing">Home</Link>
                 <Link to="/characters">Characters</Link>
                 <Link to="/story">Story</Link>
+                <Link to="/library">Library</Link>
                 {user ? (
                     <button onClick={handleLogout} className="nav-link-btn">
                         Logout ({user})
