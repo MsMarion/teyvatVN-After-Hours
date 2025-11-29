@@ -1,0 +1,65 @@
+{
+  "title": "Echoes by the Statue",
+  "characters": [
+    "Diluc",
+    "Jean"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The Anemo Archon's statue stands majestically atop Starsnatch Cliff, overlooking the vast expanse of Mondstadt. A gentle breeze whispers through the sparse trees, carrying the faint scent of Cecilia flowers. The setting sun paints the sky in hues of orange and purple, casting long, peaceful shadows over the ancient stone.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "Jean and Diluc stand in a comfortable, yet familiar, silence beside the towering statue. The day's duties are winding down, and for a rare moment, the weight of their responsibilities seems to lift, if only slightly."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(gazing at the sunset, a soft smile)",
+      "line": "It's peaceful here. I often come to reflect. Sometimes, I wonder if a different path... could have been chosen."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(eyes fixed on the horizon, unreadable)",
+      "line": "A path not taken often haunts those who dedicate themselves entirely. You are no exception, Acting Grand Master."
+    },
+    {
+      "type": "narration",
+      "text": "Jean turns her head slightly, meeting Diluc's steady gaze. There's an unspoken understanding between them, a shared burden of duty that has shaped their lives."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(sighing softly)",
+      "line": "There was someone... a long time ago. Before the weight of my title became all-consuming. We spoke of a future, lighthearted and free. It seems like a lifetime ago now."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(a faint, almost imperceptible frown)",
+      "line": "Such memories can be a weakness, or a strength. Depends on what you allow them to become. I too, remember a time... and a person. Before everything changed."
+    },
+    {
+      "type": "narration",
+      "text": "A brief, heavy silence descends. The wind rustles louder, as if mourning the roads not traveled. Diluc's usual stoicism seems to falter for a fleeting moment, revealing a deeper well of emotion."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(looking at Diluc, empathetically)",
+      "line": "Did you ever regret not pursuing that life? Or that person?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(turning to face her fully, his expression resolute)",
+      "line": "Regret is a luxury I cannot afford. My path was chosen for me, and I walk it. But I understand the sentiment. Some things... leave a mark."
+    },
+    {
+      "type": "narration",
+      "text": "Jean nods slowly, accepting his words. The last rays of sunlight fade, plunging the statue and its surroundings into twilight. The city lights of Mondstadt begin to twinkle in the distance, a reminder of the world they both tirelessly protect."
+    }
+  ]
+}

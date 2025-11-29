@@ -83,6 +83,7 @@ export default function StoryPage() {
   const [selectedBackground, setSelectedBackground] = useState(null);
   const [generatedStory, setGeneratedStory] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const navigate = useNavigate();
 
   const { selectedCharacters } = useCharacters();
@@ -235,41 +236,65 @@ export default function StoryPage() {
             </div>
           </section>
 
-          <section
-            className="visual-novel-ui"
-            style={{
-              backgroundImage: selectedBackground
-                ? `url(${selectedBackground.src})`
-                : "none",
-            }}
-          >
-            {!selectedBackground && <span>Visual novel UI</span>}
-
-            {/* This now dynamically displays the correct story sprite */}
-            {selectedBackground &&
-              selectedCharacters &&
-              selectedCharacters.map((char, index) => {
-                // Look up the character in our database to get the correct story sprite
-                const charData = characterDatabase[char.name];
-                const storySprite = charData
-                  ? Object.values(charData.storySprites)[0]
-                  : char.image; // Fallback to card image
-
-                return (
-                  <img
-                    key={char.name}
-                    src={storySprite}
-                    alt={char.name}
-                    className={`character-sprite pos-${index + 1}`}
-                  />
-                );
-              })}
-
-            {/* Visual Novel Text Box Overlay */}
-            {generatedStory && (
-              <VNTextBox segments={generatedStory.segments} />
+          {/* Fullscreen Visual Novel Viewer */}
+          <div className={`vn-fullscreen-wrapper ${isFullscreen ? 'fullscreen-active' : ''}`}>
+            {isFullscreen && (
+              <button
+                className="fullscreen-exit-btn"
+                onClick={() => setIsFullscreen(false)}
+                title="Exit Fullscreen (ESC)"
+              >
+                ✕ Exit Fullscreen
+              </button>
             )}
-          </section>
+
+            <section
+              className={`visual-novel-ui ${isFullscreen ? 'fullscreen' : ''}`}
+              style={{
+                backgroundImage: selectedBackground
+                  ? `url(${selectedBackground.src})`
+                  : "none",
+              }}
+            >
+              {!selectedBackground && <span>Visual novel UI</span>}
+
+              {/* Fullscreen toggle button (only show when story is generated) */}
+              {generatedStory && !isFullscreen && (
+                <button
+                  className="fullscreen-toggle-btn"
+                  onClick={() => setIsFullscreen(true)}
+                  title="Enter Fullscreen"
+                >
+                  ⛶ Fullscreen
+                </button>
+              )}
+
+              {/* This now dynamically displays the correct story sprite */}
+              {selectedBackground &&
+                selectedCharacters &&
+                selectedCharacters.map((char, index) => {
+                  // Look up the character in our database to get the correct story sprite
+                  const charData = characterDatabase[char.name];
+                  const storySprite = charData
+                    ? Object.values(charData.storySprites)[0]
+                    : char.image; // Fallback to card image
+
+                  return (
+                    <img
+                      key={char.name}
+                      src={storySprite}
+                      alt={char.name}
+                      className={`character-sprite pos-${index + 1}`}
+                    />
+                  );
+                })}
+
+              {/* Visual Novel Text Box Overlay */}
+              {generatedStory && (
+                <VNTextBox segments={generatedStory.segments} />
+              )}
+            </section>
+          </div>
 
           {/* Expression switcher has been removed */}
 

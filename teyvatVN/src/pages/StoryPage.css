@@ -14,7 +14,8 @@
   font-family: "Solway", serif;
   background-size: cover;
   background-position: center top;
-  background-attachment: fixed; /* Keeps background still during scroll */
+  background-attachment: fixed;
+  /* Keeps background still during scroll */
 }
 
 /* Header */
@@ -42,11 +43,13 @@
   color: white;
   text-decoration: none;
 }
+
 .story-nav-links a:not(:last-child)::after {
   content: "|";
   margin-left: 1rem;
   color: #6b7280;
 }
+
 .story-nav-links a:hover {
   text-decoration: underline;
 }
@@ -172,9 +175,11 @@
   max-width: 350px;
   object-fit: contain;
 }
+
 .character-sprite.pos-1 {
   left: 5%;
 }
+
 .character-sprite.pos-2 {
   right: 5%;
   transform: scaleX(-1);
@@ -190,17 +195,21 @@
   max-width: 800px;
   margin: 1rem auto 3rem;
 }
+
 .character-controls {
   text-align: center;
 }
+
 .character-controls h4 {
   margin: 0 0 1rem;
   font-weight: bold;
 }
+
 .expression-buttons {
   display: flex;
   gap: 0.5rem;
 }
+
 .expression-btn {
   padding: 0.5rem 1rem;
   border: 1px solid #d1d5db;
@@ -209,10 +218,12 @@
   cursor: pointer;
   transition: all 0.2s ease;
 }
+
 .expression-btn:hover {
   background-color: #eef2ff;
   border-color: #c7d2fe;
 }
+
 .expression-btn.active {
   background-color: #4f46e5;
   color: white;
@@ -242,6 +253,7 @@
   outline: none;
   transition: border-color 0.3s ease;
 }
+
 .prompt-input:focus {
   border-color: #4f46e5;
 }
@@ -265,6 +277,7 @@
   font-size: 1.2rem;
   color: #6b7280;
 }
+
 .story-output {
   background: #111827;
   color: #d1d5db;
@@ -283,6 +296,7 @@
   text-align: center;
   margin-bottom: 4rem;
 }
+
 .action-button {
   padding: 0.75rem 2rem;
   border: none;
@@ -292,12 +306,15 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
+
 .action-button.save {
   background-color: #22c55e;
 }
+
 .action-button.save:hover {
   background-color: #16a34a;
 }
+
 .action-button:disabled {
   background-color: #9ca3af;
   cursor: not-allowed;
@@ -332,6 +349,7 @@
   text-underline-offset: 8px;
   transition: color 0.3s ease;
 }
+
 .reset-button:hover {
   color: #4f46e5;
 }
@@ -491,4 +509,93 @@
 
 .story-display {
   margin-top: 1.5rem;
+}
+
+/* Fullscreen Visual Novel Mode */
+.vn-fullscreen-wrapper {
+  position: relative;
+}
+
+.vn-fullscreen-wrapper.fullscreen-active {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  background: #000;
+}
+
+.visual-novel-ui.fullscreen {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  margin: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Fullscreen Toggle Button */
+.fullscreen-toggle-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-family: "Solway", serif;
+  font-size: 0.9rem;
+  z-index: 10;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.fullscreen-toggle-btn:hover {
+  background: rgba(79, 70, 229, 0.9);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Fullscreen Exit Button */
+.fullscreen-exit-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(220, 38, 38, 0.9);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-family: "Solway", serif;
+  font-size: 1rem;
+  font-weight: bold;
+  z-index: 10000;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.fullscreen-exit-btn:hover {
+  background: rgba(185, 28, 28, 1);
+  transform: scale(1.05);
+}
+
+/* Adjust VN text box for fullscreen */
+.fullscreen-active .vn-textbox-overlay {
+  padding: 2rem 4rem;
+}
+
+.fullscreen-active .vn-textbox {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 3rem;
+}
+
+/* Adjust character sprites for fullscreen */
+.fullscreen .character-sprite {
+  height: 90%;
+  max-width: 500px;
 }
