@@ -1,0 +1,75 @@
+{
+  "title": "Echoes by the Anemo Archon",
+  "characters": [
+    "Diluc",
+    "Jean"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The sun dips below the horizon, casting long, purple shadows across Windwail Highland. The Statue of the Seven, usually a place of quiet contemplation, feels particularly solemn under the fading light. A cool breeze whispers through the grass, carrying the faint scent of pine.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "Jean stands before the towering Anemo Archon statue, her hands clasped loosely in front of her. Beside her, Diluc stands with his usual composed posture, his gaze fixed on the distant city lights of Mondstadt."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(sighing softly)",
+      "line": "It's peaceful here, isn't it? Away from the demands... the expectations."
+    },
+    {
+      "type": "narration",
+      "text": "Diluc gives a low hum in acknowledgement, his eyes still distant. The air between them is heavy, not with tension, but with a shared, unspoken weight."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(a small, wistful smile)",
+      "line": "Sometimes I wonder if we ever truly get to live for ourselves, or if our paths were simply chosen for us. And if we ever had a choice in who we... cared for."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(calmly, turning his gaze slightly towards her)",
+      "line": "The path of duty often leaves little room for personal desires. It is a sacrifice made, not always willingly."
+    },
+    {
+      "type": "narration",
+      "text": "Jean looks down at her feet, a shadow of melancholy crossing her face. She understands his words better than most."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(softly)",
+      "line": "And those we once held dear? Do their echoes ever truly fade, even when we commit ourselves to a greater cause?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(a brief, almost imperceptible flicker in his eyes)",
+      "line": "They become a part of the silence within us. A memory that reminds us of what could have been, and why we must endure what is."
+    },
+    {
+      "type": "narration",
+      "text": "A comfortable silence settles between them, punctuated only by the wind. They stand side-by-side, two guardians of Mondstadt, each carrying their own untold stories of love and loss."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(looking up at the statue with renewed resolve)",
+      "line": "Perhaps that silence is a strength, then. A quiet understanding of the depth of our commitment."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(nodding slowly)",
+      "line": "Indeed, Acting Grand Master. Perhaps it is."
+    },
+    {
+      "type": "narration",
+      "text": "The last sliver of sun dips away, leaving them bathed in the soft, ethereal glow of the moon and stars, their shared burden a silent testament to their dedication."
+    }
+  ]
+}

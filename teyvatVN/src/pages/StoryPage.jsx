@@ -155,13 +155,15 @@ export default function StoryPage() {
         // Store the complete chapter data
         setGeneratedStory(result.data);
 
-        // Auto-select background based on AI's choice
+        // Auto-select background based on AI's choice (using ID-based matching)
         if (result.data.backgrounds && result.data.backgrounds.length > 0) {
-          const bgName = result.data.backgrounds[0];
-          const matchedBg = backgrounds.find(bg => bg.name === bgName);
+          const bgId = result.data.backgrounds[0]; // AI returns background ID like "favonius_cathedral"
+          const matchedBg = backgrounds.find(bg => bg.id === bgId);
           if (matchedBg) {
             setSelectedBackground(matchedBg);
-            console.log(`Auto-selected background: ${bgName}`);
+            console.log(`Auto-selected background: ${bgId} (${matchedBg.name})`);
+          } else {
+            console.warn(`Background ID "${bgId}" not found in available backgrounds`);
           }
         }
 

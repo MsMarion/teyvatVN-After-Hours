@@ -1,0 +1,77 @@
+{
+  "title": "Echoes by the Archon's Gaze",
+  "characters": [
+    "Diluc",
+    "Jean"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The evening breeze whispers through Mondstadt, carrying the scent of Cecilia flowers. Perched high above the city, the Statue of the Seven stands bathed in the soft glow of the setting sun, casting long shadows. It's a place of quiet contemplation, far from the bustling streets, where even the city's protectors can find a moment of peace.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "Diluc stands with his back to the city, his gaze fixed on the distant mountains. Jean approaches him quietly, her steps light upon the ancient stone."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(softly)",
+      "line": "A quiet moment at last. Even the city seems to hold its breath up here."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(without turning)",
+      "line": "Indeed. A rarity in these times."
+    },
+    {
+      "type": "narration",
+      "text": "Jean walks to stand beside him, her eyes sweeping over the panorama of Mondstadt. A small, melancholic smile touches her lips."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(a sigh escaping)",
+      "line": "Sometimes, I wonder about all the things we leave behind for our duties... or simply for fate. People we cared for deeply."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(a slight turn of his head, eyes unreadable)",
+      "line": "It's a burden we all carry, Grand Master. Some more visibly than others."
+    },
+    {
+      "type": "narration",
+      "text": "A brief silence hangs between them, thick with unspoken histories and shared responsibilities. The setting sun paints the sky in hues of orange and violet."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(looking at the statue, wistfully)",
+      "line": "I suppose some connections, no matter how complicated or brief, leave an indelible mark. They shape who we become."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(turning fully to face her, a rare hint of vulnerability)",
+      "line": "You speak the truth. Some ghosts walk with us, even when we try to outrun them."
+    },
+    {
+      "type": "narration",
+      "text": "Jean offers him a gentle, understanding look, acknowledging the depth of his unspoken sentiment."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(reassuringly)",
+      "line": "Perhaps that's not always a bad thing. They remind us of the warmth we once knew, or the lessons learned. They're part of our strength."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(a faint, almost imperceptible nod)",
+      "line": "Perhaps. For Mondstadt's sake, I hope so."
+    }
+  ]
+}
