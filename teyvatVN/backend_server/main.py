@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -8,6 +8,7 @@ import json
 # custom libs
 import generate_ai_calls
 import utils
+import auth
 
 app = FastAPI()
 
@@ -37,15 +38,44 @@ class GenerateRequest(BaseModel):
     prompt: str
     username: str
 
+# Pydantic model for auth
+class AuthRequest(BaseModel):
+    username: str
+    password: str
+
 # Helper: get path to output.json for a chapter
 def get_chapter_path(username: str, chapter_id: str) -> str:
     folder = os.path.join(DATA_DIR, username, chapter_id)
     os.makedirs(folder, exist_ok=True)
     return os.path.join(folder, "output.json")
 
+# --- AUTH ENDPOINTS ---
+
+@app.post("/api/auth/register")
+async def register(request: AuthRequest):
+    if not request.username or not request.password:
+        raise HTTPException(status_code=400, detail="Username and password required")
+    
+    success = auth.create_user(request.username, request.password)
+    if not success:
+        raise HTTPException(status_code=400, detail="User already exists")
+    
+    return {"status": "success", "message": "User created"}
+
+@app.post("/api/auth/login")
+async def login(request: AuthRequest):
+    if not auth.authenticate_user(request.username, request.password):
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+    
+    return {"status": "success", "username": request.username, "token": "dummy-token-for-mvp"}
+
+
+# --- STORY ENDPOINTS ---
+
 # API: Get chapter
 @app.get("/api/chapter/{username}/{chapter_id}")
 def get_chapter(username: str, chapter_id: str):
+    # In a real app, we would validate the token here to ensure the requester is the user
     path = get_chapter_path(username, chapter_id)
     if not os.path.exists(path):
         return {"message": "Chapter not found", "data": None}
@@ -120,6 +150,10 @@ async def generate_chapter(request: GenerateRequest):
         
         if not username or not username.strip():
             raise HTTPException(status_code=400, detail="Username cannot be empty")
+            
+        # Validate user exists
+        if not auth.get_user(username):
+             raise HTTPException(status_code=401, detail="User not found")
         
         # Get next chapter ID
         chapter_id = utils.get_next_chapter_id(username)

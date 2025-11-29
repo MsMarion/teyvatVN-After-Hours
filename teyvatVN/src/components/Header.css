@@ -26,6 +26,34 @@
     text-decoration: none;
 }
 
+/* Header.css */
+.story-page-header {
+    width: 100%;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Semi-transparent background to bleed into the page background */
+    background-color: rgba(31, 41, 55, 0.3);
+    backdrop-filter: blur(5px);
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 50;
+    /* Ensure it stays on top */
+}
+
+.story-page-header .logo {
+    font-family: "Quattrocento", serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.story-nav-links a {
+    margin-left: 1rem;
+    color: white;
+    text-decoration: none;
+}
+
 .story-nav-links a:not(:last-child)::after {
     content: "|";
     margin-left: 1rem;
@@ -34,4 +62,21 @@
 
 .story-nav-links a:hover {
     text-decoration: underline;
+}
+
+.nav-link-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    margin-left: 1rem;
+    padding: 0;
+    text-decoration: none;
+}
+
+.nav-link-btn:hover {
+    text-decoration: underline;
+    color: #fbbf24;
 }

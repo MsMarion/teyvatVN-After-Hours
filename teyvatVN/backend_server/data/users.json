@@ -1,0 +1,20 @@
+{
+  "users": {
+    "scriptuser": {
+      "password_hash": "$2b$12$cbAKyX7PTUAxvkVOvUQWu.huojYmysbKrPMxTWN5DDfHKnJym0r8C",
+      "created_at": "now"
+    },
+    "testuser4": {
+      "password_hash": "$2b$12$HLsNC52E15cixwovItqE1uc3UBelQLA6UamHdomgqWOcIxoR1yPR.",
+      "created_at": "now"
+    },
+    "dawn": {
+      "password_hash": "$2b$12$WuanU3WXU2b/FLhQh1rhj.DbTRnlsPhzJEBZo.XFBt2Qqsb2oM8tq",
+      "created_at": "now"
+    },
+    "dawn2": {
+      "password_hash": "$2b$12$i3PV1JFRhmJL7axNaAPN6uG9fRzVeK/lnBAJjtUJTi4iuENvRh0fy",
+      "created_at": "now"
+    }
+  }
+}

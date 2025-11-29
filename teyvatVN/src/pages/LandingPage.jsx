@@ -18,12 +18,15 @@ import paimonFloat2 from "../assets/images/paimonFloat2.gif";
 import storyExample from '../assets/images/story-example.png';
 import Footer from "../components/Footer";
 
+import { useAuth } from "../context/AuthContext";
+
 export default function LandingPage() {
   const videoRef = useRef(null);
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
+    // ... existing useEffect code ...
     const timer = setTimeout(() => {
       if (videoRef.current) {
         videoRef.current.pause();
@@ -57,6 +60,15 @@ export default function LandingPage() {
           <RouterLink to="/characters" className="nav-cta">
             Start Story
           </RouterLink>
+          {user ? (
+            <button onClick={logout} className="nav-link-btn" style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', fontSize: 'inherit', fontFamily: 'inherit', fontWeight: '500' }}>
+              Logout
+            </button>
+          ) : (
+            <RouterLink to="/login">
+              Login
+            </RouterLink>
+          )}
         </nav>
       </header>
 
