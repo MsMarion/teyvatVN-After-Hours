@@ -57,6 +57,9 @@ export default function LandingPage() {
           <ScrollLink to="about" smooth={true} duration={800}>
             About
           </ScrollLink>
+          <RouterLink to="/library">
+            Library
+          </RouterLink>
           <RouterLink to="/characters" className="nav-cta">
             Start Story
           </RouterLink>
