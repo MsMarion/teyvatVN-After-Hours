@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, HTTPException, Depends
+from fastapi import FastAPI, Request, HTTPException, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -7,6 +7,7 @@ import os
 import json
 from sqlalchemy.orm import Session
 from starlette.responses import RedirectResponse
+from fastapi.security import OAuth2PasswordBearer
 
 # custom libs
 import generate_ai_calls
@@ -14,6 +15,27 @@ import utils
 import auth # Re-import auth
 import google_auth # New import for Google OAuth2
 from database import get_db # Import get_db
+import jwt_utils # Import jwt_utils
+from models import User # Import User model
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
+
+async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    payload = jwt_utils.verify_token(token)
+    if payload is None:
+        raise credentials_exception
+    username: str = payload.get("sub")
+    if username is None:
+        raise credentials_exception
+    user = auth.get_user(db, username=username)
+    if user is None:
+        raise credentials_exception
+    return user
 
 app = FastAPI()
 
@@ -89,9 +111,8 @@ async def google_callback(code: str, db: Session = Depends(get_db)):
         if not user:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to create user.")
 
-    # Here you would generate your own JWTs (access and refresh tokens)
-    # For now, just return the user info and a dummy token
-    return {"message": "Google login successful", "username": user.username, "token": "dummy-token-for-google-oauth"}
+    access_token = jwt_utils.create_access_token(data={"sub": user.username})
+    return {"message": "Google login successful", "username": user.username, "token": access_token}
 
 @app.post("/api/auth/register")
 async def register(request: AuthRequest, db: Session = Depends(get_db)):
@@ -110,7 +131,8 @@ async def login(request: AuthRequest, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
     
-    return {"status": "success", "username": user.username, "token": "dummy-token-for-mvp"}
+    access_token = jwt_utils.create_access_token(data={"sub": user.username})
+    return {"status": "success", "username": user.username, "token": access_token}
 
 
 # --- STORY ENDPOINTS ---
@@ -179,24 +201,25 @@ async def save_chapter(username: str, chapter_id: str, request: Request):
 
 # NEW: Simplified generation endpoint
 @app.post("/api/generate")
-async def generate_chapter(request: GenerateRequest):
+async def generate_chapter(request: GenerateRequest, current_user: User = Depends(get_current_user)):
     """
     Generate a new chapter from a simple prompt.
     Auto-increments chapter ID and uses simplified generation.
     """
     try:
         prompt = request.prompt
-        username = request.username
+        username = current_user.username # Get username from authenticated user
         
         if not prompt or not prompt.strip():
             raise HTTPException(status_code=400, detail="Prompt cannot be empty")
         
-        if not username or not username.strip():
-            raise HTTPException(status_code=400, detail="Username cannot be empty")
+        # The user is already validated by get_current_user
+        # if not username or not username.strip():
+        #     raise HTTPException(status_code=400, detail="Username cannot be empty")
             
-        # Validate user exists
-        if not auth.get_user(username):
-             raise HTTPException(status_code=401, detail="User not found")
+        # # Validate user exists
+        # if not auth.get_user(username):
+        #      raise HTTPException(status_code=401, detail="User not found")
         
         # Get next chapter ID
         chapter_id = utils.get_next_chapter_id(username)
