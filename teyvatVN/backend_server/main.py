@@ -15,7 +15,7 @@ app = FastAPI()
 # Allow frontend to access this backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5137","https://updates-limitations-favors-effectively.trycloudflare.com", "*"],  # your React app
+    allow_origins=["http://localhost:6001","https://updates-limitations-favors-effectively.trycloudflare.com", "*"],  # your React app
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -189,4 +189,4 @@ app.mount("/data", StaticFiles(directory=DATA_DIR), name="data")
 # ---- MAIN ENTRY ----
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="127.0.0.1", port=4000, reload=True)
+    uvicorn.run("main:app", host="127.0.0.1", port=6002, reload=True)
