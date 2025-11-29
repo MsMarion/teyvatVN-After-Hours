@@ -219,21 +219,29 @@ export default function StoryPage() {
             </p>
           </section>
 
-          <section className="background-selection-section">
-            <h3>Choose a Background</h3>
-            <div className="background-grid">
-              {backgrounds.map((bg) => (
-                <div
-                  key={bg.name}
-                  className={`background-card ${selectedBackground?.name === bg.name ? "selected" : ""
-                    }`}
-                  onClick={() => setSelectedBackground(bg)}
-                >
-                  <img src={bg.src} alt={bg.name} />
-                  <span>{bg.name}</span>
-                </div>
-              ))}
+          {/* Prompt Input Section - Moved to top */}
+          <section className="story-prompt-section">
+            <h3>Write your Prompt</h3>
+            <div className="prompt-input-wrapper">
+              <input
+                type="text"
+                placeholder="e.g., A sudden rainstorm during a heated argument..."
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                className="prompt-input"
+                disabled={isLoading}
+              />
+              <button
+                onClick={handleGenerate}
+                className="prompt-submit-button"
+                disabled={isLoading}
+              >
+                <FiArrowRight />
+              </button>
             </div>
+            {isLoading && (
+              <div className="loading-indicator">Generating your story...</div>
+            )}
           </section>
 
           {/* Fullscreen Visual Novel Viewer */}
@@ -296,32 +304,27 @@ export default function StoryPage() {
             </section>
           </div>
 
-          {/* Expression switcher has been removed */}
-
-          <section className="story-prompt-section">
-            <h3>Write your Prompt</h3>
-            <div className="prompt-input-wrapper">
-              <input
-                type="text"
-                placeholder="e.g., A sudden rainstorm during a heated argument..."
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                className="prompt-input"
-              />
-              <button
-                onClick={handleGenerate}
-                className="prompt-submit-button"
-                disabled={isLoading}
-              >
-                <FiArrowRight />
-              </button>
+          {/* Background Selection - Moved below VN UI */}
+          <section className="background-selection-section">
+            <h3>Choose a Background</h3>
+            <div className="background-grid">
+              {backgrounds.map((bg) => (
+                <div
+                  key={bg.name}
+                  className={`background-card ${selectedBackground?.name === bg.name ? "selected" : ""
+                    }`}
+                  onClick={() => setSelectedBackground(bg)}
+                >
+                  <img src={bg.src} alt={bg.name} />
+                  <span>{bg.name}</span>
+                </div>
+              ))}
             </div>
           </section>
 
-          {isLoading && (
-            <div className="loading-indicator">Generating your story...</div>
-          )}
+          {/* Expression switcher has been removed */}
 
+          {/* Generated Story Results - Kept below VN UI */}
           {generatedStory && (
             <section className="generated-story-section">
               <h3>Generated Story: {generatedStory.title}</h3>
