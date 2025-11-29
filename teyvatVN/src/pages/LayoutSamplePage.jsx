@@ -1,18 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Header from "../components/Header";
+import Layout from "../components/Layout";
 import "./LayoutSamplePage.css";
 import pageBg from "../assets/background/goodNews.jpg";
 
 export default function LayoutSamplePage() {
     return (
-        <div
-            className="layout-sample-container"
-            style={{ backgroundImage: `url(${pageBg})` }}
-        >
-            {/* Navbar Header System from StoryPage.jsx */}
-            <Header />
-
+        <Layout className="layout-sample-container" backgroundImage={pageBg}>
             {/* Sample Content */}
             <main className="sample-content">
                 <h1>Layout Sample Page</h1>
@@ -20,6 +13,6 @@ export default function LayoutSamplePage() {
                     This page demonstrates the navbar header system isolated from the Story Page.
                 </p>
             </main>
-        </div>
+        </Layout>
     );
 }

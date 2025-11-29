@@ -109,4 +109,6 @@ button:focus-visible {
 
 html {
   scroll-behavior: smooth;
+  overflow-y: scroll;
+  /* Forces scrollbar to prevent layout shift */
 }
