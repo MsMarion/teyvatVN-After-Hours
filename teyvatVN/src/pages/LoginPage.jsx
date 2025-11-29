@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Layout from "../components/Layout";
@@ -9,11 +9,28 @@ export default function LoginPage() {
   const [isRegistering, setIsRegistering] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { login, register } = useAuth();
+  const { login, register, googleLogin, setToken, setUser } = useAuth(); // Added googleLogin, setToken, setUser
   const navigate = useNavigate();
   const location = useLocation();
 
   const from = location.state?.from?.pathname || "/characters";
+
+  useEffect(() => {
+    // Handle Google OAuth2 callback
+    const params = new URLSearchParams(location.search);
+    const token = params.get("token");
+    const usernameFromGoogle = params.get("username");
+
+    if (token && usernameFromGoogle) {
+      setToken(token);
+      setUser(usernameFromGoogle);
+      localStorage.setItem("authToken", token);
+      localStorage.setItem("currentUser", usernameFromGoogle);
+      navigate(from, { replace: true });
+      // Clear URL parameters to prevent re-processing on refresh
+      window.history.replaceState({}, document.title, location.pathname);
+    }
+  }, [location, navigate, from, setToken, setUser]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,6 +84,12 @@ export default function LoginPage() {
             {isRegistering ? "Sign Up" : "Log In"}
           </button>
         </form>
+
+        <div className="social-login-options">
+          <button onClick={googleLogin} className="google-login-btn">
+            Login with Google
+          </button>
+        </div>
 
         <div className="toggle-text">
           {isRegistering ? "Already have an account?" : "Don't have an account?"}
