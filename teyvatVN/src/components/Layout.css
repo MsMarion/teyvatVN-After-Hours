@@ -1,0 +1,18 @@
+/* Layout.css */
+.layout-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: #222;
+    font-family: "Solway", serif;
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+    /* Keeps background still during scroll */
+}
+
+/* Ensure content grows to fill space if needed */
+.layout-content {
+    flex-grow: 1;
+    width: 100%;
+}

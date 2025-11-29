@@ -7,8 +7,7 @@ import "./StoryPage.css";
 // Components
 import VNTextBox from "../components/VNTextBox";
 import BackgroundSelector from "../components/BackgroundSelector";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Layout from "../components/Layout";
 
 // Config & Context
 import { useCharacters } from "../context/CharacterContext";
@@ -152,12 +151,7 @@ export default function StoryPage() {
   };
 
   return (
-    <div
-      className="story-page-container"
-      style={{ backgroundImage: `url(${pageBg})` }}
-    >
-      <Header />
-
+    <Layout backgroundImage={pageBg} className="story-page-container">
       <div className="story-content-container">
         <main className="story-content-wrapper">
           <section className="story-title-section">
@@ -291,8 +285,6 @@ export default function StoryPage() {
           </section>
         </main>
       </div>
-
-      <Footer />
-    </div>
+    </Layout>
   );
 }
