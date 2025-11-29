@@ -2,13 +2,18 @@ from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+from starlette.responses import RedirectResponse
 import os
 import json
+from sqlalchemy.orm import Session
+from starlette.responses import RedirectResponse
 
 # custom libs
 import generate_ai_calls
 import utils
-import auth
+import auth # Re-import auth
+import google_auth # New import for Google OAuth2
+from .database import get_db # Import get_db
 
 app = FastAPI()
 
@@ -51,23 +56,61 @@ def get_chapter_path(username: str, chapter_id: str) -> str:
 
 # --- AUTH ENDPOINTS ---
 
+@app.get("/api/auth/google/login")
+async def google_login():
+    google_oauth_url = await google_auth.get_google_oauth_url()
+    return RedirectResponse(google_oauth_url)
+
+@app.get("/api/auth/google/callback")
+async def google_callback(code: str, db: Session = Depends(get_db)):
+    user_info = await google_auth.google_callback(code)
+    email = user_info.get("email")
+    name = user_info.get("name")
+
+    if not email:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Google did not provide an email.")
+
+    user = auth.get_user_by_email(db, email)
+    if not user:
+        # If user doesn't exist, create a new one with a dummy password
+        # In a real app, you might want to prompt the user to set a password
+        # or link their Google account to an existing account.
+        # For now, we'll create a user with a generated password.
+        # The username could be derived from email or name.
+        username = email.split('@')[0] # Simple username from email
+        # Check if username already exists, if so, append a number
+        counter = 1
+        original_username = username
+        while auth.get_user(db, username):
+            username = f"{original_username}{counter}"
+            counter += 1
+
+        user = auth.create_user(db, username=username, password=os.urandom(16).hex(), email=email)
+        if not user:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to create user.")
+
+    # Here you would generate your own JWTs (access and refresh tokens)
+    # For now, just return the user info and a dummy token
+    return {"message": "Google login successful", "username": user.username, "token": "dummy-token-for-google-oauth"}
+
 @app.post("/api/auth/register")
-async def register(request: AuthRequest):
+async def register(request: AuthRequest, db: Session = Depends(get_db)):
     if not request.username or not request.password:
         raise HTTPException(status_code=400, detail="Username and password required")
     
-    success = auth.create_user(request.username, request.password)
-    if not success:
+    user = auth.create_user(db, request.username, request.password)
+    if not user:
         raise HTTPException(status_code=400, detail="User already exists")
     
     return {"status": "success", "message": "User created"}
 
 @app.post("/api/auth/login")
-async def login(request: AuthRequest):
-    if not auth.authenticate_user(request.username, request.password):
+async def login(request: AuthRequest, db: Session = Depends(get_db)):
+    user = auth.authenticate_user(db, request.username, request.password)
+    if not user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
     
-    return {"status": "success", "username": request.username, "token": "dummy-token-for-mvp"}
+    return {"status": "success", "username": user.username, "token": "dummy-token-for-mvp"}
 
 
 # --- STORY ENDPOINTS ---

@@ -6,3 +6,5 @@ openai
 bcrypt
 SQLAlchemy
 alembic
+httpx
+python-jose
