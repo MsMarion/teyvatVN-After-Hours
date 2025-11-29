@@ -1,0 +1,77 @@
+{
+  "title": "Echoes by the Archon's Gaze",
+  "characters": [
+    "Diluc",
+    "Jean"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The grand Statue of the Seven stands majestically, bathed in the soft, fading light of dusk. A gentle breeze whispers through the trees surrounding the plaza, carrying the scent of pine and distant flowers. The city of Mondstadt twinkles below, a peaceful beacon in the growing twilight. It's a place of quiet reflection, where the Anemo Archon's silent gaze seems to encompass all of time.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "Jean, the Acting Grand Master, stands beside the enormous statue, her gaze fixed on the horizon. Diluc, ever observant, approaches from behind, his footsteps barely disturbing the quiet."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(sighing softly)",
+      "line": "Another day drawing to a close. Sometimes, I wish time would stand still, just for a moment."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(calmly, hands behind his back)",
+      "line": "Time waits for no one, Jean. Not even for those who wish to forget the past, or relive it."
+    },
+    {
+      "type": "narration",
+      "text": "Jean turns, a faint, melancholic smile gracing her lips as she acknowledges Diluc's presence. There's an unspoken understanding between them, a shared weight of responsibility and past experiences."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(looking towards the city)",
+      "line": "Perhaps you're right. Though, sometimes, a memory can be a comfort. Or a sharp sting, depending on its nature."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(unmoving, eyes narrowed slightly)",
+      "line": "You speak of former attachments. Relationships forged in the fires of youth, perhaps?"
+    },
+    {
+      "type": "narration",
+      "text": "A brief, heavy silence hangs in the air. The sounds of the city below seem distant, almost irrelevant to the personal histories being quietly acknowledged between them."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(a wistful smile)",
+      "line": "Something like that. We all have those echoes, don't we? People who once meant the world, who shaped who we are, even if they're no longer by our side."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(a flicker of something unreadable in his eyes)",
+      "line": "Indeed. Some leave a mark that never truly fades. It’s not always a weakness to acknowledge their impact."
+    },
+    {
+      "type": "narration",
+      "text": "Jean glances at Diluc, a silent acknowledgment passing between them. The stoic vintner, for a moment, allowed a glimpse into the guarded corners of his own heart. The air felt lighter, yet more profound."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(looking back at the statue, resolute)",
+      "line": "Perhaps not. But moving forward, regardless of the echoes, is the only path."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(nodding subtly)",
+      "line": "Precisely. The past is a lesson, not a prison."
+    }
+  ]
+}
