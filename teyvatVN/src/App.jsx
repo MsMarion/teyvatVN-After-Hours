@@ -12,6 +12,7 @@ import TestScenePage from "./pages/TestScenePage";
 import PromptInputPage from "./pages/prompt_input_page.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import StoryPage from "./pages/StoryPage.jsx";
+import LayoutSamplePage from "./pages/LayoutSamplePage.jsx";
 
 import { CharacterProvider } from "./context/CharacterContext.jsx";
 
@@ -31,6 +32,7 @@ function App() {
           <Route path="/generate" element={<PromptInputPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/story" element={<StoryPage />} />
+          <Route path="/layout_sample" element={<LayoutSamplePage />} />
 
           {/* 404 fallback */}
           <Route

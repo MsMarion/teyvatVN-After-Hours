@@ -7,6 +7,7 @@ import "./StoryPage.css";
 // Components
 import VNTextBox from "../components/VNTextBox";
 import BackgroundSelector from "../components/BackgroundSelector";
+import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 // Config & Context
@@ -155,14 +156,7 @@ export default function StoryPage() {
       className="story-page-container"
       style={{ backgroundImage: `url(${pageBg})` }}
     >
-      <header className="story-page-header">
-        <div className="logo">teyvat.vn</div>
-        <nav className="story-nav-links">
-          <Link to="/landing">Home</Link>
-          <Link to="/characters">Characters</Link>
-          <Link to="/story">Story</Link>
-        </nav>
-      </header>
+      <Header />
 
       <div className="story-content-container">
         <main className="story-content-wrapper">
