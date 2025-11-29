@@ -32,11 +32,9 @@ def get_user_by_email(db: Session, email: str) -> Optional[User]:
     """Get a user by email from the database."""
     return db.query(User).filter(User.email == email).first()
 
-def create_user(db: Session, username: str, password: str, email: Optional[str] = None) -> Optional[User]:
+def create_user(db: Session, username: str, password: str, email: str) -> Optional[User]:
     """Create a new user in the database. Returns None if user already exists."""
-    if get_user(db, username):
-        return None
-    if email and get_user_by_email(db, email):
+    if get_user(db, username) or get_user_by_email(db, email):
         return None
     
     hashed_password = get_password_hash(password)

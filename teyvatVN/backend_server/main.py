@@ -63,12 +63,17 @@ class ChapterData(BaseModel):
 # Pydantic model for simplified generation request
 class GenerateRequest(BaseModel):
     prompt: str
-    username: str
 
 # Pydantic model for auth
 class AuthRequest(BaseModel):
     username: str
     password: str
+    email: str
+
+# Pydantic model for completing registration
+class CompleteRegistrationRequest(BaseModel):
+    token: str
+    username: str
 
 # Helper: get path to output.json for a chapter
 def get_chapter_path(username: str, chapter_id: str) -> str:
@@ -77,6 +82,35 @@ def get_chapter_path(username: str, chapter_id: str) -> str:
     return os.path.join(folder, "output.json")
 
 # --- AUTH ENDPOINTS ---
+
+@app.post("/api/auth/complete-registration")
+async def complete_registration(request: CompleteRegistrationRequest, db: Session = Depends(get_db)):
+    token = request.token
+    username = request.username
+
+    # Verify the partial token
+    payload = jwt_utils.verify_token(token)
+    if not payload or payload.get("scope") != "partial_registration":
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid or expired token.")
+
+    email = payload.get("email")
+    if not email:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Token is missing email information.")
+
+    # Check if username or email already exist
+    if auth.get_user(db, username=username):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Username is already taken.")
+    if auth.get_user_by_email(db, email=email):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email is already registered.")
+
+    # Create the new user
+    user = auth.create_user(db, username=username, password=os.urandom(16).hex(), email=email)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to create user.")
+
+    # Generate a full access token
+    access_token = jwt_utils.create_access_token(data={"sub": user.username})
+    return {"status": "success", "username": user.username, "token": access_token}
 
 @app.get("/api/auth/google/login")
 async def google_login():
@@ -93,38 +127,28 @@ async def google_callback(code: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Google did not provide an email.")
 
     user = auth.get_user_by_email(db, email)
-    if not user:
-        # If user doesn't exist, create a new one with a dummy password
-        # In a real app, you might want to prompt the user to set a password
-        # or link their Google account to an existing account.
-        # For now, we'll create a user with a generated password.
-        # The username could be derived from email or name.
-        username = email.split('@')[0] # Simple username from email
-        # Check if username already exists, if so, append a number
-        counter = 1
-        original_username = username
-        while auth.get_user(db, username):
-            username = f"{original_username}{counter}"
-            counter += 1
-
-        user = auth.create_user(db, username=username, password=os.urandom(16).hex(), email=email)
-        if not user:
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to create user.")
-
-    access_token = jwt_utils.create_access_token(data={"sub": user.username})
     
-    # Redirect back to the frontend with the token and username
-    frontend_url = f"http://localhost:6001/login?token={access_token}&username={user.username}"
-    return RedirectResponse(url=frontend_url)
+    # If user already exists, log them in directly
+    if user:
+        access_token = jwt_utils.create_access_token(data={"sub": user.username})
+        frontend_url = f"http://localhost:6001/login?token={access_token}&username={user.username}"
+        return RedirectResponse(url=frontend_url)
+
+    # If user does not exist, create a partial token and redirect to complete registration
+    else:
+        partial_token_data = {"email": email, "name": name}
+        partial_token = jwt_utils.create_partial_token(data=partial_token_data)
+        frontend_url = f"http://localhost:6001/complete-registration?token={partial_token}"
+        return RedirectResponse(url=frontend_url)
 
 @app.post("/api/auth/register")
 async def register(request: AuthRequest, db: Session = Depends(get_db)):
-    if not request.username or not request.password:
-        raise HTTPException(status_code=400, detail="Username and password required")
+    if not request.username or not request.password or not request.email:
+        raise HTTPException(status_code=400, detail="Username, password, and email are required")
     
-    user = auth.create_user(db, request.username, request.password)
+    user = auth.create_user(db, request.username, request.password, request.email)
     if not user:
-        raise HTTPException(status_code=400, detail="User already exists")
+        raise HTTPException(status_code=400, detail="User with this username or email already exists")
     
     return {"status": "success", "message": "User created"}
 

@@ -9,7 +9,8 @@ export default function LoginPage() {
   const [isRegistering, setIsRegistering] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { login, register, googleLogin, setToken, setUser } = useAuth(); // Added googleLogin, setToken, setUser
+  const [email, setEmail] = useState(""); // Add email state
+  const { login, register, googleLogin, setToken, setUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -34,11 +35,15 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!username || !password) return;
+    if (isRegistering) {
+      if (!username || !password || !email) return;
+    } else {
+      if (!username || !password) return;
+    }
 
     let success = false;
     if (isRegistering) {
-      success = await register(username, password);
+      success = await register(username, password, email);
     } else {
       success = await login(username, password);
     }
@@ -67,6 +72,20 @@ export default function LoginPage() {
               required
             />
           </div>
+
+          {isRegistering && (
+            <div className="form-group">
+              <label className="form-label">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="form-input"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+          )}
 
           <div className="form-group">
             <label className="form-label">Password</label>

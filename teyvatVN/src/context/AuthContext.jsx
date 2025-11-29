@@ -50,9 +50,9 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const register = async (username, password) => {
+    const register = async (username, password, email) => {
         try {
-            const response = await api.post("/api/auth/register", { username, password });
+            const response = await api.post("/api/auth/register", { username, password, email });
             const data = response.data;
 
             if (response.status !== 200) { // FastAPI returns 200 even for errors sometimes, check detail
