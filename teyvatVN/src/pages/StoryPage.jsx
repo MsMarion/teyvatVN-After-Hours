@@ -7,6 +7,7 @@ import "./StoryPage.css";
 import { useCharacters } from "../context/CharacterContext";
 import { characterDatabase } from "../data/characterData.js";
 import SegmentNavigator from "../components/SegmentNavigator";
+import { BACKGROUND_OPTIONS, getBackgroundById, getBackgroundByName } from "../config/backgrounds.js";
 
 // Import your assets
 import quillIcon from "../assets/images/quill.png";
@@ -14,6 +15,14 @@ import pageBg from "../assets/background/goodNews.jpg";
 import bg1 from "../assets/background/favonius-cathedral.jpg";
 import bg2 from "../assets/background/mondstadt-night.webp";
 import bg3 from "../assets/background/statue-of-seven-day.png";
+
+// Map background IDs to imported images
+const backgroundImages = {
+  "favonius_cathedral": bg1,
+  "mondstadt_night": bg2,
+  "statue_of_seven": bg3,
+  "angels_share": pageBg
+};
 
 // Visual Novel Text Box Component
 function VNTextBox({ segments }) {
@@ -92,11 +101,12 @@ export default function StoryPage() {
     }
   }, [selectedCharacters, navigate]);
 
-  const backgrounds = [
-    { name: "Favonius Cathedral", src: bg1 },
-    { name: "Mondstadt Night", src: bg2 },
-    { name: "Statue of the Seven", src: bg3 },
-  ];
+  // Build backgrounds array from configuration with proper image mapping
+  const backgrounds = BACKGROUND_OPTIONS.map(bg => ({
+    id: bg.id,
+    name: bg.displayName,
+    src: backgroundImages[bg.id]
+  }));
 
   const handleGenerate = async () => {
     const username = localStorage.getItem("currentUser") || "dawn";

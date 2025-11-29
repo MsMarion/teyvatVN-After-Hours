@@ -233,6 +233,14 @@ def generate_chapter_from_prompt(prompt: str) -> dict:
     Generate a complete visual novel chapter from a simple prompt.
     Returns a properly formatted chapter with dialogue and narration segments.
     """
+    # Standardized background options (must match frontend config)
+    BACKGROUND_OPTIONS = [
+        "favonius_cathedral",
+        "mondstadt_night", 
+        "statue_of_seven",
+        "angels_share"
+    ]
+    
     system_instructions = """You are a visual novel scene generator. Your task is to create an engaging visual novel scene with dialogue and narration.
 
 Generate a complete scene in JSON format with the following structure:
@@ -240,7 +248,7 @@ Generate a complete scene in JSON format with the following structure:
 {
   "title": "An engaging title for the scene",
   "characters": ["Character1", "Character2"],
-  "backgrounds": ["location_name"],
+  "backgrounds": ["background_id"],
   "setting_narration": "A vivid description of the scene setting and atmosphere",
   "segments": [
     {
@@ -257,13 +265,19 @@ Generate a complete scene in JSON format with the following structure:
 }
 
 IMPORTANT RULES:
-1. Each segment must have a "type" field that is either "dialogue" or "narration"
-2. Dialogue segments MUST have: type, speaker, line (expression_action is optional)
-3. Narration segments MUST have: type, text
-4. Create a mix of dialogue and narration for an engaging scene
-5. Use expression_action to show emotions like "(nervously)", "(smiling)", "(calmly)", etc.
-6. Make the scene feel alive with sensory details and character interactions
-7. Return ONLY valid JSON, no markdown code blocks or extra text
+1. The "backgrounds" array must contain EXACTLY ONE background ID from this list:
+   - "favonius_cathedral" (The grand cathedral of Mondstadt)
+   - "mondstadt_night" (The city under the stars)
+   - "statue_of_seven" (A statue dedicated to the Anemo Archon)
+   - "angels_share" (Diluc's tavern, a popular gathering spot)
+2. Choose the background that best matches the scene setting and prompt
+3. Each segment must have a "type" field that is either "dialogue" or "narration"
+4. Dialogue segments MUST have: type, speaker, line (expression_action is optional)
+5. Narration segments MUST have: type, text
+6. Create 8-12 segments mixing dialogue and narration for an engaging scene
+7. Use expression_action to show emotions like "(nervously)", "(smiling)", "(calmly)", etc.
+8. Make the scene feel alive with sensory details and character interactions
+9. Return ONLY valid JSON, no markdown code blocks or extra text
 """
 
     user_prompt = f"""Create a visual novel scene based on this prompt:

@@ -1,0 +1,71 @@
+{
+  "title": "Echoes by the Archon's Gaze",
+  "characters": [
+    "Diluc",
+    "Jean"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "Dusk settles over Mondstadt. The sky above the Statue of The Seven is painted in hues of deep violet and fading orange. A gentle, cool breeze rustles through the grass, carrying the faint scent of cecilias. The statue itself stands tall and serene, a silent witness to the city's stories. Below its gaze, Jean and Diluc stand in quiet contemplation, the city lights beginning to twinkle in the distance.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "Jean, the Acting Grand Master, sighs softly, her shoulders visibly relaxing from the day's burdens. Diluc, ever stoic, remains perfectly still beside her, his gaze fixed on the horizon."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(wearily)",
+      "line": "It's peaceful up here. A rare moment of quiet, wouldn't you say, Master Diluc?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(calmly)",
+      "line": "Indeed. A stark contrast to the usual clamor. It allows for clearer thought."
+    },
+    {
+      "type": "narration",
+      "text": "A brief silence hangs between them, filled only by the whisper of the wind. Jean turns slightly, her expression thoughtful."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(softly)",
+      "line": "Clearer thoughts, yes. And sometimes, those thoughts drift to... what might have been. To people we once held close, before duty consumed everything."
+    },
+    {
+      "type": "narration",
+      "text": "Diluc’s jaw tightens almost imperceptibly. He doesn't look at her, but his posture seems to grow a shade heavier."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(pensive)",
+      "line": "Some affections are not meant to withstand the trials of our chosen path. Or perhaps, we were simply too blind to cherish them when we had the chance."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(nodding sadly)",
+      "line": "The weight of responsibility can certainly isolate one. I've often wondered if I allowed my duties to overshadow, well, everything else. Sacrifices are made, some without us even realizing until it's too late."
+    },
+    {
+      "type": "narration",
+      "text": "The wind picks up, rustling Jean's cape. She pulls it a little tighter around herself, a small, melancholic smile gracing her lips."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(gazing at the city lights)",
+      "line": "Yet, even a faded ember leaves behind warmth. And some bonds, though broken, continue to shape who we become."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(with a gentle smile)",
+      "line": "Perhaps that warmth is what reminds us of what we’re truly fighting for. A hope for a future where such sacrifices won't be necessary."
+    }
+  ]
+}
