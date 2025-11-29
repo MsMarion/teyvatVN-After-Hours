@@ -1,8 +1,13 @@
 .login-page-container {
+    /* Ensure we keep the column layout from Layout.css so Header/Footer are top/bottom */
+    flex-direction: column;
+}
+
+/* Center the card within the content area */
+.login-page-container .layout-content {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
     padding: 1rem;
 }
 
