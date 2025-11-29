@@ -8,6 +8,16 @@
     pointer-events: none;
 }
 
+.vn-textbox-overlay.embedded {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    pointer-events: auto;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
+}
+
 .vn-textbox {
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(10px);
@@ -19,12 +29,25 @@
     border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
+.vn-textbox-overlay.embedded .vn-textbox {
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    box-shadow: none;
+}
+
 .vn-speaker {
     font-family: "Quattrocento", serif;
     font-size: 1.25rem;
     font-weight: bold;
     color: #fbbf24;
     margin-bottom: 0.75rem;
+}
+
+.vn-textbox-overlay.embedded .vn-speaker {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
 }
 
 .vn-expression {
@@ -34,6 +57,10 @@
     color: #d1d5db;
     font-style: italic;
     margin-left: 0.5rem;
+}
+
+.vn-textbox-overlay.embedded .vn-expression {
+    font-size: 0.85rem;
 }
 
 .vn-dialogue {
@@ -49,6 +76,12 @@
     line-height: 1.6;
     color: #e5e7eb;
     font-style: italic;
+}
+
+.vn-textbox-overlay.embedded .vn-dialogue,
+.vn-textbox-overlay.embedded .vn-narration {
+    font-size: 0.95rem;
+    line-height: 1.5;
 }
 
 .vn-navigation {

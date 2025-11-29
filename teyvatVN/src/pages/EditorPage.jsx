@@ -318,29 +318,22 @@ export default function EditorPage() {
                                             })}
 
                                             {/* Text Box Overlay */}
-                                            <div className="vn-preview-textbox">
-                                                {segments[selectedSegmentIndex].type === "dialogue" ? (
-                                                    <div className="vn-dialogue-box">
-                                                        <div className="vn-speaker-name">
-                                                            {segments[selectedSegmentIndex].speaker}
-                                                            {segments[selectedSegmentIndex].expression_action && (
-                                                                <span className="vn-expression">
-                                                                    {" "}{segments[selectedSegmentIndex].expression_action}
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                        <div className="vn-dialogue-text">
-                                                            {segments[selectedSegmentIndex].line || "(Empty dialogue)"}
-                                                        </div>
-                                                    </div>
-                                                ) : (
-                                                    <div className="vn-narration-box">
-                                                        <div className="vn-narration-text">
-                                                            {segments[selectedSegmentIndex].text || "(Empty narration)"}
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </div>
+                                            <VNTextBox
+                                                segment={segments[selectedSegmentIndex]}
+                                                embedded={true}
+                                                currentIndex={selectedSegmentIndex}
+                                                totalSegments={segments.length}
+                                                onNext={() => {
+                                                    if (selectedSegmentIndex < segments.length - 1) {
+                                                        setSelectedSegmentIndex(selectedSegmentIndex + 1);
+                                                    }
+                                                }}
+                                                onPrev={() => {
+                                                    if (selectedSegmentIndex > 0) {
+                                                        setSelectedSegmentIndex(selectedSegmentIndex - 1);
+                                                    }
+                                                }}
+                                            />
                                         </div>
                                     </div>
                                 </div>
