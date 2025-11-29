@@ -1,0 +1,71 @@
+{
+  "title": "Fading Embers at the Statue",
+  "characters": [
+    "Diluc",
+    "Jean"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The evening sky paints the Mondstadt horizon in hues of violet and orange, casting long shadows across the ancient Statue of the Seven. A gentle breeze whispers through the trees, carrying the scent of Cecilia flowers and the distant murmur of the city.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "Jean, ever the diligent Acting Grand Master, stood with her arms crossed, gaze fixed on the distant city lights. Her usual composed demeanor held a hint of introspection. Diluc arrived shortly after, his quiet presence making the air around them feel heavy with unspoken thoughts."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(softly, reflecting)",
+      "line": "It's peaceful here, isn't it? Away from the hustle. It makes one think... of times long past."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(calmly, gazing into the distance)",
+      "line": "Some things are best left in the past, Acting Grand Master."
+    },
+    {
+      "type": "narration",
+      "text": "Jean turned, a small, knowing smile playing on her lips. She could always sense the hidden layers beneath Diluc's stoic demeanor, a shared history connecting them that few others understood."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(gently, probing)",
+      "line": "Perhaps. But even memories can hold lessons. Have you ever thought... about what might have been? With... someone you once held dear?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(looking away, a subtle shift in posture)",
+      "line": "The path I walk now was chosen. Regrets are unproductive."
+    },
+    {
+      "type": "narration",
+      "text": "A silence stretched between them, thick with unspoken history and shared burdens. The Anemo Archon's statue seemed to watch over them with quiet understanding, its ancient stones absorbing their wistful exchange."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(sincerely, stepping slightly closer)",
+      "line": "Even so, to have loved, to have been loved... it shapes us. For better or worse, those experiences become a part of who we are."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(his voice low, almost a whisper, a rare hint of vulnerability)",
+      "line": "Indeed. And some embers, once thought extinguished, can still glow under the right conditions."
+    },
+    {
+      "type": "narration",
+      "text": "Jean met his gaze, a flicker of surprise and a deeper understanding passing between them. For a brief moment, the weight of their respective responsibilities seemed to lift, leaving only a quiet, shared reflection."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Jean",
+      "expression_action": "(a soft, wistful smile)",
+      "line": "Perhaps. Just perhaps."
+    }
+  ]
+}
