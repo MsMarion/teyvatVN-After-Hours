@@ -20,6 +20,10 @@
       "line": "Sometimes, I wonder about... well, about love. It feels so grand, yet so delicate, doesn't it?"
     },
     {
+      "type": "narration",
+      "text": "Barbra is very sad now."
+    },
+    {
       "type": "dialogue",
       "speaker": "Amber",
       "expression_action": "(perking up)",

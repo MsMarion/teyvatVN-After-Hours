@@ -14,6 +14,7 @@ import LoginPage from "./pages/LoginPage.jsx";
 import StoryPage from "./pages/StoryPage.jsx";
 import LayoutSamplePage from "./pages/LayoutSamplePage.jsx";
 import LibraryPage from "./pages/LibraryPage.jsx";
+import EditorPage from "./pages/EditorPage.jsx";
 
 import { CharacterProvider } from "./context/CharacterContext.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
@@ -62,6 +63,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <LibraryPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/editing"
+              element={
+                <ProtectedRoute>
+                  <EditorPage />
                 </ProtectedRoute>
               }
             />

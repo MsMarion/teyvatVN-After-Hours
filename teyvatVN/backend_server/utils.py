@@ -82,8 +82,13 @@ def list_user_chapters(username: str) -> list[dict]:
                         "path": output_file
                     })
     
-    # Sort by creation time (newest first)
-    chapters.sort(key=lambda x: x.get("created_at") or "", reverse=True)
+    # Sort by chapter number (newest/highest number first)
+    def get_chapter_number(chapter):
+        """Extract numeric value from chapter_id like 'chapter19' -> 19"""
+        match = re.search(r'chapter(\d+)', chapter.get("chapter_id", ""))
+        return int(match.group(1)) if match else 0
+    
+    chapters.sort(key=get_chapter_number, reverse=True)
     
     return chapters
 

@@ -1,25 +1,79 @@
 import React, { useState } from "react";
 import "./VNTextBox.css"; // We'll create this or just rely on global styles for now, but better to separate.
 
-export default function VNTextBox({ segments }) {
-    const [currentIndex, setCurrentIndex] = useState(0);
+export default function VNTextBox({
+    segments,
+    segment,
+    embedded = false,
+    onNext,
+    onPrev,
+    currentIndex,
+    totalSegments
+}) {
+    const [localIndex, setLocalIndex] = useState(0);
 
+    // Controlled mode (Editor)
+    if (segment) {
+        return (
+            <div className={`vn-textbox-overlay ${embedded ? "embedded" : ""}`}>
+                <div className="vn-textbox">
+                    {segment.type === "dialogue" ? (
+                        <>
+                            <div className="vn-speaker">
+                                {segment.speaker} <span className="vn-expression">{segment.expression_action}</span>
+                            </div>
+                            <div className="vn-dialogue">{segment.line}</div>
+                        </>
+                    ) : (
+                        <div className="vn-narration">{segment.text}</div>
+                    )}
+
+                    {/* Navigation for Controlled Mode */}
+                    {(onNext || onPrev) && (
+                        <div className="vn-navigation">
+                            <button
+                                onClick={onPrev}
+                                disabled={!onPrev || currentIndex === 0}
+                                className="vn-nav-btn"
+                            >
+                                ← Prev
+                            </button>
+                            <span className="vn-progress">
+                                {typeof currentIndex === 'number' && totalSegments
+                                    ? `${currentIndex + 1} / ${totalSegments}`
+                                    : ""}
+                            </span>
+                            <button
+                                onClick={onNext}
+                                disabled={!onNext || (totalSegments && currentIndex >= totalSegments - 1)}
+                                className="vn-nav-btn"
+                            >
+                                Next →
+                            </button>
+                        </div>
+                    )}
+                </div>
+            </div>
+        );
+    }
+
+    // Uncontrolled mode (Story Reader)
     if (!segments || segments.length === 0) return null;
 
-    const current = segments[currentIndex];
-    const hasPrev = currentIndex > 0;
-    const hasNext = currentIndex < segments.length - 1;
+    const current = segments[localIndex];
+    const hasPrev = localIndex > 0;
+    const hasNext = localIndex < segments.length - 1;
 
     const handlePrev = () => {
-        if (hasPrev) setCurrentIndex(currentIndex - 1);
+        if (hasPrev) setLocalIndex(localIndex - 1);
     };
 
     const handleNext = () => {
-        if (hasNext) setCurrentIndex(currentIndex + 1);
+        if (hasNext) setLocalIndex(localIndex + 1);
     };
 
     return (
-        <div className="vn-textbox-overlay">
+        <div className={`vn-textbox-overlay ${embedded ? "embedded" : ""}`}>
             <div className="vn-textbox">
                 {current.type === "dialogue" ? (
                     <>
@@ -40,7 +94,7 @@ export default function VNTextBox({ segments }) {
                     >
                         ← Prev
                     </button>
-                    <span className="vn-progress">{currentIndex + 1} / {segments.length}</span>
+                    <span className="vn-progress">{localIndex + 1} / {segments.length}</span>
                     <button
                         onClick={handleNext}
                         disabled={!hasNext}
