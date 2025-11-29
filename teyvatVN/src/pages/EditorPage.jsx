@@ -8,6 +8,21 @@ import "./EditorPage.css";
 
 // Assets
 import pageBg from "../assets/background/goodNews.jpg";
+import bg1 from "../assets/background/favonius-cathedral.jpg";
+import bg2 from "../assets/background/mondstadt-night.webp";
+import bg3 from "../assets/background/statue-of-seven-day.png";
+
+// Components
+import VNTextBox from "../components/VNTextBox";
+import { characterDatabase } from "../data/characterData.js";
+
+// Map background IDs to imported images
+const backgroundImages = {
+    "favonius_cathedral": bg1,
+    "mondstadt_night": bg2,
+    "statue_of_seven": bg3,
+    "angels_share": pageBg
+};
 
 export default function EditorPage() {
     const [searchParams] = useSearchParams();
@@ -243,7 +258,7 @@ export default function EditorPage() {
                         </div>
                     </div>
 
-                    {/* Editor Panel */}
+                    {/* Editor Panel with Embedded Preview */}
                     <div className="editor-panel">
                         {selectedSegmentIndex !== null ? (
                             <>
@@ -271,6 +286,66 @@ export default function EditorPage() {
                                     </div>
                                 </div>
 
+                                {/* VN Preview Section */}
+                                <div className="vn-preview-section">
+                                    <div className="vn-preview-label">
+                                        <span>Live Preview</span>
+                                    </div>
+                                    <div className="vn-preview-stage-compact">
+                                        <div
+                                            className="vn-preview-background"
+                                            style={{
+                                                backgroundImage: `url(${backgroundImages[chapter?.backgrounds?.[0]] || pageBg})`
+                                            }}
+                                        >
+                                            {/* Character Sprites */}
+                                            {chapter?.characters?.map((charName, index) => {
+                                                const charData = characterDatabase[charName];
+                                                const storySprite = charData
+                                                    ? Object.values(charData.storySprites)[0]
+                                                    : null;
+
+                                                if (!storySprite) return null;
+
+                                                return (
+                                                    <img
+                                                        key={charName}
+                                                        src={storySprite}
+                                                        alt={charName}
+                                                        className={`vn-character-sprite pos-${index + 1}`}
+                                                    />
+                                                );
+                                            })}
+
+                                            {/* Text Box Overlay */}
+                                            <div className="vn-preview-textbox">
+                                                {segments[selectedSegmentIndex].type === "dialogue" ? (
+                                                    <div className="vn-dialogue-box">
+                                                        <div className="vn-speaker-name">
+                                                            {segments[selectedSegmentIndex].speaker}
+                                                            {segments[selectedSegmentIndex].expression_action && (
+                                                                <span className="vn-expression">
+                                                                    {" "}{segments[selectedSegmentIndex].expression_action}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                        <div className="vn-dialogue-text">
+                                                            {segments[selectedSegmentIndex].line || "(Empty dialogue)"}
+                                                        </div>
+                                                    </div>
+                                                ) : (
+                                                    <div className="vn-narration-box">
+                                                        <div className="vn-narration-text">
+                                                            {segments[selectedSegmentIndex].text || "(Empty narration)"}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Editor Form */}
                                 <div className="editor-panel-content">
                                     {segments[selectedSegmentIndex].type === "dialogue" ? (
                                         <>
