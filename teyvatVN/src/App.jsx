@@ -1,6 +1,7 @@
 // src/App.jsx
 
 import React from "react";
+import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // --- Import all your pages ---
@@ -18,6 +19,7 @@ function App() {
   return (
     <Router>
       <CharacterProvider>
+        <Toaster position="top-center" />
         <Routes>
           {/* --- FIXED: Now correctly renders the LoadingPage React component --- */}
           <Route path="/" element={<LoadingPage />} />

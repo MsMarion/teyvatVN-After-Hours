@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiArrowRight, FiRefreshCcw } from "react-icons/fi";
+import toast from "react-hot-toast";
 import "./StoryPage.css";
 
-// Assuming you have this context and data file set up
+// Components
+import VNTextBox from "../components/VNTextBox";
+import BackgroundSelector from "../components/BackgroundSelector";
+
+// Config & Context
 import { useCharacters } from "../context/CharacterContext";
 import { characterDatabase } from "../data/characterData.js";
 import SegmentNavigator from "../components/SegmentNavigator";
-import { BACKGROUND_OPTIONS, getBackgroundById, getBackgroundByName } from "../config/backgrounds.js";
+import { BACKGROUND_OPTIONS } from "../config/backgrounds.js";
+import { API_URL } from "../config/api";
 
-// Import your assets
+// Assets
 import quillIcon from "../assets/images/quill.png";
 import pageBg from "../assets/background/goodNews.jpg";
 import bg1 from "../assets/background/favonius-cathedral.jpg";
@@ -23,60 +29,6 @@ const backgroundImages = {
   "statue_of_seven": bg3,
   "angels_share": pageBg
 };
-
-// Visual Novel Text Box Component
-function VNTextBox({ segments }) {
-  const [currentIndex, setCurrentIndex] = React.useState(0);
-
-  if (!segments || segments.length === 0) return null;
-
-  const current = segments[currentIndex];
-  const hasPrev = currentIndex > 0;
-  const hasNext = currentIndex < segments.length - 1;
-
-  const handlePrev = () => {
-    if (hasPrev) setCurrentIndex(currentIndex - 1);
-  };
-
-  const handleNext = () => {
-    if (hasNext) setCurrentIndex(currentIndex + 1);
-  };
-
-  return (
-    <div className="vn-textbox-overlay">
-      <div className="vn-textbox">
-        {current.type === "dialogue" ? (
-          <>
-            <div className="vn-speaker">
-              {current.speaker} <span className="vn-expression">{current.expression_action}</span>
-            </div>
-            <div className="vn-dialogue">{current.line}</div>
-          </>
-        ) : (
-          <div className="vn-narration">{current.text}</div>
-        )}
-
-        <div className="vn-navigation">
-          <button
-            onClick={handlePrev}
-            disabled={!hasPrev}
-            className="vn-nav-btn"
-          >
-            ← Prev
-          </button>
-          <span className="vn-progress">{currentIndex + 1} / {segments.length}</span>
-          <button
-            onClick={handleNext}
-            disabled={!hasNext}
-            className="vn-nav-btn"
-          >
-            Next →
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default function StoryPage() {
   const [prompt, setPrompt] = useState("");
@@ -97,7 +49,7 @@ export default function StoryPage() {
 
     // Only redirect if no characters in context AND no persisted characters
     if ((!selectedCharacters || selectedCharacters.length < 2) && !hasPersistedCharacters) {
-      alert("Please select your characters first!");
+      toast.error("Please select your characters first!");
       navigate("/characters");
     }
   }, [selectedCharacters, navigate]);
@@ -113,7 +65,7 @@ export default function StoryPage() {
     const username = localStorage.getItem("currentUser") || "dawn";
 
     if (!prompt) {
-      alert("Please enter a prompt!");
+      toast.error("Please enter a prompt!");
       return;
     }
 
@@ -133,7 +85,7 @@ export default function StoryPage() {
         : "";
       const enhancedPrompt = characterContext + prompt;
 
-      const response = await fetch("http://localhost:4000/api/generate", {
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -155,6 +107,7 @@ export default function StoryPage() {
       if (result.status === "success" && result.data) {
         // Store the complete chapter data
         setGeneratedStory(result.data);
+        toast.success("Story generated successfully!");
 
         // Auto-select background based on AI's choice (using ID-based matching)
         if (result.data.backgrounds && result.data.backgrounds.length > 0) {
@@ -172,12 +125,12 @@ export default function StoryPage() {
         localStorage.setItem("latestResult", JSON.stringify(result.data));
         localStorage.setItem("latestPrompt", prompt);
       } else {
-        alert("Failed to generate story structure.");
+        toast.error("Failed to generate story structure.");
       }
 
     } catch (error) {
       console.error("Error generating story:", error);
-      alert(`Failed to generate story: ${error.message}`);
+      toast.error(`Failed to generate story: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
@@ -189,10 +142,11 @@ export default function StoryPage() {
 
   const handleSave = () => {
     if (!generatedStory) {
-      alert("There's no story to save!");
+      toast.error("There's no story to save!");
       return;
     }
     console.log("Story Saved!", generatedStory);
+    toast.success("Story saved!");
   };
 
   return (
@@ -305,24 +259,11 @@ export default function StoryPage() {
           </div>
 
           {/* Background Selection - Moved below VN UI */}
-          <section className="background-selection-section">
-            <h3>Choose a Background</h3>
-            <div className="background-grid">
-              {backgrounds.map((bg) => (
-                <div
-                  key={bg.name}
-                  className={`background-card ${selectedBackground?.name === bg.name ? "selected" : ""
-                    }`}
-                  onClick={() => setSelectedBackground(bg)}
-                >
-                  <img src={bg.src} alt={bg.name} />
-                  <span>{bg.name}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Expression switcher has been removed */}
+          <BackgroundSelector
+            backgrounds={backgrounds}
+            selectedBackground={selectedBackground}
+            onSelect={setSelectedBackground}
+          />
 
           {/* Generated Story Results - Kept below VN UI */}
           {generatedStory && (
