@@ -112,7 +112,10 @@ async def google_callback(code: str, db: Session = Depends(get_db)):
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to create user.")
 
     access_token = jwt_utils.create_access_token(data={"sub": user.username})
-    return {"message": "Google login successful", "username": user.username, "token": access_token}
+    
+    # Redirect back to the frontend with the token and username
+    frontend_url = f"http://localhost:6001/login?token={access_token}&username={user.username}"
+    return RedirectResponse(url=frontend_url)
 
 @app.post("/api/auth/register")
 async def register(request: AuthRequest, db: Session = Depends(get_db)):

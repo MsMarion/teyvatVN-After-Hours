@@ -1,13 +1,10 @@
-{
-    "characters": [
-        "{\"name\":\"Jean\",\"image\":\"/src/assets/character-sprites/jean.png\",\"element\":\"Anemo\",\"personality\":\"Kind, Dedicated\",\"likes\":[\"Lisa\",\"Amber\"],\"dislikes\":[\"Diluc (sometimes)\",\"Barbara (sibling rivalry)\"],\"quote\":\"I must protect everyone.\"}",
-        "{\"name\":\"Diluc\",\"image\":\"/src/assets/character-sprites/diluc.webp\",\"element\":\"Pyro\",\"personality\":\"Stoic, Protective\",\"likes\":[\"Kaeya\",\"Lisa\",\"Jean\"],\"dislikes\":[\"Kaeya (it's complicated)\"],\"quote\":\"In the dark, I see the truth.\"}"
-    ],
-    "start_setting": [
-        {
-            "name": "Mondstadt Night",
-            "src": "/src/assets/background/mondstadt-night.webp"
-        }
-    ],
-    "story_direction": "test2"
-}
+PS C:\Users\Dawn\Desktop\Projects\Teyvat 2nd Branch\teyvatVN-After-Hours\teyvatVN\backend_server> uvicorn main:app --host 127.0.0.1 --port 6002 --reload                                                          
+uvicorn : The term 'uvicorn' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct 
+and try again.
+At line:1 char:1
++ uvicorn main:app --host 127.0.0.1 --port 6002 --reload
++ ~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (uvicorn:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\Dawn\Desktop\Projects\Teyvat 2nd Branch\teyvatVN-After-Hours\teyvatVN\backend_server> 

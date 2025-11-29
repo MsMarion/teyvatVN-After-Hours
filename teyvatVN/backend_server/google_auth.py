@@ -57,7 +57,7 @@ async def google_callback(code: str):
         # Google's ID tokens are signed, but we don't need to verify the signature here
         # as we just received it from Google's secure token endpoint.
         # In a more robust system, you might want to verify the signature and issuer.
-        user_info = jwt.decode(id_token, options={"verify_signature": False})
+        user_info = jwt.decode(id_token, None, audience=GOOGLE_CLIENT_ID, options={"verify_signature": False, "verify_at_hash": False})
 
         return {
             "email": user_info.get("email"),
