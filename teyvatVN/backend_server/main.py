@@ -157,6 +157,41 @@ async def rename_chapter(username: str, chapter_id: str, request: Request):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+# API: Update chapter segments (for editor)
+@app.put("/api/chapter/{username}/{chapter_id}/segments")
+async def update_segments(username: str, chapter_id: str, request: Request):
+    """Update the segments of a chapter."""
+    # In a real app, we would validate the token here to ensure the requester is the user
+    try:
+        body = await request.json()
+        segments = body.get("segments")
+        
+        if not segments or not isinstance(segments, list):
+            raise HTTPException(status_code=400, detail="Segments array is required")
+        
+        path = get_chapter_path(username, chapter_id)
+        
+        if not os.path.exists(path):
+            raise HTTPException(status_code=404, detail="Chapter not found")
+        
+        # Read existing chapter data
+        with open(path, "r", encoding="utf-8") as f:
+            chapter_data = json.load(f)
+        
+        # Update segments
+        chapter_data["segments"] = segments
+        
+        # Save back to file
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(chapter_data, f, indent=2, ensure_ascii=False)
+        
+        return {"status": "success", "message": "Segments updated", "data": chapter_data}
+        
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=400, detail="Invalid JSON")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 # Create a new chapter or overwrite it
 @app.post("/api/{username}/{chapter_id}")

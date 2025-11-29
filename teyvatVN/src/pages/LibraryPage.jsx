@@ -180,6 +180,12 @@ export default function LibraryPage() {
 
                                     <div className="chapter-card-footer">
                                         <button
+                                            onClick={() => navigate(`/editing?chapter=${chapter.chapter_id}`)}
+                                            className="edit-button"
+                                        >
+                                            <FiEdit2 /> Edit Story
+                                        </button>
+                                        <button
                                             onClick={() => handleReadChapter(chapter.chapter_id)}
                                             className="read-button"
                                         >
