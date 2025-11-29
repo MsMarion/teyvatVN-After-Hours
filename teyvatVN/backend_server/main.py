@@ -13,7 +13,7 @@ import generate_ai_calls
 import utils
 import auth # Re-import auth
 import google_auth # New import for Google OAuth2
-from .database import get_db # Import get_db
+from database import get_db # Import get_db
 
 app = FastAPI()
 
