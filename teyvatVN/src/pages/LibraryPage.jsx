@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiBook, FiCalendar, FiUsers, FiTrash2 } from "react-icons/fi";
+import { FiBook, FiCalendar, FiUsers, FiTrash2, FiEdit2 } from "react-icons/fi";
 import toast from "react-hot-toast";
 import Layout from "../components/Layout";
 import { useAuth } from "../context/AuthContext";
@@ -70,6 +70,57 @@ export default function LibraryPage() {
         });
     };
 
+    const handleDeleteChapter = async (chapterId, chapterTitle) => {
+        const username = localStorage.getItem("currentUser") || user?.username;
+
+        if (!confirm(`Are you sure you want to delete "${chapterTitle}"? This action cannot be undone.`)) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:4000/api/chapter/${username}/${chapterId}`, {
+                method: "DELETE"
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to delete chapter");
+            }
+
+            toast.success("Chapter deleted successfully!");
+            fetchLibrary(); // Refresh the library
+        } catch (error) {
+            console.error("Error deleting chapter:", error);
+            toast.error("Failed to delete chapter");
+        }
+    };
+
+    const handleRenameChapter = async (chapterId, currentTitle) => {
+        const username = localStorage.getItem("currentUser") || user?.username;
+        const newTitle = prompt("Enter new title:", currentTitle);
+
+        if (!newTitle || newTitle === currentTitle) {
+            return; // User cancelled or didn't change the title
+        }
+
+        try {
+            const response = await fetch(`http://localhost:4000/api/chapter/${username}/${chapterId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ title: newTitle })
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to rename chapter");
+            }
+
+            toast.success("Chapter renamed successfully!");
+            fetchLibrary(); // Refresh the library
+        } catch (error) {
+            console.error("Error renaming chapter:", error);
+            toast.error("Failed to rename chapter");
+        }
+    };
+
     return (
         <Layout backgroundImage={pageBg} className="library-page-container">
             <div className="library-content-container">
@@ -134,10 +185,22 @@ export default function LibraryPage() {
                                         >
                                             Read Story
                                         </button>
-                                        {/* Future: Add delete button */}
-                                        {/* <button className="delete-button" title="Delete">
-                      <FiTrash2 />
-                    </button> */}
+                                        <div className="chapter-actions">
+                                            <button
+                                                onClick={() => handleRenameChapter(chapter.chapter_id, chapter.title)}
+                                                className="action-button rename-button"
+                                                title="Rename chapter"
+                                            >
+                                                <FiEdit2 />
+                                            </button>
+                                            <button
+                                                onClick={() => handleDeleteChapter(chapter.chapter_id, chapter.title)}
+                                                className="action-button delete-button"
+                                                title="Delete chapter"
+                                            >
+                                                <FiTrash2 />
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
