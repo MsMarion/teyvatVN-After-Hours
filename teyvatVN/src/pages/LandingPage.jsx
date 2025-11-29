@@ -54,6 +54,9 @@ export default function LandingPage() {
           <ScrollLink to="about" smooth={true} duration={800}>
             About
           </ScrollLink>
+          <RouterLink to="/characters" className="nav-cta">
+            Start Story
+          </RouterLink>
         </nav>
       </header>
 
@@ -115,6 +118,11 @@ export default function LandingPage() {
                 <li>
                   <strong>Branch the Story</strong> - Make decisions to shape
                   the plot – or regenerate for a new twist!
+                </li>
+                <li>
+                  <RouterLink to="/characters" className="start-now-btn">
+                    Start now!
+                  </RouterLink>
                 </li>
               </ol>
             </div>
