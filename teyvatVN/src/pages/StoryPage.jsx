@@ -276,20 +276,24 @@ export default function StoryPage() {
               )}
 
               {/* This now dynamically displays the correct story sprite */}
-              {selectedBackground &&
-                selectedCharacters &&
-                selectedCharacters.map((char, index) => {
+              {selectedBackground && generatedStory && generatedStory.characters &&
+                generatedStory.characters.map((charName, index) => {
                   // Look up the character in our database to get the correct story sprite
-                  const charData = characterDatabase[char.name];
+                  const charData = characterDatabase[charName];
                   const storySprite = charData
                     ? Object.values(charData.storySprites)[0]
-                    : char.image; // Fallback to card image
+                    : null; // Fallback to null if not found
+
+                  if (!storySprite) {
+                    console.warn(`No sprite found for character: ${charName}`);
+                    return null;
+                  }
 
                   return (
                     <img
-                      key={char.name}
+                      key={charName}
                       src={storySprite}
-                      alt={char.name}
+                      alt={charName}
                       className={`character-sprite pos-${index + 1}`}
                     />
                   );

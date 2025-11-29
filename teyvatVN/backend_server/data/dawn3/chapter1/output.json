@@ -1,0 +1,79 @@
+{
+  "title": "Echoes by the Statue",
+  "characters": [
+    "Amber",
+    "Eula"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The Anemo Archon's statue stands majestically, overlooking Mondstadt. A gentle breeze whispers through the trees, carrying the faint scent of cecilias. Amber and Eula stand near its base, the afternoon sun casting long shadows, lending a somber yet peaceful atmosphere to their quiet conversation.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "The city of Mondstadt hummed softly in the distance, a comforting backdrop to the two Knights of Favonius enjoying a rare moment of stillness."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Amber",
+      "expression_action": "(looking out at the city, thoughtfully)",
+      "line": "It's so peaceful up here, isn't it? Makes you think about... everything."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Eula",
+      "expression_action": "(crossing her arms, a slight sigh)",
+      "line": "Indeed. A rare respite from the ceaseless machinations of this city. Or perhaps, a reminder of what one protects."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Amber",
+      "expression_action": "(turning to Eula, a little hesitant)",
+      "line": "Or... sometimes, it makes you think about old memories. Like, old crushes? Or... people you used to really care about, in that way?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Eula",
+      "expression_action": "(a subtle flicker of something in her eyes, then composing herself)",
+      "line": "Such trivial matters are of no concern to the Spindrift Knight. My focus remains on my vengeance."
+    },
+    {
+      "type": "narration",
+      "text": "Amber chuckled softly, recognizing the familiar Eula deflection. She knew beneath the 'vengeance' facade, there was a deeply feeling person."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Amber",
+      "expression_action": "(smiling gently)",
+      "line": "Come on, Eula. Even Knights are allowed to have a past. It's not trivial to remember the people who shaped you, even for a little while."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Eula",
+      "expression_action": "(looking away, towards the distant mountains)",
+      "line": "Hmph. Perhaps. There were... indeed those who once held a foolish notion of understanding the Lawrence clan's plight. A fleeting alliance of hearts."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Amber",
+      "expression_action": "(nodding understandingly)",
+      "line": "Yeah... Sometimes I wonder if they're doing okay, wherever they are now. If they remember me too."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Eula",
+      "expression_action": "(turning back to Amber, a rare, almost soft expression)",
+      "line": "Undoubtedly, Outrider. Your infectious optimism is not easily forgotten. I imagine they remember you with... a similar, if less boisterous, fondness."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Amber",
+      "expression_action": "(grinning brightly)",
+      "line": "Hey, that's almost a compliment from you! Thanks, Eula. It's nice to know someone understands."
+    },
+    {
+      "type": "narration",
+      "text": "A comfortable silence fell between them again, broken only by the wind. The ancient statue seemed to bear witness to their shared, unspoken reflections, as the sun began its slow descent."
+    }
+  ]
+}
