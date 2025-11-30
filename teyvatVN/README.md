@@ -1,15 +1,75 @@
-# React + Vite
+# TeyvatVN Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the React-based frontend for the TeyvatVN application, built with Vite. It provides the user interface for playing visual novels, creating stories, and managing the library.
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Prerequisites
+- Node.js (v14+ recommended)
+- npm
 
-## Expanding the ESLint configuration
+### Installation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
+2. Ensure you have a `.env` file in the root directory with:
+   - `VITE_API_BASE_URL` (defaults to http://localhost:8000)
 
-dawn fixed this
+### Running the Application
+
+To start the development server:
+
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:6001` (or the next available port).
+
+## File Structure
+
+The frontend code is organized in the `src/` directory:
+
+```
+src/
+├── components/          # React Components
+│   ├── auth/            # Authentication components
+│   │   └── ProtectedRoute.jsx  # Route guard
+│   ├── common/          # Shared/Generic components
+│   │   └── ScrollToTop.jsx
+│   ├── layout/          # Layout components
+│   │   ├── Header.jsx
+│   │   ├── Footer.jsx
+│   │   └── Layout.jsx   # Main page wrapper
+│   └── vn/              # Visual Novel specific components
+│       ├── VNScene.jsx         # Main VN display engine
+│       ├── VNTextBox.jsx       # Dialogue box
+│       ├── BackgroundSelector.jsx
+│       └── SegmentNavigator.jsx
+├── context/             # React Contexts
+│   ├── AuthContext.jsx      # User auth state
+│   └── CharacterContext.jsx # Character selection state
+├── pages/               # Application Pages
+│   ├── LandingPage.jsx
+│   ├── LoginPage.jsx
+│   ├── StoryPage.jsx    # Story creation/input
+│   ├── EditorPage.jsx   # Story editing
+│   ├── PlayPage.jsx     # Story playback
+│   ├── LibraryPage.jsx
+│   └── ...
+├── services/            # API Services
+│   └── api.js           # Axios instance configuration
+├── hooks/               # Custom React Hooks
+├── utils/               # Utility functions
+├── assets/              # Static assets (images, fonts)
+├── App.jsx              # Main App component & Routing
+└── main.jsx             # Entry point
+```
+
+## Key Features
+- **Visual Novel Engine**: `VNScene` component renders the story with backgrounds, characters, and dialogue.
+- **Authentication**: `AuthContext` manages user state and integrates with the backend JWT auth.
+- **Story Creation**: `StoryPage` allows users to input prompts and generate stories via the backend AI service.
+- **Editor**: `EditorPage` provides a live preview for editing generated stories.
