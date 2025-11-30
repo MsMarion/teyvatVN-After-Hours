@@ -1,0 +1,75 @@
+{
+  "title": "Echoes by the Statue",
+  "characters": [
+    "Diluc",
+    "Kaeya"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The Statue of the Seven stands majestically, bathed in the soft, fading light of a Mondstadt evening. A gentle breeze rustles through the surrounding trees, carrying the scent of Cecilia flowers. The air is quiet, holding a sense of peace that often belies the hidden complexities of the city's inhabitants.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "Diluc stands before the Anemo Archon's statue, his gaze distant, lost in thought. Kaeya approaches from behind, his footsteps surprisingly light."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(amused, a slight smirk)",
+      "line": "A pensive mood, Master Diluc? Reflecting on the blessings of the Anemo Archon, or perhaps... old flames?"
+    },
+    {
+      "type": "narration",
+      "text": "Diluc doesn't turn, but a subtle tension stiffens his shoulders. The air between them, always a delicate balance, thickens."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(gruffly, without turning)",
+      "line": "The past holds little interest for me. Only the present and the threats it harbors."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(softly, a rare sincerity in his voice)",
+      "line": "Such a convenient philosophy. But even you must admit, some shadows stretch long. Some melodies echo. I recall a certain bard, perhaps? Or a knight of Favonius with a fiery spirit?"
+    },
+    {
+      "type": "narration",
+      "text": "Diluc finally turns, his crimson eyes narrowing slightly, but there's a flicker of something unreadable beneath his stoic facade."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(calmly, but with underlying intensity)",
+      "line": "And you, Kaeya? Do you ever find yourself haunted by specters of affection from your own past? Before the ice truly settled around your heart?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(looks away, a genuine sigh)",
+      "line": "Even I am not immune to such... sentimentalities. There was a time. A distant memory of warmth, before the chill became my constant companion. We often choose our paths, but sometimes, the path chooses for us."
+    },
+    {
+      "type": "narration",
+      "text": "For a moment, the usual guard between them seems to drop, replaced by a shared, silent understanding of lost connections and paths not taken. The statue watches over them, unwavering."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(nods slowly, a hint of something akin to empathy)",
+      "line": "Such is life in Teyvat. A dance of choices and consequences."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(recovering his usual smirk, though a trace of melancholy remains)",
+      "line": "Indeed. Though I find a good glass of wine always helps to soften the edges of those memories. Perhaps we should discuss these 'threats' you mentioned over a drink at Angel's Share?"
+    },
+    {
+      "type": "narration",
+      "text": "Diluc merely gives a noncommittal grunt, turning back to the statue. The moment of shared vulnerability passes, leaving behind the usual unspoken complexities as the Mondstadt night deepens around them."
+    }
+  ]
+}

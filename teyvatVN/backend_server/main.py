@@ -254,8 +254,8 @@ async def generate_chapter(request: GenerateRequest):
             raise HTTPException(status_code=400, detail="Username cannot be empty")
             
         # Validate user exists
-        if not auth.get_user(username):
-             raise HTTPException(status_code=401, detail="User not found")
+        # if not auth.get_user(username):
+        #      raise HTTPException(status_code=401, detail="User not found")
         
         # Get next chapter ID
         chapter_id = utils.get_next_chapter_id(username)

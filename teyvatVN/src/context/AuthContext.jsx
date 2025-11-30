@@ -26,16 +26,22 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const storedToken = localStorage.getItem("authToken");
+        const storedUser = localStorage.getItem("currentUser");
         log("AuthContext: Checking stored token:", storedToken);
+
         if (storedToken) {
             // In a real app, you'd decode the JWT to get user info or verify it with the backend
             // For now, we'll assume the token implies a logged-in state and try to get user info
             // This part will be improved with a proper JWT decode/verify
             setToken(storedToken);
-            // Placeholder: In a real app, you'd decode the token to get the username
-            // For now, we'll just set a generic user or fetch user details
-            setUser("Authenticated User"); // This will be replaced by actual username from JWT
-            log("AuthContext: User restored from token");
+            if (storedUser) {
+                setUser(storedUser);
+                log("AuthContext: User restored from localStorage:", storedUser);
+            } else {
+                // Fallback if no user is stored but token exists
+                setUser("Authenticated User");
+                log("AuthContext: User restored with placeholder");
+            }
         } else {
             log("AuthContext: No token found");
         }

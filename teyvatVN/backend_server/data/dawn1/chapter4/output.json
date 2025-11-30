@@ -1,0 +1,69 @@
+{
+  "title": "Shadows of Past Affections",
+  "characters": [
+    "Diluc",
+    "Kaeya"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The Statue of the Seven stands majestic and silent, overlooking the twinkling lights of Mondstadt as dusk paints the sky in hues of purple and orange. A cool wind whispers secrets through the plaza, rustling the leaves of nearby trees. Diluc Ragnvindr stands by the base of the statue, his gaze fixed on the horizon, while Kaeya Alberich leans casually against a pillar nearby, an unreadable smile playing on his lips.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "The air between the two brothers is thick with unspoken history, a tension that always simmers beneath their surface interactions."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(amusedly)",
+      "line": "A pensive look, Master Diluc. Is the Archon's benevolent gaze prompting introspection... or perhaps stirring old memories of companionship?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(sternly)",
+      "line": "My thoughts are my own, Kaeya. Unlike some, I don't feel the need to broadcast them."
+    },
+    {
+      "type": "narration",
+      "text": "Diluc's response is sharp, a clear indicator of his reluctance to engage. He glances briefly at Kaeya, then returns his gaze to the fading light."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(slyly)",
+      "line": "Ah, but even the most impenetrable walls hold secrets. And the heart, well, it rarely forgets. Especially those who once held it close."
+    },
+    {
+      "type": "narration",
+      "text": "A flicker of something unreadable crosses Diluc's face – perhaps a fleeting memory, a phantom ache. He clenches his jaw, his grip tightening on the hilt of his unlit claymore."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(voice low, with a hint of sorrow)",
+      "line": "The past holds little but regret for some. Dwelling on it is pointless."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(softly, a rare moment of genuine reflection)",
+      "line": "Perhaps. But without memory, how do we know what we've lost? What we once fought for? Or who we once truly were?"
+    },
+    {
+      "type": "narration",
+      "text": "The question hangs in the air, heavy with unspoken implications for both men. The wind picks up, carrying the distant strains of a bard's song from the city below."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(looking up at the statue, a melancholic sigh)",
+      "line": "Some paths are chosen. Others, simply found themselves entwined with fate, only to be severed. Either way, the Archon’s grace cannot mend what’s broken."
+    },
+    {
+      "type": "narration",
+      "text": "Kaeya watches him, his usual grin softened by the fading light, leaving a quiet, shared understanding in the twilight as the first stars began to pierce the evening sky."
+    }
+  ]
+}
