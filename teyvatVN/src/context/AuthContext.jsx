@@ -18,8 +18,15 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(null); // Stores JWT
     const [loading, setLoading] = useState(true);
 
+    if (!window.authDebugLogs) window.authDebugLogs = [];
+    const log = (msg, data) => {
+        console.log(msg, data);
+        window.authDebugLogs.push({ msg, data, time: new Date().toISOString() });
+    };
+
     useEffect(() => {
         const storedToken = localStorage.getItem("authToken");
+        log("AuthContext: Checking stored token:", storedToken);
         if (storedToken) {
             // In a real app, you'd decode the JWT to get user info or verify it with the backend
             // For now, we'll assume the token implies a logged-in state and try to get user info
@@ -28,6 +35,9 @@ export const AuthProvider = ({ children }) => {
             // Placeholder: In a real app, you'd decode the token to get the username
             // For now, we'll just set a generic user or fetch user details
             setUser("Authenticated User"); // This will be replaced by actual username from JWT
+            log("AuthContext: User restored from token");
+        } else {
+            log("AuthContext: No token found");
         }
         setLoading(false);
     }, []);
@@ -37,13 +47,15 @@ export const AuthProvider = ({ children }) => {
             const response = await api.post("/api/auth/login", { username, password });
             const data = response.data;
 
+            log("AuthContext: Login successful", data);
             setToken(data.token);
-            setUser(data.username); // Backend still returns username
+            setUser(data.username);
             localStorage.setItem("authToken", data.token);
-            localStorage.setItem("currentUser", data.username); // Store username for display
+            localStorage.setItem("currentUser", data.username);
             toast.success(`Welcome back, ${data.username}!`);
             return true;
         } catch (error) {
+            log("AuthContext: Login failed", error);
             console.error("Login error:", error);
             toast.error(error.response?.data?.detail || error.message);
             return false;
@@ -55,7 +67,7 @@ export const AuthProvider = ({ children }) => {
             const response = await api.post("/api/auth/register", { username, password, email });
             const data = response.data;
 
-            if (response.status !== 200) { // FastAPI returns 200 even for errors sometimes, check detail
+            if (response.status !== 200) {
                 throw new Error(data.detail || "Registration failed");
             }
 

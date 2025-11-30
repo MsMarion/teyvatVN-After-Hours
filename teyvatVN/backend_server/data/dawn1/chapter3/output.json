@@ -1,0 +1,77 @@
+{
+  "title": "Echoes of Yesteryear",
+  "characters": [
+    "Diluc",
+    "Kaeya"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The wind whispers through the plains of Windwail, carrying the scent of Cecilia flowers as the last rays of sun kiss the colossal Statue of the Seven. A profound quiet descends upon the land, broken only by the rustling leaves.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "Diluc stands before the Anemo Archon's statue, his silhouette sharp against the fading light. His gaze is distant, lost in thought as the world around him slowly drifts into twilight."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(thoughtful)",
+      "line": "Even in silence, some burdens weigh heavy."
+    },
+    {
+      "type": "narration",
+      "text": "A familiar, almost too casual voice breaks the quiet serenity, accompanied by the light crunch of footsteps on the path."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(approaching with a smirk)",
+      "line": "Fancy meeting you here, Master Diluc. Seeking solace from the Archon, perhaps? Or merely enjoying the melancholic view?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(without turning, calm)",
+      "line": "My reasons are my own, Captain Kaeya. And yours, I presume, are equally veiled in performative nonchalance?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(shrugging playfully)",
+      "line": "Just a stroll, my dear brother. Though, a place like this does make one ponder... past connections. Lost affections, perhaps?"
+    },
+    {
+      "type": "narration",
+      "text": "Diluc's posture stiffens almost imperceptibly, a flicker of something unreadable in his eyes as he finally turns to face Kaeya."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(eyes narrowed)",
+      "line": "Unnecessary sentimentality. The past is precisely that — past. There is no merit in dwelling on what is gone."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(a hint of genuine sadness in his voice)",
+      "line": "Is it ever truly? Some memories linger longer than others. Especially those tied to a certain... warmth. Or a cold hand in yours, if one is prone to such imagery."
+    },
+    {
+      "type": "narration",
+      "text": "A heavy silence descends, thick with unspoken history and shared, complicated pain. The wind picks up, rustling through the nearby trees as the last vestiges of daylight fade."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(softly, looking back at the statue)",
+      "line": "We have different ways of remembering, Kaeya. Mine involves moving forward."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(a soft, uncharacteristic smile)",
+      "line": "And mine, perhaps, involves acknowledging that some parts of us are forever shaped by those we once held dear. Even if only in memory. Good evening, Master Diluc."
+    }
+  ]
+}

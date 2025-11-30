@@ -14,7 +14,7 @@ import generate_ai_calls
 import utils
 import auth # Re-import auth
 import google_auth # New import for Google OAuth2
-from database import get_db # Import get_db
+from database import get_db, engine, Base # Import get_db, engine, and Base
 import jwt_utils # Import jwt_utils
 from models import User # Import User model
 
@@ -36,6 +36,9 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
     if user is None:
         raise credentials_exception
     return user
+
+# Create tables
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
@@ -63,6 +66,7 @@ class ChapterData(BaseModel):
 # Pydantic model for simplified generation request
 class GenerateRequest(BaseModel):
     prompt: str
+    username: str
 
 # Pydantic model for auth
 class AuthRequest(BaseModel):
@@ -228,21 +232,30 @@ async def save_chapter(username: str, chapter_id: str, request: Request):
 
 # NEW: Simplified generation endpoint
 @app.post("/api/generate")
-async def generate_chapter(request: Request, generate_request: GenerateRequest, current_user: User = Depends(get_current_user)):
+async def generate_chapter(request: GenerateRequest):
     """
     Generate a new chapter from a simple prompt.
     Auto-increments chapter ID and uses simplified generation.
     """
-    print("--- /api/generate endpoint called ---")
-    print("Request Headers:", request.headers)
+    # print("--- /api/generate endpoint called ---")  
+    # print(request)
+    #print("Request Headers:", request.headers)
+    # print("Request Body:", request.body)
+
+    # print("Request JSON:", request.json())
     try:
-        prompt = generate_request.prompt
-        username = current_user.username # Get username from authenticated user
+        prompt = request.prompt
+        username = request.username
         
         if not prompt or not prompt.strip():
             raise HTTPException(status_code=400, detail="Prompt cannot be empty")
         
-        # The user is already validated by get_current_user
+        if not username or not username.strip():
+            raise HTTPException(status_code=400, detail="Username cannot be empty")
+            
+        # Validate user exists
+        if not auth.get_user(username):
+             raise HTTPException(status_code=401, detail="User not found")
         
         # Get next chapter ID
         chapter_id = utils.get_next_chapter_id(username)
