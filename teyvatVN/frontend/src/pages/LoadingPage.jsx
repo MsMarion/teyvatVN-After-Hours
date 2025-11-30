@@ -6,26 +6,36 @@ import quillImage from "../assets/images/quill.png";
 /**
  * Loading Page Component
  * 
- * Displays a loading animation with a quill icon and text.
- * Automatically redirects to the landing page after a short delay.
+ * Displays a splash screen with a loading animation (quill icon and text).
+ * It automatically redirects the user to the Landing Page after a short delay.
+ * This is typically used as the initial entry point of the application.
  */
 export default function LoadingPage() {
   const navigate = useNavigate();
-  // State to control the fade-out animation
+
+  // --- State Management ---
+  // 'isFadingOut' is a boolean flag.
+  // When true, we add a CSS class to the container to trigger a fade-out animation.
   const [isFadingOut, setIsFadingOut] = useState(false);
 
+  // --- Side Effects ---
+  // This effect runs once when the component mounts (appears on screen).
   useEffect(() => {
-    // Timer to start the fade-out after 1 second
+    // 1. Start the fade-out animation after 1 second (1000ms).
+    // This gives the user time to see the logo before it disappears.
     const fadeTimer = setTimeout(() => {
       setIsFadingOut(true);
-    }, 1000); // 1 second delay
+    }, 1000);
 
-    // Timer to navigate to the landing page AFTER the fade animation completes
+    // 2. Navigate to the landing page after 2.2 seconds (2200ms).
+    // This allows time for the fade-out animation (defined in CSS) to complete.
     const navigateTimer = setTimeout(() => {
       navigate("/landing");
     }, 2200);
 
-    // Cleanup function to clear timers if the component unmounts
+    // Cleanup function:
+    // If the user leaves this page before the timers finish (e.g., hits back button),
+    // we clear the timers to prevent errors or unexpected navigation.
     return () => {
       clearTimeout(fadeTimer);
       clearTimeout(navigateTimer);
@@ -33,7 +43,8 @@ export default function LoadingPage() {
   }, [navigate]);
 
   return (
-    // Conditionally apply the 'fading-out' class to trigger the animation
+    // The container div gets the 'fading-out' class only when isFadingOut is true.
+    // This class is responsible for the CSS transition (opacity: 0).
     <div className={`loading-container ${isFadingOut ? "fading-out" : ""}`}>
       <img src={quillImage} alt="Quill" className="quill-image" />
       <h1 className="loading-text">Rewrite the lore, your way!</h1>

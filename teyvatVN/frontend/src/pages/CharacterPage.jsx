@@ -23,6 +23,7 @@ import rosariaImg from "../assets/character-sprites/rosaria.webp";
 import sucroseImg from "../assets/character-sprites/sucrose.png";
 import ventiImg from "../assets/character-sprites/venti.webp";
 
+// Static database of all available characters
 const allCharacters = [
   // Your allCharacters array...
   {
@@ -170,12 +171,21 @@ const allCharacters = [
  * Features a search bar, character cards, and a modal for detailed character info.
  */
 export default function CharacterPage() {
+  // --- State Management ---
+  // 'selected' stores the array of currently selected character objects (max 2).
   const [selected, setSelected] = useState([]);
+
+  // 'searchTerm' stores the text typed into the search bar.
   const [searchTerm, setSearchTerm] = useState("");
+
+  // 'modalCharacter' stores the character object currently being viewed in the popup modal.
+  // If null, the modal is closed.
   const [modalCharacter, setModalCharacter] = useState(null);
 
   const navigate = useNavigate();
   const { setSelectedCharacters } = useCharacters();
+
+  // --- Modal Handlers ---
 
   const handleOpenModal = (character) => {
     setModalCharacter(character);
@@ -185,27 +195,47 @@ export default function CharacterPage() {
     setModalCharacter(null);
   };
 
+  // --- Selection Logic ---
+
+  /**
+   * Toggles the selection status of a character.
+   * - If already selected, remove it.
+   * - If not selected and we have less than 2, add it.
+   * - If trying to add a 3rd, show an alert.
+   */
   const handleToggleSelection = (character) => {
     if (selected.find((c) => c.name === character.name)) {
+      // Deselect: Filter out the character with the matching name
       setSelected((prev) => prev.filter((c) => c.name !== character.name));
     } else if (selected.length < 2) {
+      // Select: Add the new character to the array
       setSelected((prev) => [...prev, character]);
     } else {
       alert("You can only select up to 2 characters.");
     }
+    // Close the modal after making a selection change
     handleCloseModal();
   };
 
   const handleClearSearch = () => setSearchTerm("");
+
   const handleDeselect = (name) =>
     setSelected((prev) => prev.filter((c) => c.name !== name));
+
   const handleStartOver = () => setSelected([]);
 
+  /**
+   * Finalizes the selection and navigates to the Story Page.
+   */
   const handleContinue = () => {
     if (selected.length === 2) {
+      // Update the global context with the selected characters
       setSelectedCharacters(selected);
+
+      // Persist selection to localStorage so it survives page reloads
       localStorage.setItem("character1", JSON.stringify(selected[0]));
       localStorage.setItem("character2", JSON.stringify(selected[1]));
+
       console.log(selected[0])
       navigate("/story");
     } else {
@@ -213,6 +243,8 @@ export default function CharacterPage() {
     }
   };
 
+  // --- Filtering ---
+  // Create a new array of characters that match the search term
   const filteredCharacters = allCharacters.filter((char) =>
     char.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -226,6 +258,7 @@ export default function CharacterPage() {
           profile — then select your favorites to begin the journey.
         </p>
 
+        {/* Top Bar: Search and Selection Summary */}
         <div className="topbar">
           <div className="search-container">
             <input
@@ -261,6 +294,7 @@ export default function CharacterPage() {
           </div>
         </div>
 
+        {/* Character Grid */}
         <div className="character-grid">
           {filteredCharacters.map((char) => (
             <div
@@ -275,8 +309,10 @@ export default function CharacterPage() {
           ))}
         </div>
 
+        {/* Character Detail Modal */}
         {modalCharacter && (
           <div className="modal-overlay" onClick={handleCloseModal}>
+            {/* Stop propagation prevents clicking inside the modal from closing it */}
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
               <button className="modal-close" onClick={handleCloseModal}>
                 ×
