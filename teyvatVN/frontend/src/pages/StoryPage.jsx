@@ -39,14 +39,32 @@ const backgroundImages = {
  * and view it in a visual novel format.
  */
 export default function StoryPage() {
+  // --- State Management ---
+  // 'prompt' stores the text the user types into the input box.
   const [prompt, setPrompt] = useState("");
+
+  // 'selectedBackground' stores the currently chosen background object (id, name, src).
   const [selectedBackground, setSelectedBackground] = useState(null);
+
+  // 'generatedStory' holds the full story object returned from the backend API.
+  // It is null until a story is successfully generated or loaded.
   const [generatedStory, setGeneratedStory] = useState(null);
+
+  // 'isLoading' is a boolean flag (true/false) to show a loading spinner
+  // while waiting for the API to respond.
   const [isLoading, setIsLoading] = useState(false);
+
+  // 'isFullscreen' controls whether the visual novel scene is displayed in full screen.
   const [isFullscreen, setIsFullscreen] = useState(false);
+
+  // --- Hooks ---
+  // 'useSearchParams' allows us to read parameters from the URL (e.g., ?chapter=123).
   const [searchParams] = useSearchParams();
+
+  // 'useNavigate' gives us a function to programmatically change the URL (redirect users).
   const navigate = useNavigate();
 
+  // 'useCharacters' is a custom hook to access the globally selected characters.
   const { selectedCharacters } = useCharacters();
 
   // Build backgrounds array from configuration with proper image mapping
@@ -56,7 +74,11 @@ export default function StoryPage() {
     src: backgroundImages[bg.id]
   }));
 
-  // Load chapter from URL parameter if present
+  // --- Side Effects (useEffect) ---
+
+  // Effect 1: Check for 'chapter' in URL
+  // This runs once when the component mounts (loads) or when searchParams change.
+  // If a chapter ID is found in the URL, we immediately try to load that chapter.
   useEffect(() => {
     const chapterId = searchParams.get("chapter");
     if (chapterId) {
@@ -64,12 +86,14 @@ export default function StoryPage() {
     }
   }, [searchParams]);
 
-  // Redirect if no characters are selected (check localStorage first for persistence)
+  // Effect 2: Validate Character Selection
+  // This ensures users don't land on this page without picking characters first.
+  // It checks both the global state (Context) and LocalStorage (browser memory).
   useEffect(() => {
-    // Skip character check if we're loading a chapter from URL
+    // Skip character check if we're loading a chapter from URL (viewing mode)
     const chapterId = searchParams.get("chapter");
     if (chapterId) {
-      return; // Don't check for characters if loading existing chapter
+      return;
     }
 
     // Check if characters are in localStorage (persisted selection)
@@ -84,24 +108,30 @@ export default function StoryPage() {
     }
   }, [selectedCharacters, navigate, searchParams]);
 
-  // Function to load an existing chapter
+  // --- Helper Functions ---
+
+  /**
+   * Fetches an existing chapter from the backend API.
+   * @param {string} chapterId - The unique ID of the chapter to load.
+   */
   const loadChapter = async (chapterId) => {
     const username = localStorage.getItem("currentUser") || "dawn";
-    setIsLoading(true);
+    setIsLoading(true); // Start loading
 
     try {
       console.log(`Loading chapter: ${chapterId} for user: ${username}`);
+      // Make a GET request to the backend
       const response = await fetch(`${API_BASE_URL}/api/chapter/${username}/${chapterId}`);
 
       if (!response.ok) {
         throw new Error("Failed to load chapter");
       }
 
-      const result = await response.json();
+      const result = await response.json(); // Parse JSON response
       console.log("Chapter loaded:", result);
 
       if (result.message === "Loaded" && result.data) {
-        setGeneratedStory(result.data);
+        setGeneratedStory(result.data); // Update state with story data
         toast.success(`Chapter loaded: ${result.data.title}`);
 
         // Auto-select background based on chapter data
@@ -120,10 +150,13 @@ export default function StoryPage() {
       console.error("Error loading chapter:", error);
       toast.error(`Failed to load chapter: ${error.message}`);
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); // Stop loading regardless of success or failure
     }
   };
 
+  /**
+   * Sends the user's prompt and characters to the AI backend to generate a story.
+   */
   const handleGenerate = async () => {
     const username = localStorage.getItem("currentUser") || "dawn";
 
@@ -148,6 +181,7 @@ export default function StoryPage() {
         : "";
       const enhancedPrompt = characterContext + prompt;
 
+      // Make a POST request to the AI generation endpoint
       const response = await fetch(API_URL, {
         method: "POST",
         headers: {
@@ -184,7 +218,7 @@ export default function StoryPage() {
           }
         }
 
-        // Also save to localStorage
+        // Also save to localStorage for persistence across reloads
         localStorage.setItem("latestResult", JSON.stringify(result.data));
         localStorage.setItem("latestPrompt", prompt);
       } else {

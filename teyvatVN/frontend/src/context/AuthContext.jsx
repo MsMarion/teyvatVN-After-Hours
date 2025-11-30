@@ -8,10 +8,14 @@ import { API_URL, API_BASE_URL } from "../config/api";
  * 
  * Provides authentication state (user, token) and methods (login, register, logout)
  * to the entire application.
+ * 
+ * Context allows us to share data (like who is logged in) with any component
+ * in the app without passing props down manually through every level.
  */
 const AuthContext = createContext(null);
 
 // Create an Axios instance for API calls
+// This sets up a base configuration for all our auth-related requests
 const api = axios.create({
     baseURL: API_BASE_URL, // Base URL for authentication endpoints
     headers: {
@@ -20,8 +24,14 @@ const api = axios.create({
 });
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null); // Stores username
-    const [token, setToken] = useState(null); // Stores JWT
+    // --- State Management ---
+    // 'user' stores the current user's username. Null if not logged in.
+    const [user, setUser] = useState(null);
+
+    // 'token' stores the JWT (JSON Web Token) used to authenticate API requests.
+    const [token, setToken] = useState(null);
+
+    // 'loading' is true while we check if the user was previously logged in.
     const [loading, setLoading] = useState(true);
 
     // Debug logging helper
@@ -31,16 +41,17 @@ export const AuthProvider = ({ children }) => {
         window.authDebugLogs.push({ msg, data, time: new Date().toISOString() });
     };
 
-    // Check for stored token on initial load
+    // --- Side Effects ---
+    // Effect: Check for stored token on initial load
+    // This runs once when the app starts. It checks if the user has a token saved
+    // in their browser's LocalStorage from a previous session.
     useEffect(() => {
         const storedToken = localStorage.getItem("authToken");
         const storedUser = localStorage.getItem("currentUser");
         log("AuthContext: Checking stored token:", storedToken);
 
         if (storedToken) {
-            // In a real app, you'd decode the JWT to get user info or verify it with the backend
-            // For now, we'll assume the token implies a logged-in state and try to get user info
-            // This part will be improved with a proper JWT decode/verify
+            // Restore the session
             setToken(storedToken);
             if (storedUser) {
                 setUser(storedUser);
@@ -53,39 +64,50 @@ export const AuthProvider = ({ children }) => {
         } else {
             log("AuthContext: No token found");
         }
-        setLoading(false);
+        setLoading(false); // Finished checking
     }, []);
+
+    // --- Auth Functions ---
 
     /**
      * Login function
      * Authenticates user with username and password.
+     * Sends a POST request to the backend.
      */
     const login = async (username, password) => {
         try {
+            // Send login request
             const response = await api.post("/api/auth/login", { username, password });
             const data = response.data;
 
             log("AuthContext: Login successful", data);
+
+            // Update state with new user data
             setToken(data.token);
             setUser(data.username);
+
+            // Save to localStorage for persistence
             localStorage.setItem("authToken", data.token);
             localStorage.setItem("currentUser", data.username);
+
             toast.success(`Welcome back, ${data.username}!`);
-            return true;
+            return true; // Success
         } catch (error) {
             log("AuthContext: Login failed", error);
             console.error("Login error:", error);
             toast.error(error.response?.data?.detail || error.message);
-            return false;
+            return false; // Failure
         }
     };
 
     /**
      * Register function
      * Creates a new user account.
+     * If successful, automatically logs the user in.
      */
     const register = async (username, password, email, apiKey) => {
         try {
+            // Send registration request
             const response = await api.post("/api/auth/register", { username, password, email, gemini_api_key: apiKey });
             const data = response.data;
 
@@ -94,6 +116,7 @@ export const AuthProvider = ({ children }) => {
             }
 
             toast.success("Account created! Logging you in...");
+            // Automatically log in after successful registration
             return await login(username, password);
         } catch (error) {
             console.error("Registration error:", error);
@@ -104,7 +127,8 @@ export const AuthProvider = ({ children }) => {
 
     /**
      * Google Login function
-     * Initiates the Google OAuth flow.
+     * Initiates the Google OAuth flow by redirecting the user to the backend's auth endpoint.
+     * The backend will then redirect to Google's login page.
      */
     const googleLogin = async () => {
         try {
@@ -120,7 +144,7 @@ export const AuthProvider = ({ children }) => {
 
     /**
      * Logout function
-     * Clears user state and local storage.
+     * Clears user state and removes data from local storage.
      */
     const logout = () => {
         setUser(null);
@@ -137,4 +161,5 @@ export const AuthProvider = ({ children }) => {
     );
 };
 
+// Custom hook to easily access the AuthContext from any component
 export const useAuth = () => useContext(AuthContext);

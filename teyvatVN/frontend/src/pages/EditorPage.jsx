@@ -34,18 +34,32 @@ const backgroundImages = {
  * Includes a live preview of the visual novel scene.
  */
 export default function EditorPage() {
+    // --- State Management ---
+    // 'searchParams' to get the chapter ID from the URL (e.g., ?chapter=123).
     const [searchParams] = useSearchParams();
+
+    // 'chapter' stores the metadata of the chapter being edited (title, characters, etc.).
     const [chapter, setChapter] = useState(null);
+
+    // 'segments' is an array of all the story parts (dialogue lines or narration).
+    // This is the main data structure we are editing.
     const [segments, setSegments] = useState([]);
+
+    // 'selectedSegmentIndex' tracks which segment is currently being edited in the right panel.
     const [selectedSegmentIndex, setSelectedSegmentIndex] = useState(null);
+
+    // Loading and Saving states for UI feedback.
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
+
     const navigate = useNavigate();
     const { user } = useAuth();
 
     const chapterId = searchParams.get("chapter");
     const username = localStorage.getItem("currentUser") || user?.username;
 
+    // --- Side Effects ---
+    // Load the chapter data when the component mounts or when chapterId changes.
     useEffect(() => {
         if (!chapterId) {
             toast.error("No chapter specified");
@@ -55,6 +69,10 @@ export default function EditorPage() {
         loadChapter();
     }, [chapterId]);
 
+    // --- Data Fetching ---
+    /**
+     * Fetches the chapter data from the backend.
+     */
     const loadChapter = async () => {
         setIsLoading(true);
         try {
@@ -68,6 +86,7 @@ export default function EditorPage() {
 
             if (result.message === "Loaded" && result.data) {
                 setChapter(result.data);
+                // Initialize segments state with the data from the backend
                 setSegments(result.data.segments || []);
             } else {
                 toast.error("Chapter not found");
@@ -82,14 +101,19 @@ export default function EditorPage() {
         }
     };
 
+    /**
+     * Saves the current state of segments back to the server.
+     */
     const handleSave = async () => {
         setIsSaving(true);
         try {
+            // Create an updated chapter object
             const updatedChapter = {
                 ...chapter,
                 segments: segments
             };
 
+            // Send a PUT request to update the segments
             const response = await fetch(`${API_BASE_URL}/api/chapter/${username}/${chapterId}/segments`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -110,8 +134,16 @@ export default function EditorPage() {
         }
     };
 
+    // --- Segment Manipulation Functions ---
+
+    /**
+     * Updates a specific field of a segment at a given index.
+     * @param {number} index - The index of the segment to update.
+     * @param {string} field - The property to change (e.g., 'text', 'speaker').
+     * @param {any} value - The new value.
+     */
     const handleSegmentChange = (index, field, value) => {
-        const newSegments = [...segments];
+        const newSegments = [...segments]; // Create a copy to avoid direct mutation
         newSegments[index] = {
             ...newSegments[index],
             [field]: value
@@ -119,58 +151,86 @@ export default function EditorPage() {
         setSegments(newSegments);
     };
 
+    /**
+     * Inserts a new narration segment after the specified index.
+     */
     const handleAddSegment = (index) => {
         const newSegment = {
             type: "narration",
             text: "New narration segment..."
         };
         const newSegments = [...segments];
+        // Splice inserts the new segment at index + 1
         newSegments.splice(index + 1, 0, newSegment);
         setSegments(newSegments);
+        // Automatically select the newly created segment
         setSelectedSegmentIndex(index + 1);
     };
 
+    /**
+     * Deletes the segment at the specified index.
+     */
     const handleDeleteSegment = (index) => {
         if (!confirm("Are you sure you want to delete this segment?")) {
             return;
         }
+        // Filter out the segment at the given index
         const newSegments = segments.filter((_, i) => i !== index);
         setSegments(newSegments);
+        // Deselect if the deleted segment was selected
         if (selectedSegmentIndex === index) {
             setSelectedSegmentIndex(null);
         }
     };
 
+    /**
+     * Moves a segment up or down in the list.
+     * @param {number} index - Current index of the segment.
+     * @param {string} direction - "up" or "down".
+     */
     const handleMoveSegment = (index, direction) => {
-        if (direction === "up" && index === 0) return;
-        if (direction === "down" && index === segments.length - 1) return;
+        if (direction === "up" && index === 0) return; // Can't move up if at top
+        if (direction === "down" && index === segments.length - 1) return; // Can't move down if at bottom
 
         const newSegments = [...segments];
         const targetIndex = direction === "up" ? index - 1 : index + 1;
+
+        // Swap the elements
         [newSegments[index], newSegments[targetIndex]] = [newSegments[targetIndex], newSegments[index]];
+
         setSegments(newSegments);
+        // Keep the moved segment selected
         setSelectedSegmentIndex(targetIndex);
     };
 
+    /**
+     * Opens the story player starting from the specific segment.
+     */
     const handlePlayFromHere = (index) => {
         // Navigate to story page with chapter and starting segment
         navigate(`/story?chapter=${chapterId}&start=${index}`);
     };
 
+    /**
+     * Toggles a segment between 'dialogue' and 'narration' types.
+     * Preserves text content where possible.
+     */
     const toggleSegmentType = (index) => {
         const segment = segments[index];
         const newSegments = [...segments];
 
         if (segment.type === "dialogue") {
+            // Convert to Narration
             newSegments[index] = {
                 type: "narration",
-                text: segment.line || ""
+                text: segment.line || "" // Use dialogue line as narration text
             };
         } else {
+            // Convert to Dialogue
             newSegments[index] = {
                 type: "dialogue",
-                speaker: chapter?.characters?.[0] || "Unknown",
-                line: segment.text || "",
+                speaker: chapter?.characters?.[0] || "Unknown", // Default to first character
+                line: segment.text || "", // Use narration text as dialogue line
                 expression_action: ""
             };
         }
@@ -209,7 +269,7 @@ export default function EditorPage() {
 
                 {/* Main Editor Area */}
                 <div className="editor-main">
-                    {/* Segment List */}
+                    {/* Segment List - Left Side */}
                     <div className="segment-list">
                         <div className="segment-list-header">
                             <h2>Segments ({segments.length})</h2>
@@ -267,7 +327,7 @@ export default function EditorPage() {
                         </div>
                     </div>
 
-                    {/* Editor Panel with Embedded Preview */}
+                    {/* Editor Panel - Right Side */}
                     <div className="editor-panel">
                         {selectedSegmentIndex !== null ? (
                             <>
@@ -295,7 +355,7 @@ export default function EditorPage() {
                                     </div>
                                 </div>
 
-                                {/* VN Preview Section */}
+                                {/* VN Preview Section - Live preview of the current segment */}
                                 <div className="vn-preview-section">
                                     <div className="vn-preview-label">
                                         <span>Live Preview</span>
@@ -322,7 +382,7 @@ export default function EditorPage() {
                                     </div>
                                 </div>
 
-                                {/* Editor Form */}
+                                {/* Editor Form - Inputs to modify segment data */}
                                 <div className="editor-panel-content">
                                     {segments[selectedSegmentIndex].type === "dialogue" ? (
                                         <>

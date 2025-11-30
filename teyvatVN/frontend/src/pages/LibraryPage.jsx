@@ -17,15 +17,26 @@ import pageBg from "../assets/background/goodNews.jpg";
  * Allows users to read, edit, rename, or delete chapters.
  */
 export default function LibraryPage() {
+    // --- State Management ---
+    // 'chapters' stores the list of story objects fetched from the database.
     const [chapters, setChapters] = useState([]);
+
+    // 'isLoading' indicates if we are currently fetching data from the server.
     const [isLoading, setIsLoading] = useState(true);
+
     const navigate = useNavigate();
     const { user } = useAuth();
 
+    // --- Side Effects ---
+    // Fetch the user's library when the component first loads.
     useEffect(() => {
         fetchLibrary();
     }, []);
 
+    // --- Data Fetching ---
+    /**
+     * Retrieves all chapters associated with the current user.
+     */
     const fetchLibrary = async () => {
         const username = localStorage.getItem("currentUser") || user?.username;
 
@@ -37,6 +48,7 @@ export default function LibraryPage() {
 
         setIsLoading(true);
         try {
+            // Make a GET request to the library endpoint
             const response = await fetch(`${API_BASE_URL}/api/library/${username}`);
 
             if (!response.ok) {
@@ -57,6 +69,11 @@ export default function LibraryPage() {
         }
     };
 
+    // --- User Actions ---
+
+    /**
+     * Navigates to the StoryPage to read a specific chapter.
+     */
     const handleReadChapter = (chapterId) => {
         // Navigate to story page with chapter ID
         // For now, we'll just show a toast - we'll implement chapter loading next
@@ -65,6 +82,9 @@ export default function LibraryPage() {
         navigate(`/story?chapter=${chapterId}`);
     };
 
+    /**
+     * Formats a raw date string into a readable format (e.g., "Oct 15, 2023, 10:30 AM").
+     */
     const formatDate = (isoString) => {
         if (!isoString) return "Unknown date";
         const date = new Date(isoString);
@@ -77,14 +97,19 @@ export default function LibraryPage() {
         });
     };
 
+    /**
+     * Deletes a chapter after user confirmation.
+     */
     const handleDeleteChapter = async (chapterId, chapterTitle) => {
         const username = localStorage.getItem("currentUser") || user?.username;
 
+        // Ask for confirmation before deleting
         if (!confirm(`Are you sure you want to delete "${chapterTitle}"? This action cannot be undone.`)) {
             return;
         }
 
         try {
+            // Make a DELETE request to the API
             const response = await fetch(`${API_BASE_URL}/api/chapter/${username}/${chapterId}`, {
                 method: "DELETE"
             });
@@ -94,15 +119,20 @@ export default function LibraryPage() {
             }
 
             toast.success("Chapter deleted successfully!");
-            fetchLibrary(); // Refresh the library
+            fetchLibrary(); // Refresh the list to remove the deleted chapter
         } catch (error) {
             console.error("Error deleting chapter:", error);
             toast.error("Failed to delete chapter");
         }
     };
 
+    /**
+     * Renames a chapter.
+     */
     const handleRenameChapter = async (chapterId, currentTitle) => {
         const username = localStorage.getItem("currentUser") || user?.username;
+
+        // Prompt the user for a new title
         const newTitle = prompt("Enter new title:", currentTitle);
 
         if (!newTitle || newTitle === currentTitle) {
@@ -110,6 +140,7 @@ export default function LibraryPage() {
         }
 
         try {
+            // Make a PUT request to update the title
             const response = await fetch(`${API_BASE_URL}/api/chapter/${username}/${chapterId}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -121,7 +152,7 @@ export default function LibraryPage() {
             }
 
             toast.success("Chapter renamed successfully!");
-            fetchLibrary(); // Refresh the library
+            fetchLibrary(); // Refresh the list to show the new title
         } catch (error) {
             console.error("Error renaming chapter:", error);
             toast.error("Failed to rename chapter");
@@ -149,6 +180,7 @@ export default function LibraryPage() {
                         </button>
                     </section>
 
+                    {/* Conditional Rendering: Loading -> Empty -> List */}
                     {isLoading ? (
                         <div className="loading-state">
                             <div className="loading-spinner"></div>
