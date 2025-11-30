@@ -1,0 +1,71 @@
+{
+  "title": "Echoes by the Statue",
+  "characters": [
+    "Diluc",
+    "Kaeya"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The evening breeze whispers through the sparse trees around the majestic Statue of the Seven, carrying the faint scent of windwheel asters. The Anemo Archon's gaze, serene and eternal, watches over the quiet exchange between two brothers, bathed in the soft, fading light of dusk.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "Diluc stands with his arms crossed, a posture of weary patience, while Kaeya leans casually against the base of the statue, a knowing smirk playing on his lips."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(teasingly)",
+      "line": "A rare sight, Master Diluc, to find you here, contemplating... or perhaps, reminiscing? The Archon seems to inspire such things."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(flatly)",
+      "line": "I prefer quiet over your company, Kaeya. My thoughts are my own, not for public discourse."
+    },
+    {
+      "type": "narration",
+      "text": "Kaeya chuckles, pushing himself off the stone with a graceful movement, circling Diluc slowly, like a predator sizing up its prey."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(smoothly)",
+      "line": "But even the most reclusive mind must occasionally wander to happier times, no? To those fleeting affections that once warmed even your stoic heart. Or perhaps, those that left a scar?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(eyes narrowing slightly)",
+      "line": "Your fascination with the past is tiresome. What is your point?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(a wistful smirk)",
+      "line": "Just wondering if you ever think of *her*. Or perhaps, *them*. Mondstadt has seen many loves come and go, some brighter than others."
+    },
+    {
+      "type": "narration",
+      "text": "A brief, heavy silence hangs in the air, broken only by the rustling leaves. Diluc's gaze drifts to the horizon, his jaw tightening almost imperceptibly."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(low, almost a whisper)",
+      "line": "Some things are best left buried, Kaeya. For everyone's sake."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(softly, a rare glimpse of genuine emotion)",
+      "line": "Indeed. Some memories, like some people, cast long shadows even when they're gone. And some, well, some just fade into the wind, leaving barely a ripple."
+    },
+    {
+      "type": "narration",
+      "text": "Kaeya turns his back to the statue, looking out over the distant lights of Mondstadt, his usual playful facade momentarily replaced by a quiet pensiveness. Diluc remains still, the unspoken weight of their shared, complicated past lingering between them, a silent testament to truths only they could know."
+    }
+  ]
+}
