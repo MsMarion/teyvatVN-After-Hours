@@ -177,13 +177,13 @@ async def login(request: AuthRequest, db: Session = Depends(get_db)):
 # --- LIBRARY ENDPOINTS ---
 
 @app.get("/api/library/{username}")
-def get_library(username: str):
+def get_library(username: str, db: Session = Depends(get_db)):
     """
     Get all chapters for a user.
     Returns a list of chapter metadata.
     """
     # In a real app, we would validate the token here to ensure the requester is the user
-    if not auth.get_user(username):
+    if not auth.get_user(db, username):
         raise HTTPException(status_code=404, detail="User not found")
     
     chapters = utils.list_user_chapters(username)
