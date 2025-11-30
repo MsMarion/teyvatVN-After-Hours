@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiBook, FiCalendar, FiUsers, FiTrash2, FiEdit2 } from "react-icons/fi";
+import { FiBook, FiCalendar, FiUsers, FiTrash2, FiEdit2, FiSettings } from "react-icons/fi";
 import toast from "react-hot-toast";
 import Layout from "../components/Layout";
 import { useAuth } from "../context/AuthContext";
@@ -135,6 +135,12 @@ export default function LibraryPage() {
                             Your collection of generated stories. Revisit your favorite moments
                             or continue where you left off.
                         </p>
+                        <button
+                            onClick={() => navigate("/settings")}
+                            className="mt-4 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+                        >
+                            <FiSettings /> API Settings
+                        </button>
                     </section>
 
                     {isLoading ? (

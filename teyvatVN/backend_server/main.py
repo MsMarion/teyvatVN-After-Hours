@@ -75,12 +75,21 @@ class ChapterData(BaseModel):
 class GenerateRequest(BaseModel):
     prompt: str
     username: str
+    api_key: str | None = None
+
+class UpdateSettingsRequest(BaseModel):
+    username: str
+    gemini_api_key: str
 
 # Pydantic model for auth
 class AuthRequest(BaseModel):
     username: str
     password: str
     email: str
+
+class UpdateSettingsRequest(BaseModel):
+    username: str
+    gemini_api_key: str
 
 # Pydantic model for completing registration
 class CompleteRegistrationRequest(BaseModel):
@@ -172,6 +181,28 @@ async def login(request: AuthRequest, db: Session = Depends(get_db)):
     
     access_token = jwt_utils.create_access_token(data={"sub": user.username})
     return {"status": "success", "username": user.username, "token": access_token}
+
+@app.put("/api/user/settings")
+async def update_settings(request: UpdateSettingsRequest, db: Session = Depends(get_db)):
+    user = auth.get_user(db, request.username)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    user.gemini_api_key = request.gemini_api_key
+    db.commit()
+    
+    return {"status": "success", "message": "Settings updated"}
+
+@app.get("/api/user/settings/{username}")
+async def get_settings(username: str, db: Session = Depends(get_db)):
+    user = auth.get_user(db, username)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+        
+    return {
+        "status": "success", 
+        "gemini_api_key": user.gemini_api_key
+    }
 
 
 # --- LIBRARY ENDPOINTS ---
@@ -299,7 +330,7 @@ async def update_segments(username: str, chapter_id: str, request: Request):
 
 # Create a new chapter or overwrite it
 @app.post("/api/{username}/{chapter_id}")
-async def save_chapter(username: str, chapter_id: str, request: Request):
+async def save_chapter(username: str, chapter_id: str, request: Request, db: Session = Depends(get_db)):
     try:
         body = await request.json()
         prompt = body["prompt"]
@@ -324,10 +355,14 @@ async def save_chapter(username: str, chapter_id: str, request: Request):
         "start_setting": background if isinstance(background, str) else background.get("name", "Unknown"),
         "story_direction": prompt
     }
+
+    # Get user API key
+    user = auth.get_user(db, username)
+    api_key = user.gemini_api_key if user else None
     
     # Generate the full story
     try:
-        story_segments = generate_ai_calls.generate_story(chapter_input)
+        story_segments = generate_ai_calls.generate_story(chapter_input, api_key=api_key)
     except Exception as e:
         print(f"Generation failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))
@@ -351,7 +386,7 @@ async def save_chapter(username: str, chapter_id: str, request: Request):
 
 # NEW: Simplified generation endpoint
 @app.post("/api/generate")
-async def generate_chapter(request: GenerateRequest):
+async def generate_chapter(request: GenerateRequest, db: Session = Depends(get_db)):
     """
     Generate a new chapter from a simple prompt.
     Auto-increments chapter ID and uses simplified generation.
@@ -381,8 +416,16 @@ async def generate_chapter(request: GenerateRequest):
         print(f"Generating chapter {chapter_id} for user {username}")
         print(f"Prompt: {prompt}")
         
+        # Get user API key
+        user = auth.get_user(db, username)
+        api_key = user.gemini_api_key if user else None
+        
+        # Get user API key
+        user = auth.get_user(db, username)
+        api_key = user.gemini_api_key if user else None
+        
         # Generate the chapter using new simplified function
-        chapter_data = generate_ai_calls.generate_chapter_from_prompt(prompt)
+        chapter_data = generate_ai_calls.generate_chapter_from_prompt(prompt, api_key=api_key)
         
         # Save to file
         path = utils.get_chapter_path(username, chapter_id)

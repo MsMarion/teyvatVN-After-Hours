@@ -24,7 +24,7 @@ def clean_json_string(json_str):
     return json_str.strip()
 
 # assume beats are a list of details
-def generate_beat_details(beats, chapter_data):
+def generate_beat_details(beats, chapter_data, api_key=None):
     list_of_details = []
     previous_beat = None
     
@@ -111,6 +111,9 @@ def generate_beat_details(beats, chapter_data):
             },
         ]
         
+        if api_key:
+            genai.configure(api_key=api_key)
+        
         model = genai.GenerativeModel("gemini-2.5-flash-lite")
         
         try:
@@ -141,7 +144,7 @@ def generate_beat_details(beats, chapter_data):
 
     return list_of_details
 
-def generate_beats(chapter_data):
+def generate_beats(chapter_data, api_key=None):
     print("Generating beats...")
     
     if isinstance(chapter_data, str):
@@ -204,6 +207,9 @@ def generate_beats(chapter_data):
         },
     ]
     
+    if api_key:
+        genai.configure(api_key=api_key)
+
     model = genai.GenerativeModel("gemini-2.5-flash-lite")
     
     try:
@@ -217,18 +223,18 @@ def generate_beats(chapter_data):
         print(f"Error generating beats: {e}")
         return "[]"
 
-def generate_story(chapter_data):
+def generate_story(chapter_data, api_key=None):
     """Main function to generate the full story."""
     # 1. Generate Beats
-    beats_json_str = generate_beats(chapter_data)
+    beats_json_str = generate_beats(chapter_data, api_key=api_key)
     
     # 2. Generate Details from Beats
-    story_segments = generate_beat_details(beats_json_str, chapter_data)
+    story_segments = generate_beat_details(beats_json_str, chapter_data, api_key=api_key)
     
     return story_segments
 
 
-def generate_chapter_from_prompt(prompt: str) -> dict:
+def generate_chapter_from_prompt(prompt: str, api_key: str | None = None) -> dict:
     """
     Generate a complete visual novel chapter from a simple prompt.
     Returns a properly formatted chapter with dialogue and narration segments.
@@ -311,6 +317,9 @@ Remember to output ONLY the JSON object, nothing else."""
         },
     ]
     
+    if api_key:
+        genai.configure(api_key=api_key)
+
     model = genai.GenerativeModel(
         "gemini-2.5-flash",
         system_instruction=system_instructions
