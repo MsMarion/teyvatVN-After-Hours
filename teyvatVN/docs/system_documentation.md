@@ -156,3 +156,11 @@ Authentication is handled via a custom token-based system (migrating to more sec
 2.  Backend verifies credentials and returns a token.
 3.  Frontend stores token in `localStorage`.
 4.  `ProtectedRoute` checks for token presence before rendering protected pages (`/story`, `/play`, `/editor`).
+
+---
+
+## 6. Future Improvements / TODO
+
+- [ ] **API Key Guide**: Create a "How to get your Gemini API Key" guide for users to help them set up their account.
+- [ ] **Rate Limiting**: Implement a rate limit or quota system for the free tier to prevent spam and abuse of the system API key (if enabled) or server resources.
+
