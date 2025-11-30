@@ -59,7 +59,10 @@ This PRD covers the backend and frontend implementation required for Google OAut
 *   **FR.BE.4:** Decode the ID token to extract user information (email, name, etc.).
 *   **FR.BE.5:** Check if a user with the extracted email already exists in the internal database.
     *   **FR.BE.5.1:** If the user exists, log them in.
-    *   **FR.BE.5.2:** If the user does not exist, create a new user account in the internal database using the Google-provided email and a generated username/password.
+    *   **FR.BE.5.2:** If the user does not exist:
+        *   Generate a temporary "partial registration" token containing the user's email and name.
+        *   Redirect the user to the frontend `/complete-registration` page with this token.
+        *   Allow the user to choose a username to complete the account creation process.
 *   **FR.BE.6:** Generate and return a TeyvatVN-specific JWT (access token) to the frontend upon successful authentication/registration via Google.
 *   **FR.BE.7:** Handle errors during the OAuth2 flow (e.g., invalid code, Google API errors) and return appropriate HTTP status codes and messages.
 
