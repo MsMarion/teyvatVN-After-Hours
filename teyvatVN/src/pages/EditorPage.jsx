@@ -49,7 +49,7 @@ export default function EditorPage() {
     const loadChapter = async () => {
         setIsLoading(true);
         try {
-            const response = await fetch(`http://localhost:4000/api/chapter/${username}/${chapterId}`);
+            const response = await fetch(`http://localhost:6002/api/chapter/${username}/${chapterId}`);
 
             if (!response.ok) {
                 throw new Error("Failed to load chapter");
@@ -81,7 +81,7 @@ export default function EditorPage() {
                 segments: segments
             };
 
-            const response = await fetch(`http://localhost:4000/api/chapter/${username}/${chapterId}/segments`, {
+            const response = await fetch(`http://localhost:6002/api/chapter/${username}/${chapterId}/segments`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ segments: segments })

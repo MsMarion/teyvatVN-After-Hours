@@ -30,7 +30,7 @@ export default function LibraryPage() {
 
         setIsLoading(true);
         try {
-            const response = await fetch(`http://localhost:4000/api/library/${username}`);
+            const response = await fetch(`http://localhost:6002/api/library/${username}`);
 
             if (!response.ok) {
                 throw new Error("Failed to fetch library");
@@ -78,7 +78,7 @@ export default function LibraryPage() {
         }
 
         try {
-            const response = await fetch(`http://localhost:4000/api/chapter/${username}/${chapterId}`, {
+            const response = await fetch(`http://localhost:6002/api/chapter/${username}/${chapterId}`, {
                 method: "DELETE"
             });
 
@@ -103,7 +103,7 @@ export default function LibraryPage() {
         }
 
         try {
-            const response = await fetch(`http://localhost:4000/api/chapter/${username}/${chapterId}`, {
+            const response = await fetch(`http://localhost:6002/api/chapter/${username}/${chapterId}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ title: newTitle })

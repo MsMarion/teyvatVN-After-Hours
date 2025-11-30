@@ -84,7 +84,7 @@ export default function StoryPage() {
 
     try {
       console.log(`Loading chapter: ${chapterId} for user: ${username}`);
-      const response = await fetch(`http://localhost:4000/api/chapter/${username}/${chapterId}`);
+      const response = await fetch(`http://localhost:6002/api/chapter/${username}/${chapterId}`);
 
       if (!response.ok) {
         throw new Error("Failed to load chapter");
