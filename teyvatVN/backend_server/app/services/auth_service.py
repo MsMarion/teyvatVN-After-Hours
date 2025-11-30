@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 from fastapi import Depends
 from datetime import datetime
 
-from database import get_db
-from models import User
+from app.core.database import get_db
+from app.models.sql import User
 
 def get_password_hash(password: str) -> str:
     """Hash a password using bcrypt."""

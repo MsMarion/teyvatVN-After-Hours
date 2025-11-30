@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { FiSave, FiPlay, FiPlus, FiTrash2, FiMove } from "react-icons/fi";
 import toast from "react-hot-toast";
-import Layout from "../components/Layout";
+import Layout from "../components/layout/Layout";
 import { useAuth } from "../context/AuthContext";
 import "./EditorPage.css";
 
@@ -13,7 +13,7 @@ import bg2 from "../assets/background/mondstadt-night.webp";
 import bg3 from "../assets/background/statue-of-seven-day.png";
 
 // Components
-import VNScene from "../components/VNScene";
+import VNScene from "../components/vn/VNScene";
 import { characterDatabase } from "../data/characterData.js";
 import { API_BASE_URL } from "../config/api";
 

@@ -21,7 +21,7 @@ import SettingsPage from "./pages/SettingsPage.jsx";
 
 import { CharacterProvider } from "./context/CharacterContext.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
-import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import ProtectedRoute from "./components/auth/ProtectedRoute.jsx";
 
 function App() {
   return (

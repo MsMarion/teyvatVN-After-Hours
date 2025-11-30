@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiSave, FiArrowLeft, FiKey } from "react-icons/fi";
 import toast from "react-hot-toast";
-import Layout from "../components/Layout";
+import Layout from "../components/layout/Layout";
 import { useAuth } from "../context/AuthContext";
 import { API_BASE_URL } from "../config/api";
 import pageBg from "../assets/background/goodNews.jpg"; // Reusing background

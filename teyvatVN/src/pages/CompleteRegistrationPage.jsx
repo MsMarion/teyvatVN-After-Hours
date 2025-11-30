@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { jwtDecode } from "jwt-decode";
 import api from "../api/axios";
 import toast from "react-hot-toast";
-import Layout from "../components/Layout";
+import Layout from "../components/layout/Layout";
 import pageBg from "../assets/background/goodNews.jpg";
 import "./LoginPage.css"; // Reuse login page styles
 

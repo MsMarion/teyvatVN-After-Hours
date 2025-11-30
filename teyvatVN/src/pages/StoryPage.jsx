@@ -5,14 +5,14 @@ import toast from "react-hot-toast";
 import "./StoryPage.css";
 
 // Components
-import VNScene from "../components/VNScene";
-import BackgroundSelector from "../components/BackgroundSelector";
-import Layout from "../components/Layout";
+import VNScene from "../components/vn/VNScene";
+import BackgroundSelector from "../components/vn/BackgroundSelector";
+import Layout from "../components/layout/Layout";
 
 // Config & Context
 import { useCharacters } from "../context/CharacterContext";
 import { characterDatabase } from "../data/characterData.js";
-import SegmentNavigator from "../components/SegmentNavigator";
+import SegmentNavigator from "../components/vn/SegmentNavigator";
 import { BACKGROUND_OPTIONS } from "../config/backgrounds.js";
 import { API_URL, API_BASE_URL } from "../config/api";
 

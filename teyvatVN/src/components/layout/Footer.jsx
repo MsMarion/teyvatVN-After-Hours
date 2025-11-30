@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import quillIcon from "../assets/images/quill.png";
+import quillIcon from "../../assets/images/quill.png";
 import "./Footer.css";
 
 export default function Footer() {

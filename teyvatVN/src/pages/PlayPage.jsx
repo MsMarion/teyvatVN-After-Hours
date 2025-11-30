@@ -4,8 +4,8 @@ import toast from "react-hot-toast";
 import "./StoryPage.css"; // Reusing StoryPage styles
 
 // Components
-import VNScene from "../components/VNScene";
-import Layout from "../components/Layout";
+import VNScene from "../components/vn/VNScene";
+import Layout from "../components/layout/Layout";
 
 // Config & Context
 import { BACKGROUND_OPTIONS } from "../config/backgrounds.js";

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import Layout from "../components/Layout";
+import Layout from "../components/layout/Layout";
 import pageBg from "../assets/background/goodNews.jpg";
 import "./LoginPage.css";
 

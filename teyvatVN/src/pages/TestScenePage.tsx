@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import SegmentNavigator from "../components/SegmentNavigator";
+import SegmentNavigator from "../components/vn/SegmentNavigator";
 import fallbackScene from "../data/sample_scene.json";
 
 const url = "https://script-deferred-sg-anthony.trycloudflare.com/data/dawn/chapter1/output.json";
@@ -39,7 +39,7 @@ export default function TestScenePage() {
     }
 
     fetch(url)
-      
+
       .then((res) => {
         if (!res.ok) throw new Error("Fetch failed");
         return res.json();

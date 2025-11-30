@@ -1,8 +1,8 @@
 import React from "react";
 import VNTextBox from "./VNTextBox";
-import { characterDatabase } from "../data/characterData.js";
-import quillIcon from "../assets/images/quill.png";
-import "../pages/StoryPage.css"; // Reuse existing styles for now
+import { characterDatabase } from "../../data/characterData.js";
+import quillIcon from "../../assets/images/quill.png";
+import "../../pages/StoryPage.css"; // Reuse existing styles for now
 
 export default function VNScene({
     story,
