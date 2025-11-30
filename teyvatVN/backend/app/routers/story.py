@@ -1,3 +1,10 @@
+"""
+Story management router.
+
+This module defines API endpoints for managing user stories (chapters).
+It includes functionality to list, retrieve, delete, and update chapters.
+"""
+
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 import os
@@ -32,6 +39,10 @@ def get_library(username: str, db: Session = Depends(get_db)):
 
 @router.get("/api/chapter/{username}/{chapter_id}")
 def get_chapter(username: str, chapter_id: str):
+    """
+    Retrieve a specific chapter by ID.
+    Reads the chapter data from the JSON file.
+    """
     path = utils.get_chapter_path(username, chapter_id)
     if not os.path.exists(path):
         return {"message": "Chapter not found", "data": None}

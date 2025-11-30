@@ -1,14 +1,30 @@
+"""
+Common utility functions.
+
+This module contains helper functions for file system operations,
+such as managing user chapters and data directories.
+"""
+
 import os
 import re
 from typing import Optional
 
+# Base data directory
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 
 
 def get_next_chapter_id(username: str) -> str:
     """
     Get the next available chapter ID for a user.
-    Returns 'chapter1' if no chapters exist, otherwise 'chapterN+1'.
+    
+    Checks the user's data directory for existing chapters and returns
+    the next sequential ID (e.g., 'chapter1', 'chapter2').
+
+    Args:
+        username (str): The username of the user.
+
+    Returns:
+        str: The next available chapter ID (e.g., 'chapterN+1').
     """
     user_dir = os.path.join(DATA_DIR, username)
     
@@ -37,7 +53,16 @@ def get_next_chapter_id(username: str) -> str:
 def list_user_chapters(username: str) -> list[dict]:
     """
     List all chapters for a user with metadata.
-    Returns a list of chapter metadata including title, characters, and creation time.
+    
+    Scans the user's directory for chapters and reads their metadata
+    from the 'output.json' file in each chapter directory.
+
+    Args:
+        username (str): The username of the user.
+
+    Returns:
+        list[dict]: A list of dictionaries, each containing chapter metadata 
+                    (id, title, characters, backgrounds, created_at, path).
     """
     import json
     from datetime import datetime
@@ -96,7 +121,15 @@ def list_user_chapters(username: str) -> list[dict]:
 def get_chapter_path(username: str, chapter_id: str) -> str:
     """
     Get the full path to a chapter's output.json file.
-    Creates the directory if it doesn't exist.
+    
+    Creates the directory structure if it doesn't exist.
+
+    Args:
+        username (str): The username.
+        chapter_id (str): The chapter ID.
+
+    Returns:
+        str: The absolute path to the output.json file.
     """
     folder = os.path.join(DATA_DIR, username, chapter_id)
     os.makedirs(folder, exist_ok=True)

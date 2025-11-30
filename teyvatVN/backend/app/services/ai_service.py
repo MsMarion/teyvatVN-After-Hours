@@ -1,3 +1,10 @@
+"""
+AI Service for generating visual novel content.
+
+This module interacts with the Google Gemini API to generate story beats,
+detailed narrative segments, and full chapters based on user prompts.
+"""
+
 import google.generativeai as genai
 import os
 import time
@@ -25,6 +32,20 @@ def clean_json_string(json_str):
 
 # assume beats are a list of details
 def generate_beat_details(beats, chapter_data, api_key=None):
+    """
+    Expands a list of story beats into detailed narrative segments.
+
+    Iterates through each beat and uses the LLM to generate a full scene description,
+    maintaining continuity from the previous beat and foreshadowing the next.
+
+    Args:
+        beats (list | str): List of beat objects or a JSON string representing them.
+        chapter_data (dict | str): Contextual data for the chapter (characters, setting, etc.).
+        api_key (str, optional): API key to use for this request.
+
+    Returns:
+        list[dict]: A list of detailed story segments.
+    """
     list_of_details = []
     previous_beat = None
     
@@ -145,6 +166,16 @@ def generate_beat_details(beats, chapter_data, api_key=None):
     return list_of_details
 
 def generate_beats(chapter_data, api_key=None):
+    """
+    Generates a high-level outline (beats) for a chapter.
+
+    Args:
+        chapter_data (dict | str): Contextual data for the chapter.
+        api_key (str, optional): API key to use.
+
+    Returns:
+        str: A JSON string representing the list of beats.
+    """
     print("Generating beats...")
     
     if isinstance(chapter_data, str):
@@ -224,7 +255,18 @@ def generate_beats(chapter_data, api_key=None):
         return "[]"
 
 def generate_story(chapter_data, api_key=None):
-    """Main function to generate the full story."""
+    """
+    Main function to generate the full story.
+    
+    Orchestrates the process by first generating beats and then expanding them into details.
+
+    Args:
+        chapter_data (dict): Input data for the story generation.
+        api_key (str, optional): API key to use.
+
+    Returns:
+        list[dict]: The full list of generated story segments.
+    """
     # 1. Generate Beats
     beats_json_str = generate_beats(chapter_data, api_key=api_key)
     
@@ -238,6 +280,15 @@ def generate_chapter_from_prompt(prompt: str, api_key: str | None = None) -> dic
     """
     Generate a complete visual novel chapter from a simple prompt.
     Returns a properly formatted chapter with dialogue and narration segments.
+    
+    This is a "one-shot" generation function that produces a ready-to-use chapter structure.
+
+    Args:
+        prompt (str): The user's prompt describing the scene.
+        api_key (str, optional): API key to use.
+
+    Returns:
+        dict: The generated chapter data including title, characters, background, and segments.
     """
     # Standardized background options (must match frontend config)
     BACKGROUND_OPTIONS = [

@@ -1,3 +1,10 @@
+"""
+Google OAuth2 authentication utilities.
+
+This module handles the interaction with Google's OAuth2 service for user authentication.
+It includes functions to generate the authorization URL and handle the callback to retrieve user information.
+"""
+
 import os
 from dotenv import load_dotenv
 import httpx
@@ -6,6 +13,7 @@ from jose import jwt
 
 load_dotenv()
 
+# Google OAuth2 configuration
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 GOOGLE_REDIRECT_URI = f"{os.getenv('BACKEND_URL', 'http://localhost:6002')}/api/auth/google/callback"
@@ -16,6 +24,12 @@ GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token"
 GOOGLE_USERINFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo"
 
 async def get_google_oauth_url():
+    """
+    Generates the Google OAuth2 authorization URL.
+
+    Returns:
+        str: The URL to redirect the user to for Google login.
+    """
     if not GOOGLE_CLIENT_ID:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Google Client ID not configured.")
 
@@ -31,6 +45,18 @@ async def get_google_oauth_url():
     return f"{GOOGLE_AUTHORIZATION_URL}?{urlencode(params)}"
 
 async def google_callback(code: str):
+    """
+    Handles the Google OAuth2 callback.
+
+    Exchanges the authorization code for an access token and ID token,
+    then decodes the ID token to get user information.
+
+    Args:
+        code (str): The authorization code received from Google.
+
+    Returns:
+        dict: A dictionary containing user information (email, name, picture, tokens).
+    """
     if not GOOGLE_CLIENT_ID or not GOOGLE_CLIENT_SECRET:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Google Client ID or Secret not configured.")
 
@@ -43,6 +69,7 @@ async def google_callback(code: str):
     }
 
     async with httpx.AsyncClient() as client:
+        # Exchange code for tokens
         token_response = await client.post(GOOGLE_TOKEN_URL, data=token_params)
         token_response.raise_for_status()
         token_data = token_response.json()

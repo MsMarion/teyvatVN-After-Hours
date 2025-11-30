@@ -1,3 +1,10 @@
+"""
+AI generation router.
+
+This module defines API endpoints for generating story content using AI.
+It handles requests for creating new chapters and generating story segments.
+"""
+
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
@@ -18,6 +25,21 @@ class GenerateRequest(BaseModel):
 
 @router.post("/api/{username}/{chapter_id}")
 async def save_chapter(username: str, chapter_id: str, request: Request, db: Session = Depends(get_db)):
+    """
+    Generate and save a story chapter based on detailed inputs.
+
+    This endpoint takes character, background, and story direction inputs,
+    generates a full story using the AI service, and saves it to a file.
+
+    Args:
+        username (str): The username of the user.
+        chapter_id (str): The ID of the chapter to save.
+        request (Request): The request object containing JSON body.
+        db (Session): Database session.
+
+    Returns:
+        dict: Status and data of the generated chapter.
+    """
     try:
         body = await request.json()
         prompt = body["prompt"]
@@ -72,7 +94,16 @@ async def save_chapter(username: str, chapter_id: str, request: Request, db: Ses
 async def generate_chapter(request: GenerateRequest, db: Session = Depends(get_db)):
     """
     Generate a new chapter from a simple prompt.
-    Auto-increments chapter ID and uses simplified generation.
+    
+    This is a streamlined endpoint that auto-increments the chapter ID
+    and uses a one-shot generation process.
+
+    Args:
+        request (GenerateRequest): The request body containing prompt and username.
+        db (Session): Database session.
+
+    Returns:
+        dict: Status and data of the generated chapter.
     """
     try:
         prompt = request.prompt

@@ -1,3 +1,10 @@
+"""
+Authentication router.
+
+This module defines API endpoints for user authentication, registration,
+and settings management. It supports both local (username/password) and Google OAuth2 authentication.
+"""
+
 from fastapi import APIRouter, Depends, HTTPException, status, Request
 from sqlalchemy.orm import Session
 from starlette.responses import RedirectResponse
@@ -30,6 +37,12 @@ FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:6001")
 
 @router.post("/api/auth/complete-registration")
 async def complete_registration(request: CompleteRegistrationRequest, db: Session = Depends(get_db)):
+    """
+    Complete user registration after Google OAuth.
+
+    This endpoint is used when a user signs up with Google but needs to provide
+    additional information (like a username) to complete their account setup.
+    """
     token = request.token
     username = request.username
 
@@ -60,11 +73,21 @@ async def complete_registration(request: CompleteRegistrationRequest, db: Sessio
 
 @router.get("/api/auth/google/login")
 async def google_login():
+    """
+    Initiate Google OAuth2 login flow.
+    Redirects the user to Google's authorization page.
+    """
     google_oauth_url = await google_auth.get_google_oauth_url()
     return RedirectResponse(google_oauth_url)
 
 @router.get("/api/auth/google/callback")
 async def google_callback(code: str, db: Session = Depends(get_db)):
+    """
+    Handle Google OAuth2 callback.
+    
+    Receives the authorization code, exchanges it for tokens, and retrieves user info.
+    If the user exists, logs them in. If not, redirects to registration completion.
+    """
     user_info = await google_auth.google_callback(code)
     email = user_info.get("email")
     name = user_info.get("name")
@@ -89,6 +112,9 @@ async def google_callback(code: str, db: Session = Depends(get_db)):
 
 @router.post("/api/auth/register")
 async def register(request: AuthRequest, db: Session = Depends(get_db)):
+    """
+    Register a new user with username and password.
+    """
     if not request.username or not request.password or not request.email:
         raise HTTPException(status_code=400, detail="Username, password, and email are required")
     
@@ -101,6 +127,10 @@ async def register(request: AuthRequest, db: Session = Depends(get_db)):
 
 @router.post("/api/auth/login")
 async def login(request: AuthRequest, db: Session = Depends(get_db)):
+    """
+    Authenticate a user with username and password.
+    Returns a JWT access token upon success.
+    """
     user = auth_service.authenticate_user(db, request.username, request.password)
     if not user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
@@ -110,6 +140,9 @@ async def login(request: AuthRequest, db: Session = Depends(get_db)):
 
 @router.put("/api/user/settings")
 async def update_settings(request: UpdateSettingsRequest, db: Session = Depends(get_db)):
+    """
+    Update user settings (e.g., Gemini API key).
+    """
     user = auth_service.get_user(db, request.username)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -121,6 +154,10 @@ async def update_settings(request: UpdateSettingsRequest, db: Session = Depends(
 
 @router.get("/api/user/settings/{username}")
 async def get_settings(username: str, db: Session = Depends(get_db)):
+    """
+    Get user settings.
+    Returns the decrypted Gemini API key.
+    """
     user = auth_service.get_user(db, username)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")

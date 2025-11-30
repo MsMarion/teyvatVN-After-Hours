@@ -1,3 +1,10 @@
+"""
+Security utilities for encryption and decryption.
+
+This module provides functions to encrypt and decrypt sensitive data (like API keys)
+using the Fernet symmetric encryption algorithm.
+"""
+
 from cryptography.fernet import Fernet
 import os
 import base64
@@ -15,17 +22,34 @@ if not ENCRYPTION_KEY:
     print(f"Generated Key: {ENCRYPTION_KEY}")
     print("Please add this to your .env file as ENCRYPTION_KEY=...")
 
+# Initialize the Fernet cipher suite
 cipher_suite = Fernet(ENCRYPTION_KEY.encode() if isinstance(ENCRYPTION_KEY, str) else ENCRYPTION_KEY)
 
 def encrypt_value(value: str) -> str:
-    """Encrypts a string value."""
+    """
+    Encrypts a string value.
+
+    Args:
+        value (str): The plaintext string to encrypt.
+
+    Returns:
+        str: The encrypted string (base64 encoded).
+    """
     if not value:
         return value
     encrypted_bytes = cipher_suite.encrypt(value.encode())
     return encrypted_bytes.decode()
 
 def decrypt_value(value: str) -> str:
-    """Decrypts a string value."""
+    """
+    Decrypts a string value.
+
+    Args:
+        value (str): The encrypted string to decrypt.
+
+    Returns:
+        str: The decrypted plaintext string.
+    """
     if not value:
         return value
     try:
