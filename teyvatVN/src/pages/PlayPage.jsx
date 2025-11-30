@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
-import "./StoryPage.css"; // Reusing StoryPage styles
+import "../styles/StoryPage.css"; // Reusing StoryPage styles
 
 // Components
 import VNScene from "../components/vn/VNScene";

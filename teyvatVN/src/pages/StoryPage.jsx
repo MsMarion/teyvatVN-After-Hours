@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { FiArrowRight, FiRefreshCcw } from "react-icons/fi";
 import toast from "react-hot-toast";
-import "./StoryPage.css";
+import "../styles/StoryPage.css";
 
 // Components
 import VNScene from "../components/vn/VNScene";

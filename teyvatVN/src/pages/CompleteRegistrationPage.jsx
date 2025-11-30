@@ -6,7 +6,7 @@ import api from "../api/axios";
 import toast from "react-hot-toast";
 import Layout from "../components/layout/Layout";
 import pageBg from "../assets/background/goodNews.jpg";
-import "./LoginPage.css"; // Reuse login page styles
+import "../styles/LoginPage.css";
 
 export default function CompleteRegistrationPage() {
     const [username, setUsername] = useState("");

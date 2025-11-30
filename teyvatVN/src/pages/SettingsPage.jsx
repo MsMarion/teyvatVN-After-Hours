@@ -6,7 +6,7 @@ import Layout from "../components/layout/Layout";
 import { useAuth } from "../context/AuthContext";
 import { API_BASE_URL } from "../config/api";
 import pageBg from "../assets/background/goodNews.jpg"; // Reusing background
-import "./SettingsPage.css";
+import "../styles/SettingsPage.css";
 
 export default function SettingsPage() {
     const [apiKey, setApiKey] = useState("");

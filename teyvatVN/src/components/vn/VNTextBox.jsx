@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./VNTextBox.css"; // We'll create this or just rely on global styles for now, but better to separate.
+import "../../styles/VNTextBox.css"; // We'll create this or just rely on global styles for now, but better to separate.
 
 export default function VNTextBox({
     segments,

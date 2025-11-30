@@ -4,7 +4,7 @@ import { FiSave, FiPlay, FiPlus, FiTrash2, FiMove } from "react-icons/fi";
 import toast from "react-hot-toast";
 import Layout from "../components/layout/Layout";
 import { useAuth } from "../context/AuthContext";
-import "./EditorPage.css";
+import "../styles/EditorPage.css";
 
 // Assets
 import pageBg from "../assets/background/goodNews.jpg";

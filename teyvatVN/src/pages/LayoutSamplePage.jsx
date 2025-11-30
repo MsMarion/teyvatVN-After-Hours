@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../components/layout/Layout";
-import "./LayoutSamplePage.css";
+import "../styles/LayoutSamplePage.css";
 import pageBg from "../assets/background/goodNews.jpg";
 
 export default function LayoutSamplePage() {

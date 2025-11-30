@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import "./Layout.css";
+import "../../styles/Layout.css";
 
 export default function Layout({ children, backgroundImage, className = "" }) {
     return (

@@ -4,7 +4,7 @@ import { FiBook, FiCalendar, FiUsers, FiTrash2, FiEdit2, FiSettings } from "reac
 import toast from "react-hot-toast";
 import Layout from "../components/layout/Layout";
 import { useAuth } from "../context/AuthContext";
-import "./LibraryPage.css";
+import "../styles/LibraryPage.css";
 import { API_BASE_URL } from "../config/api";
 
 // Assets

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./loading.css";
+import "../styles/loading.css";
 import quillImage from "../assets/images/quill.png";
 
 export default function LoadingPage() {

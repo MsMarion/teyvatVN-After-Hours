@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 // --- CHANGED: We now use Link from 'react-scroll' for smooth scrolling anchors ---
 import { Link as ScrollLink, scroller } from "react-scroll";
 import { Link as RouterLink } from "react-router-dom"; // Keep this for page navigation
-import "./LandingPage.css";
+import "../styles/LandingPage.css";
 
 import heroVideo from "../assets/background/movingBG.mp4";
 

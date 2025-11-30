@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCharacters } from "../context/CharacterContext";
-import "./CharacterPage.css";
+import "../styles/CharacterPage.css";
 import Layout from "../components/layout/Layout";
 import pageBg from "../assets/background/goodNews.jpg";
 
