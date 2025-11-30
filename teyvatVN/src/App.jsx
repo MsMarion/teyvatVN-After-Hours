@@ -16,6 +16,7 @@ import LayoutSamplePage from "./pages/LayoutSamplePage.jsx";
 import CompleteRegistrationPage from "./pages/CompleteRegistrationPage.jsx"; // Import the new page
 import LibraryPage from "./pages/LibraryPage.jsx";
 import EditorPage from "./pages/EditorPage.jsx";
+import PlayPage from "./pages/PlayPage.jsx";
 
 import { CharacterProvider } from "./context/CharacterContext.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
@@ -73,6 +74,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <EditorPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/play"
+              element={
+                <ProtectedRoute>
+                  <PlayPage />
                 </ProtectedRoute>
               }
             />
