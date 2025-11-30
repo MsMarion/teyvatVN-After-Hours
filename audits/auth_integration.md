@@ -51,9 +51,9 @@ This audit reviews the authentication integration of the TeyvatVN application, c
 ### 1.2 Backend Authentication (`main.py`, `auth.py`, `google_auth.py`)
 
 **Locations**: 
-- `backend_server/main.py` (endpoints)
-- `backend_server/auth.py` (user management)
-- `backend_server/google_auth.py` (OAuth logic)
+- `backend/app/main.py` (endpoints)
+- `backend/app/routers/auth.py` (user management)
+- `backend/app/routers/google_auth.py` (OAuth logic)
 
 #### Strengths:
 - ✅ Password hashing using bcrypt
@@ -143,7 +143,7 @@ VITE_API_BASE_URL=http://localhost:6002
 ## 4. Library System Integration
 
 ### 4.1 User Story Storage
-**Location**: `backend_server/data/{username}/chapter{N}/output.json`
+**Location**: `backend/data/{username}/chapter{N}/output.json`
 
 #### Implementation:
 - File-system based storage (not database)
@@ -258,12 +258,12 @@ Authentication System Files:
 │   ├── src/components/ProtectedRoute.jsx (Route protection)
 │   └── src/config/api.js (API configuration)
 └── Backend
-    ├── main.py (Auth endpoints)
-    ├── auth.py (User management logic)
-    ├── google_auth.py (OAuth logic)
-    ├── jwt_utils.py (Token generation/validation)
-    ├── database.py (Database configuration)
-    └── models.py (User model)
+    ├── app/main.py (Auth endpoints)
+    ├── app/routers/auth.py (User management logic)
+    ├── app/routers/google_auth.py (OAuth logic)
+    ├── app/core/jwt_utils.py (Token generation/validation)
+    ├── app/core/database.py (Database configuration)
+    └── app/models (User model)
 ```
 
 ---

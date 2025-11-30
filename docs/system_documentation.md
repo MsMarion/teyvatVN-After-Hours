@@ -130,7 +130,7 @@ export const characterDatabase = {
 The backend is a FastAPI application serving the API endpoints.
 
 ### Location
-`backend_server/main.py`
+`backend/app/main.py`
 
 ### Key Configuration
 - **Port**: Defaults to `8000`.
