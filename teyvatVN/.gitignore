@@ -27,3 +27,4 @@ dist-ssr
 # Python
 __pycache__
 sql_app.db
+keys.txt
