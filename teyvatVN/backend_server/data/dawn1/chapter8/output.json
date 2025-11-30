@@ -1,0 +1,65 @@
+{
+  "title": "Echoes Beneath the Anemo Archon",
+  "characters": [
+    "Diluc",
+    "Kaeya"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The grand Statue of the Seven stands majestically, overlooking Mondstadt. The evening air is cool and still, a soft breeze rustling through the nearby trees. Diluc and Kaeya stand a few paces apart, their silhouettes stark against the twilight glow, an unspoken tension thick between them.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "A heavy silence hangs in the air, broken only by the distant sounds of the city. Diluc gazes towards the horizon, his back to Kaeya, while Kaeya watches him with a knowing, almost predatory calm."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(lightly mocking)",
+      "line": "Such a grand view, isn't it, Master Diluc? One could almost believe in eternal devotion standing here. Or, perhaps, remember how fleeting it truly is."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(without turning)",
+      "line": "Your philosophical musings are wasted on me, Kaeya. Speak your mind, or don't speak at all."
+    },
+    {
+      "type": "narration",
+      "text": "Kaeya takes a step closer, his smile not quite reaching his eye. The atmosphere becomes charged, a familiar dance of provocation and icy retort beginning to unfold."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(slyly)",
+      "line": "Oh, but I am speaking my mind. I merely wonder if even your formidable resolve occasionally wavers when memories of... certain individuals resurface. Those from a time before the burdens you now carry."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(turning sharply, gaze hardening)",
+      "line": "Some things are best left buried, Kaeya. My past is my own."
+    },
+    {
+      "type": "narration",
+      "text": "A flash of something akin to pain flickers across Diluc's face, quickly suppressed. Kaeya, observing this, lets his own facade slip slightly, a hint of genuine melancholy replacing his usual smirk."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(softer, reflective)",
+      "line": "Perhaps. But some wounds, no matter how deep, never truly heal. They simply scar over, a constant reminder of what was lost. We both know that, don't we?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(looking away, voice low)",
+      "line": "Living in the past serves no purpose. Only the present and the future matter. What's done is done."
+    },
+    {
+      "type": "narration",
+      "text": "The wind picks up, rustling Diluc's cape and Kaeya's hair. They stand in silence again, the weight of shared and unshared memories pressing down on them under the watchful, silent gaze of the Anemo Archon."
+    }
+  ]
+}

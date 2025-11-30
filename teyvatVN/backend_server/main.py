@@ -360,6 +360,11 @@ async def save_chapter(username: str, chapter_id: str, request: Request, db: Ses
     user = auth.get_user(db, username)
     api_key = user.gemini_api_key if user else None
     
+    # Enforce API Key
+    use_dev_key = os.getenv("USE_DEV_KEY", "false").lower() == "true"
+    if not api_key and not use_dev_key:
+        raise HTTPException(status_code=400, detail="Please configure your Gemini API Key in Settings.")
+    
     # Generate the full story
     try:
         story_segments = generate_ai_calls.generate_story(chapter_input, api_key=api_key)
@@ -420,9 +425,10 @@ async def generate_chapter(request: GenerateRequest, db: Session = Depends(get_d
         user = auth.get_user(db, username)
         api_key = user.gemini_api_key if user else None
         
-        # Get user API key
-        user = auth.get_user(db, username)
-        api_key = user.gemini_api_key if user else None
+        # Enforce API Key
+        use_dev_key = os.getenv("USE_DEV_KEY", "false").lower() == "true"
+        if not api_key and not use_dev_key:
+            raise HTTPException(status_code=400, detail="Please configure your Gemini API Key in Settings.")
         
         # Generate the chapter using new simplified function
         chapter_data = generate_ai_calls.generate_chapter_from_prompt(prompt, api_key=api_key)

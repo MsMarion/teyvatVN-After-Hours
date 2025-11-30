@@ -1,0 +1,65 @@
+{
+  "title": "A Pop Quiz in the Tavern",
+  "characters": [
+    "Amber",
+    "Traveler"
+  ],
+  "backgrounds": [
+    "angels_share"
+  ],
+  "setting_narration": "The warm, inviting glow of Angel's Share offers a brief respite from the evening chill. The clinking of mugs and hushed conversations fill the air, but in a quiet corner, Amber and the Traveler are deeply engrossed in something more academic than alcoholic.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "Amber taps a small, rolled-up parchment against her chin, a playful gleam in her eyes as she looks at the Traveler."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Amber",
+      "expression_action": "(grinning playfully)",
+      "line": "Alright, Traveler! Next question for your Mondstadt Lore crash course: What's the biggest threat to the city, besides stormy weather and hilichurl camps?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Traveler",
+      "expression_action": "(pensive, looking up)",
+      "line": "Hmm, the biggest threat... Is it... economic instability caused by a lack of proper trade routes?"
+    },
+    {
+      "type": "narration",
+      "text": "Amber blinks, then lets out a small laugh, shaking her head. The Traveler's guess was thoughtful, but not quite what she was looking for."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Amber",
+      "expression_action": "(chuckling)",
+      "line": "Good try, very astute! But I was thinking more... literally. The *literal* biggest threat, always lurking above us, ready to cause chaos if not handled properly!"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Traveler",
+      "expression_action": "(eyes widening in realization)",
+      "line": "Oh! Dvalin! The Stormterror Dragon!"
+    },
+    {
+      "type": "narration",
+      "text": "Amber claps her hands together softly, a triumphant smile spreading across her face."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Amber",
+      "expression_action": "(beaming)",
+      "line": "Bingo! You got it! See, you're practically a Knight of Favonius already! Just a few more questions and you'll be ready for any pop quiz Master Jean throws at us!"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Traveler",
+      "expression_action": "(smiling)",
+      "line": "Thanks to you, Amber. Your lessons are much more fun than reading dusty old books."
+    },
+    {
+      "type": "narration",
+      "text": "Amber winks, already flipping the parchment to reveal the next question, eager to continue the impromptu study session late into the Mondstadt night."
+    }
+  ]
+}
