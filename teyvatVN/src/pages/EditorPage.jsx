@@ -15,6 +15,7 @@ import bg3 from "../assets/background/statue-of-seven-day.png";
 // Components
 import VNTextBox from "../components/VNTextBox";
 import { characterDatabase } from "../data/characterData.js";
+import { API_BASE_URL } from "../config/api";
 
 // Map background IDs to imported images
 const backgroundImages = {
@@ -49,7 +50,7 @@ export default function EditorPage() {
     const loadChapter = async () => {
         setIsLoading(true);
         try {
-            const response = await fetch(`http://localhost:6002/api/chapter/${username}/${chapterId}`);
+            const response = await fetch(`${API_BASE_URL}/api/chapter/${username}/${chapterId}`);
 
             if (!response.ok) {
                 throw new Error("Failed to load chapter");
@@ -81,7 +82,7 @@ export default function EditorPage() {
                 segments: segments
             };
 
-            const response = await fetch(`http://localhost:6002/api/chapter/${username}/${chapterId}/segments`, {
+            const response = await fetch(`${API_BASE_URL}/api/chapter/${username}/${chapterId}/segments`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ segments: segments })

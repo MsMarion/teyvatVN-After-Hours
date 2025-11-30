@@ -48,7 +48,7 @@ app = FastAPI()
 # Allow frontend to access this backend
 # Load environment variables
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:6001")
-BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
+BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:6002")
 
 # Allow frontend to access this backend
 app.add_middleware(

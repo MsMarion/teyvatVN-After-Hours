@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import Layout from "../components/Layout";
 import { useAuth } from "../context/AuthContext";
 import "./LibraryPage.css";
+import { API_BASE_URL } from "../config/api";
 
 // Assets
 import pageBg from "../assets/background/goodNews.jpg";
@@ -30,7 +31,7 @@ export default function LibraryPage() {
 
         setIsLoading(true);
         try {
-            const response = await fetch(`http://localhost:6002/api/library/${username}`);
+            const response = await fetch(`${API_BASE_URL}/api/library/${username}`);
 
             if (!response.ok) {
                 throw new Error("Failed to fetch library");
@@ -78,7 +79,7 @@ export default function LibraryPage() {
         }
 
         try {
-            const response = await fetch(`http://localhost:6002/api/chapter/${username}/${chapterId}`, {
+            const response = await fetch(`${API_BASE_URL}/api/chapter/${username}/${chapterId}`, {
                 method: "DELETE"
             });
 
@@ -103,7 +104,7 @@ export default function LibraryPage() {
         }
 
         try {
-            const response = await fetch(`http://localhost:6002/api/chapter/${username}/${chapterId}`, {
+            const response = await fetch(`${API_BASE_URL}/api/chapter/${username}/${chapterId}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ title: newTitle })

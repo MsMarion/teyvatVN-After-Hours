@@ -8,7 +8,7 @@ load_dotenv()
 
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
-GOOGLE_REDIRECT_URI = "http://localhost:6002/api/auth/google/callback" # This should match your Google Cloud Console setup
+GOOGLE_REDIRECT_URI = f"{os.getenv('BACKEND_URL', 'http://localhost:6002')}/api/auth/google/callback"
 
 # Google's OAuth2 endpoints
 GOOGLE_AUTHORIZATION_URL = "https://accounts.google.com/o/oauth2/v2/auth"

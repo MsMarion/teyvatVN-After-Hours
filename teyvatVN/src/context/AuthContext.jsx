@@ -1,13 +1,13 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import toast from "react-hot-toast";
 import axios from "axios"; // Import axios
-import { API_URL } from "../config/api";
+import { API_URL, API_BASE_URL } from "../config/api";
 
 const AuthContext = createContext(null);
 
 // Create an Axios instance for API calls
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL, // Base URL for authentication endpoints
+    baseURL: API_BASE_URL, // Base URL for authentication endpoints
     headers: {
         "Content-Type": "application/json",
     },
@@ -89,7 +89,9 @@ export const AuthProvider = ({ children }) => {
     const googleLogin = async () => {
         try {
             // Redirect to backend's Google login endpoint
-            window.location.href = `${import.meta.env.VITE_API_BASE_URL}/api/auth/google/login`;
+            const redirectUrl = `${API_BASE_URL}/api/auth/google/login`;
+            console.log("Initiating Google Login redirect to:", redirectUrl);
+            window.location.href = redirectUrl;
         } catch (error) {
             console.error("Google login initiation error:", error);
             toast.error("Failed to initiate Google login.");
