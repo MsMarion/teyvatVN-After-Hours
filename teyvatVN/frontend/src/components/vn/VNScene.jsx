@@ -4,6 +4,25 @@ import { characterDatabase } from "../../data/characterData.js";
 import quillIcon from "../../assets/images/quill.png";
 import "../../styles/StoryPage.css"; // Reuse existing styles for now
 
+/**
+ * VNScene Component
+ * 
+ * Renders the visual novel scene, including the background, character sprites,
+ * and the text box overlay.
+ * 
+ * It supports two modes:
+ * 1. Story Mode: Takes a full `story` object and manages state internally (via VNTextBox).
+ * 2. Controlled Mode: Takes `currentSegment` and `characters` props for external control (e.g., Editor).
+ * 
+ * Props:
+ * - story: The full story object (optional).
+ * - characters: List of character names to display (optional, for controlled mode).
+ * - currentSegment: The current dialogue/narration segment to display (optional, for controlled mode).
+ * - onNext/onPrev: Callbacks for navigation (optional, for controlled mode).
+ * - backgroundImage: URL of the background image.
+ * - isFullscreen: Boolean to toggle fullscreen styling.
+ * - onToggleFullscreen: Callback to toggle fullscreen mode.
+ */
 export default function VNScene({
     story,
     // Alternative to 'story' object for controlled mode:

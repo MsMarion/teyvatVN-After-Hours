@@ -31,6 +31,13 @@ const backgroundImages = {
   "angels_share": pageBg
 };
 
+/**
+ * Story Page Component
+ * 
+ * The main interface for generating and reading stories.
+ * Allows users to input a prompt, generate a story via AI,
+ * and view it in a visual novel format.
+ */
 export default function StoryPage() {
   const [prompt, setPrompt] = useState("");
   const [selectedBackground, setSelectedBackground] = useState(null);

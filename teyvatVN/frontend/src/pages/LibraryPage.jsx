@@ -10,6 +10,12 @@ import { API_BASE_URL } from "../config/api";
 // Assets
 import pageBg from "../assets/background/goodNews.jpg";
 
+/**
+ * Library Page Component
+ * 
+ * Displays a list of the user's generated stories (chapters).
+ * Allows users to read, edit, rename, or delete chapters.
+ */
 export default function LibraryPage() {
     const [chapters, setChapters] = useState([]);
     const [isLoading, setIsLoading] = useState(true);

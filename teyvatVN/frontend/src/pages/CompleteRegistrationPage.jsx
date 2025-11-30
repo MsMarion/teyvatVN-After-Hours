@@ -8,6 +8,12 @@ import Layout from "../components/layout/Layout";
 import pageBg from "../assets/background/goodNews.jpg";
 import "../styles/LoginPage.css";
 
+/**
+ * Complete Registration Page Component
+ * 
+ * Handles the final step of Google OAuth registration where the user
+ * chooses a username to complete their account setup.
+ */
 export default function CompleteRegistrationPage() {
     const [username, setUsername] = useState("");
     const [partialToken, setPartialToken] = useState(null);

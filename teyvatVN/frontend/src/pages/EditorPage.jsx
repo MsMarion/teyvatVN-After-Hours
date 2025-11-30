@@ -25,6 +25,14 @@ const backgroundImages = {
     "angels_share": pageBg
 };
 
+/**
+ * Editor Page Component
+ * 
+ * Allows users to edit existing chapters.
+ * Users can modify dialogue, add/remove segments, reorder segments,
+ * and change segment types (dialogue vs narration).
+ * Includes a live preview of the visual novel scene.
+ */
 export default function EditorPage() {
     const [searchParams] = useSearchParams();
     const [chapter, setChapter] = useState(null);

@@ -163,6 +163,12 @@ const allCharacters = [
   },
 ];
 
+/**
+ * Character Selection Page Component
+ * 
+ * Allows users to browse and select two characters for their story.
+ * Features a search bar, character cards, and a modal for detailed character info.
+ */
 export default function CharacterPage() {
   const [selected, setSelected] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");

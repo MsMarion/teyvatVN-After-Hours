@@ -1,5 +1,10 @@
 import React from "react";
 
+/**
+ * BackgroundSelector Component
+ * 
+ * A grid component for selecting a background image from a list.
+ */
 export default function BackgroundSelector({ backgrounds, selectedBackground, onSelect }) {
     return (
         <section className="background-selection-section">

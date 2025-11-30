@@ -20,6 +20,13 @@ import Footer from "../components/layout/Footer";
 
 import { useAuth } from "../context/AuthContext";
 
+/**
+ * Landing Page Component
+ * 
+ * The public-facing home page of the application.
+ * Features a hero video, "How to Play" section, and "About Us" section.
+ * Uses smooth scrolling for internal navigation.
+ */
 export default function LandingPage() {
   const videoRef = useRef(null);
   const { user, logout } = useAuth();

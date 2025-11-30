@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import "../../styles/VNTextBox.css"; // We'll create this or just rely on global styles for now, but better to separate.
 
+/**
+ * VNTextBox Component
+ * 
+ * Displays the dialogue or narration text in a visual novel style box.
+ * 
+ * Supports two modes:
+ * 1. Controlled Mode (Editor): Displays a single `segment` passed as a prop. Navigation is handled externally via callbacks.
+ * 2. Uncontrolled Mode (Story Reader): Takes a list of `segments` and manages the current index internally.
+ */
 export default function VNTextBox({
     segments,
     segment,

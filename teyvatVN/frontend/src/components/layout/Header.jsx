@@ -3,6 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "../../styles/Header.css";
 
+/**
+ * Header Component
+ * 
+ * Displays the application logo and navigation links.
+ * Shows different links based on authentication status (Login vs Logout).
+ */
 export default function Header() {
     const { user, logout } = useAuth();
     const navigate = useNavigate();

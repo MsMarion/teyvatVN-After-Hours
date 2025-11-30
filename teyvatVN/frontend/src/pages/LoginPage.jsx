@@ -5,6 +5,13 @@ import Layout from "../components/layout/Layout";
 import pageBg from "../assets/background/goodNews.jpg";
 import "../styles/LoginPage.css";
 
+/**
+ * Login Page Component
+ * 
+ * Handles user authentication (login and registration).
+ * Supports both username/password and Google OAuth login.
+ * Redirects to the previous page or character selection after successful login.
+ */
 export default function LoginPage() {
   const [isRegistering, setIsRegistering] = useState(false);
   const [username, setUsername] = useState("");

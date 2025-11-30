@@ -3,6 +3,12 @@ import toast from "react-hot-toast";
 import axios from "axios"; // Import axios
 import { API_URL, API_BASE_URL } from "../config/api";
 
+/**
+ * Authentication Context
+ * 
+ * Provides authentication state (user, token) and methods (login, register, logout)
+ * to the entire application.
+ */
 const AuthContext = createContext(null);
 
 // Create an Axios instance for API calls
@@ -18,12 +24,14 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(null); // Stores JWT
     const [loading, setLoading] = useState(true);
 
+    // Debug logging helper
     if (!window.authDebugLogs) window.authDebugLogs = [];
     const log = (msg, data) => {
         console.log(msg, data);
         window.authDebugLogs.push({ msg, data, time: new Date().toISOString() });
     };
 
+    // Check for stored token on initial load
     useEffect(() => {
         const storedToken = localStorage.getItem("authToken");
         const storedUser = localStorage.getItem("currentUser");
@@ -48,6 +56,10 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
     }, []);
 
+    /**
+     * Login function
+     * Authenticates user with username and password.
+     */
     const login = async (username, password) => {
         try {
             const response = await api.post("/api/auth/login", { username, password });
@@ -68,6 +80,10 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    /**
+     * Register function
+     * Creates a new user account.
+     */
     const register = async (username, password, email, apiKey) => {
         try {
             const response = await api.post("/api/auth/register", { username, password, email, gemini_api_key: apiKey });
@@ -86,6 +102,10 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    /**
+     * Google Login function
+     * Initiates the Google OAuth flow.
+     */
     const googleLogin = async () => {
         try {
             // Redirect to backend's Google login endpoint
@@ -98,6 +118,10 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    /**
+     * Logout function
+     * Clears user state and local storage.
+     */
     const logout = () => {
         setUser(null);
         setToken(null);

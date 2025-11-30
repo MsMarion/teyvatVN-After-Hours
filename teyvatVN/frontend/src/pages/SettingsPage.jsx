@@ -8,6 +8,11 @@ import { API_BASE_URL } from "../config/api";
 import pageBg from "../assets/background/goodNews.jpg"; // Reusing background
 import "../styles/SettingsPage.css";
 
+/**
+ * Settings Page Component
+ * 
+ * Allows users to manage their account settings, specifically the Gemini API key.
+ */
 export default function SettingsPage() {
     const [apiKey, setApiKey] = useState("");
     const [isLoading, setIsLoading] = useState(true);
@@ -114,6 +119,7 @@ export default function SettingsPage() {
                             type="submit"
                             disabled={isSaving}
                             className="save-button"
+                            title="Save Settings"
                         >
                             {isSaving ? "Saving..." : (
                                 <>

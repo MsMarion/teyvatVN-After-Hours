@@ -1,5 +1,13 @@
 // src/App.jsx
 
+/**
+ * Main Application Component
+ * 
+ * This component sets up the routing for the application using React Router.
+ * It also wraps the application with necessary context providers (Auth, Character)
+ * and the Toast notification provider.
+ */
+
 import React from "react";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -26,18 +34,20 @@ import ProtectedRoute from "./components/auth/ProtectedRoute.jsx";
 function App() {
   return (
     <Router>
+      {/* Context Providers wrap the application to provide global state */}
       <AuthProvider>
         <CharacterProvider>
           <Toaster position="top-center" />
           <Routes>
-            {/* Public Routes */}
+            {/* Public Routes - Accessible by anyone */}
             <Route path="/" element={<LoadingPage />} />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/complete-registration" element={<CompleteRegistrationPage />} />
             <Route path="/layout_sample" element={<LayoutSamplePage />} />
 
-            {/* Protected Routes */}
+            {/* Protected Routes - Require authentication */}
+            {/* Wrapped in ProtectedRoute component which redirects to login if not authenticated */}
             <Route
               path="/characters"
               element={
@@ -103,7 +113,7 @@ function App() {
               }
             />
 
-            {/* 404 fallback */}
+            {/* 404 fallback - Matches any URL not defined above */}
             <Route
               path="*"
               element={

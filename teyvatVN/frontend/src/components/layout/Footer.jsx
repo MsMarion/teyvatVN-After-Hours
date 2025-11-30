@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 import quillIcon from "../../assets/images/quill.png";
 import "../../styles/Footer.css";
 
+/**
+ * Footer Component
+ * 
+ * Displays the application footer with branding, sitemap links, and credits.
+ */
 export default function Footer() {
     return (
         <footer className="footer-container">

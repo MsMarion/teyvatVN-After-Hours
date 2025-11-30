@@ -3,6 +3,12 @@ import { useNavigate } from "react-router-dom";
 import "../styles/loading.css";
 import quillImage from "../assets/images/quill.png";
 
+/**
+ * Loading Page Component
+ * 
+ * Displays a loading animation with a quill icon and text.
+ * Automatically redirects to the landing page after a short delay.
+ */
 export default function LoadingPage() {
   const navigate = useNavigate();
   // State to control the fade-out animation
