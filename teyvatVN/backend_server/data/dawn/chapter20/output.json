@@ -1,0 +1,71 @@
+{
+  "title": "Echoes Under the Archon's Gaze",
+  "characters": [
+    "Diluc",
+    "Kaeya"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The air around the colossal Statue of the Seven is cool, a gentle evening breeze sweeping through Mondstadt. Below, the city lights begin to twinkle, a stark contrast to the quiet solemnity of the mountain path. Diluc stands, arms crossed, facing the cityscape, while Kaeya leans casually against a nearby stone pillar, his gaze on his adoptive brother.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "The wind whispers past the Anemo Archon's statue, carrying the distant sounds of Mondstadt's evening revelry, a stark counterpoint to the quiet tension between the two men."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(lightly smirking)",
+      "line": "A beautiful view, isn't it, Master Diluc? One could almost forget all the troubles of the world... or perhaps, remember them with a certain fondness."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(without turning)",
+      "line": "Fondness is a luxury some cannot afford. There are always troubles, Kaeya. Looking away changes nothing."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(pushing off the pillar, stepping closer)",
+      "line": "Ah, but even you, brother, must occasionally gaze back at the past. At moments of warmth. Of... companionship. Before the chill set in."
+    },
+    {
+      "type": "narration",
+      "text": "Diluc's posture stiffens imperceptibly. He remains silent, his back still to Kaeya, but his grip on his own arm tightens."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(softly, a rare sincerity in his tone)",
+      "line": "There were those who saw beyond the formality, weren't there? Who saw the fire beneath the ice, or the heart beneath the mask. Even for a short while."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(turning slowly, eyes shadowed)",
+      "line": "Such memories serve only to remind one of what was lost. Or what was never truly theirs to begin with."
+    },
+    {
+      "type": "narration",
+      "text": "A brief, heavy silence falls between them, filled only by the rustling leaves and the distant murmur of the city below. The unspoken weight of their shared, complicated past hangs in the air."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(a small, melancholic smile)",
+      "line": "Perhaps. But even broken things leave beautiful fragments. A reminder that something good, however fleeting, once existed."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(gazing out again at the city, a flicker of something unreadable in his eyes)",
+      "line": "Fragments. Yes. And sometimes, those fragments are sharper than any blade."
+    },
+    {
+      "type": "narration",
+      "text": "Diluc says no more, turning back to the city lights. Kaeya watches him for a moment longer, the usual playful glint in his eye replaced by a shared, quiet understanding of old pains."
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "title": "Echoes Under the Archon's Gaze",
+  "characters": [
+    "Diluc",
+    "Kaeya"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The air at the Statue of the Seven is cool and crisp, carrying the faint scent of windblume. Dusk paints the sky in shades of violet and orange, casting long, solemn shadows across the serene plaza overlooking Mondstadt. A place of quiet reflection, yet today, it hums with unspoken tension.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "Diluc stands with his back to the city, his gaze fixed on the Archon statue. His posture is rigid, betraying a deep contemplation. Kaeya approaches from behind, his footsteps unusually soft."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(a soft, melancholic tone)",
+      "line": "Lost in thought, Master Diluc? Or perhaps... lost in the echoes of memory?"
+    },
+    {
+      "type": "narration",
+      "text": "Diluc turns slowly, his crimson eyes narrowing slightly as they meet Kaeya's. The usual sharpness in his gaze is tempered by something else – a deep-seated weariness."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(stoic, but a subtle tremor in his voice)",
+      "line": "Some memories are best left undisturbed, Kaeya. Especially those that cling to what once was."
+    },
+    {
+      "type": "narration",
+      "text": "A cool breeze sweeps through the plaza, rustling Diluc's cape and stirring a stray lock of Kaeya's hair. The silence between them stretches, thick with shared history and unspoken sorrows."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(sighing softly, looking out at the city lights)",
+      "line": "Indeed. Though often, the heart refuses to forget. Especially when it comes to... certain affections. The ones that leave their mark, long after they're gone."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(his gaze drifting back to the statue, a rare vulnerability)",
+      "line": "Love, like fire, can warm and illuminate... but its embers can also scorch. A pain that lingers, a constant reminder."
+    },
+    {
+      "type": "narration",
+      "text": "Kaeya watches Diluc, the playful glint in his eye replaced by a profound sadness. For a moment, the barriers between them seem to thin, revealing two men burdened by past loves and losses."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(a faint, wistful smile)",
+      "line": "And some pains, brother, linger longer than others. A reminder of what was, and what can never be again. A shared burden, perhaps, even if we carry them alone."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(a slight, almost imperceptible nod)",
+      "line": "It shapes us. Every loss, every memory. We carry it, for good or ill."
+    },
+    {
+      "type": "narration",
+      "text": "The last vestiges of twilight fade, giving way to the starry embrace of Mondstadt's night sky. The two brothers stand silently, united by the quiet weight of their pasts, under the watchful gaze of the Anemo Archon."
+    }
+  ]
+}
