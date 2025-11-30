@@ -13,7 +13,7 @@ import bg2 from "../assets/background/mondstadt-night.webp";
 import bg3 from "../assets/background/statue-of-seven-day.png";
 
 // Components
-import VNTextBox from "../components/VNTextBox";
+import VNScene from "../components/VNScene";
 import { characterDatabase } from "../data/characterData.js";
 import { API_BASE_URL } from "../config/api";
 
@@ -293,49 +293,24 @@ export default function EditorPage() {
                                         <span>Live Preview</span>
                                     </div>
                                     <div className="vn-preview-stage-compact">
-                                        <div
-                                            className="vn-preview-background"
-                                            style={{
-                                                backgroundImage: `url(${backgroundImages[chapter?.backgrounds?.[0]] || pageBg})`
+                                        <VNScene
+                                            characters={chapter?.characters}
+                                            currentSegment={segments[selectedSegmentIndex]}
+                                            currentIndex={selectedSegmentIndex}
+                                            totalSegments={segments.length}
+                                            onNext={() => {
+                                                if (selectedSegmentIndex < segments.length - 1) {
+                                                    setSelectedSegmentIndex(selectedSegmentIndex + 1);
+                                                }
                                             }}
-                                        >
-                                            {/* Character Sprites */}
-                                            {chapter?.characters?.map((charName, index) => {
-                                                const charData = characterDatabase[charName];
-                                                const storySprite = charData
-                                                    ? Object.values(charData.storySprites)[0]
-                                                    : null;
-
-                                                if (!storySprite) return null;
-
-                                                return (
-                                                    <img
-                                                        key={charName}
-                                                        src={storySprite}
-                                                        alt={charName}
-                                                        className={`vn-character-sprite pos-${index + 1}`}
-                                                    />
-                                                );
-                                            })}
-
-                                            {/* Text Box Overlay */}
-                                            <VNTextBox
-                                                segment={segments[selectedSegmentIndex]}
-                                                embedded={true}
-                                                currentIndex={selectedSegmentIndex}
-                                                totalSegments={segments.length}
-                                                onNext={() => {
-                                                    if (selectedSegmentIndex < segments.length - 1) {
-                                                        setSelectedSegmentIndex(selectedSegmentIndex + 1);
-                                                    }
-                                                }}
-                                                onPrev={() => {
-                                                    if (selectedSegmentIndex > 0) {
-                                                        setSelectedSegmentIndex(selectedSegmentIndex - 1);
-                                                    }
-                                                }}
-                                            />
-                                        </div>
+                                            onPrev={() => {
+                                                if (selectedSegmentIndex > 0) {
+                                                    setSelectedSegmentIndex(selectedSegmentIndex - 1);
+                                                }
+                                            }}
+                                            backgroundImage={backgroundImages[chapter?.backgrounds?.[0]] || pageBg}
+                                            isFullscreen={false}
+                                        />
                                     </div>
                                 </div>
 
