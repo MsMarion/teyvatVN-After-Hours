@@ -10,6 +10,7 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState(""); // Add email state
+  const [apiKey, setApiKey] = useState(""); // Add API key state
   const { login, register, googleLogin, setToken, setUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -43,7 +44,7 @@ export default function LoginPage() {
 
     let success = false;
     if (isRegistering) {
-      success = await register(username, password, email);
+      success = await register(username, password, email, apiKey);
     } else {
       success = await login(username, password);
     }
@@ -83,6 +84,19 @@ export default function LoginPage() {
                 className="form-input"
                 placeholder="Enter your email"
                 required
+              />
+            </div>
+          )}
+
+          {isRegistering && (
+            <div className="form-group">
+              <label className="form-label">Gemini API Key (Optional)</label>
+              <input
+                type="text"
+                value={apiKey}
+                onChange={(e) => setApiKey(e.target.value)}
+                className="form-input"
+                placeholder="Enter your Gemini API Key"
               />
             </div>
           )}

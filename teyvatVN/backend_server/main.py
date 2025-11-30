@@ -20,6 +20,7 @@ import google_auth # New import for Google OAuth2
 from database import get_db, engine, Base # Import get_db, engine, and Base
 import jwt_utils # Import jwt_utils
 from models import User # Import User model
+import security # Import security module
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
 
@@ -86,6 +87,7 @@ class AuthRequest(BaseModel):
     username: str
     password: str
     email: str
+    gemini_api_key: str | None = None
 
 class UpdateSettingsRequest(BaseModel):
     username: str
@@ -95,6 +97,7 @@ class UpdateSettingsRequest(BaseModel):
 class CompleteRegistrationRequest(BaseModel):
     token: str
     username: str
+    gemini_api_key: str | None = None
 
 # Helper: get path to output.json for a chapter
 def get_chapter_path(username: str, chapter_id: str) -> str:
@@ -125,7 +128,8 @@ async def complete_registration(request: CompleteRegistrationRequest, db: Sessio
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email is already registered.")
 
     # Create the new user
-    user = auth.create_user(db, username=username, password=os.urandom(16).hex(), email=email)
+    encrypted_key = security.encrypt_value(request.gemini_api_key) if request.gemini_api_key else None
+    user = auth.create_user(db, username=username, password=os.urandom(16).hex(), email=email, gemini_api_key=encrypted_key)
     if not user:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to create user.")
 
@@ -167,7 +171,8 @@ async def register(request: AuthRequest, db: Session = Depends(get_db)):
     if not request.username or not request.password or not request.email:
         raise HTTPException(status_code=400, detail="Username, password, and email are required")
     
-    user = auth.create_user(db, request.username, request.password, request.email)
+    encrypted_key = security.encrypt_value(request.gemini_api_key) if request.gemini_api_key else None
+    user = auth.create_user(db, request.username, request.password, request.email, encrypted_key)
     if not user:
         raise HTTPException(status_code=400, detail="User with this username or email already exists")
     
@@ -188,7 +193,7 @@ async def update_settings(request: UpdateSettingsRequest, db: Session = Depends(
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
-    user.gemini_api_key = request.gemini_api_key
+    user.gemini_api_key = security.encrypt_value(request.gemini_api_key)
     db.commit()
     
     return {"status": "success", "message": "Settings updated"}
@@ -201,7 +206,7 @@ async def get_settings(username: str, db: Session = Depends(get_db)):
         
     return {
         "status": "success", 
-        "gemini_api_key": user.gemini_api_key
+        "gemini_api_key": security.decrypt_value(user.gemini_api_key)
     }
 
 
@@ -358,7 +363,7 @@ async def save_chapter(username: str, chapter_id: str, request: Request, db: Ses
 
     # Get user API key
     user = auth.get_user(db, username)
-    api_key = user.gemini_api_key if user else None
+    api_key = security.decrypt_value(user.gemini_api_key) if user else None
     
     # Enforce API Key
     use_dev_key = os.getenv("USE_DEV_KEY", "false").lower() == "true"
@@ -423,7 +428,7 @@ async def generate_chapter(request: GenerateRequest, db: Session = Depends(get_d
         
         # Get user API key
         user = auth.get_user(db, username)
-        api_key = user.gemini_api_key if user else None
+        api_key = security.decrypt_value(user.gemini_api_key) if user else None
         
         # Enforce API Key
         use_dev_key = os.getenv("USE_DEV_KEY", "false").lower() == "true"

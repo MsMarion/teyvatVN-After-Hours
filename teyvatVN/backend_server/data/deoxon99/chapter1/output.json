@@ -1,0 +1,65 @@
+{
+  "title": "Echoes by the Statue",
+  "characters": [
+    "Diluc",
+    "Kaeya"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The evening wind sighs softly around the towering Statue of the Seven, carrying the scent of Cecilia flowers. Moonlight bathes the plaza in a gentle glow, highlighting the stoic figure of the Anemo Archon. Below, Diluc stands with his arms crossed, a familiar frown etched on his face, while Kaeya leans against the statue's base, a playful glint in his eye.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "The air between the two brothers is thick with unspoken history, a common occurrence whenever they find themselves in the same vicinity."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(feigning innocence)",
+      "line": "A beautiful night for introspection, wouldn't you agree, Master Diluc? Or perhaps, contemplation of... warmer memories?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(gruffly)",
+      "line": "Cut the theatrics, Kaeya. If you have something to say, say it. My time is not for idle chatter."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(a knowing smirk)",
+      "line": "Oh, but this isn't idle chatter. Merely an observation. This spot, under the watchful gaze of the Archon... it makes one think of vows, doesn't it? Or perhaps, promises made under a different moon, to a different heart."
+    },
+    {
+      "type": "narration",
+      "text": "Diluc's gaze shifts to the vast expanse of Mondstadt below, his expression hardening slightly at the veiled reference."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(coldly)",
+      "line": "Some memories are best left undisturbed. Especially those belonging to the past."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(chuckle, then more serious)",
+      "line": "Ah, but isn't that where all our 'past lovers' reside? Fading echoes, yet sometimes, they feel as vivid as the wind itself. Even for a man as... solitary as yourself."
+    },
+    {
+      "type": "narration",
+      "text": "A flicker of something unreadable crosses Diluc's eyes – perhaps regret, perhaps defiance – before it's swiftly masked."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(turning to leave)",
+      "line": "My past is my own, Kaeya. And unlike some, I don't dwell on what cannot be changed. Good night."
+    },
+    {
+      "type": "narration",
+      "text": "Diluc strides away, his cape billowing gently in the breeze. Kaeya watches him go, a faint, melancholic smile playing on his lips as he looks up at the silent Anemo Archon, the city lights twinkling in the distance like forgotten stars."
+    }
+  ]
+}

@@ -12,6 +12,7 @@ export default function CompleteRegistrationPage() {
     const [username, setUsername] = useState("");
     const [partialToken, setPartialToken] = useState(null);
     const [email, setEmail] = useState("");
+    const [apiKey, setApiKey] = useState(""); // Add API key state
     const [loading, setLoading] = useState(false);
     const { setToken, setUser } = useAuth();
     const navigate = useNavigate();
@@ -52,6 +53,7 @@ export default function CompleteRegistrationPage() {
             const response = await api.post("/api/auth/complete-registration", {
                 token: partialToken,
                 username: username,
+                gemini_api_key: apiKey,
             });
 
             const data = response.data;
@@ -77,10 +79,10 @@ export default function CompleteRegistrationPage() {
         <Layout backgroundImage={pageBg} className="login-page-container">
             <div className="login-card">
                 <h1 className="login-title">Complete Your Registration</h1>
-                <p className="text-center text-gray-300 mb-4">
+                <p className="login-description">
                     You're almost there! Choose a username to complete your account setup.
                 </p>
-                <p className="text-center text-gray-400 mb-6">
+                <p className="login-info">
                     Your email: <strong>{email}</strong>
                 </p>
 
@@ -94,6 +96,17 @@ export default function CompleteRegistrationPage() {
                             className="form-input"
                             placeholder="Choose your username"
                             required
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label className="form-label">Gemini API Key (Optional)</label>
+                        <input
+                            type="text"
+                            value={apiKey}
+                            onChange={(e) => setApiKey(e.target.value)}
+                            className="form-input"
+                            placeholder="Enter your Gemini API Key"
                         />
                     </div>
 

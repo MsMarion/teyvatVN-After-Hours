@@ -32,13 +32,13 @@ def get_user_by_email(db: Session, email: str) -> Optional[User]:
     """Get a user by email from the database."""
     return db.query(User).filter(User.email == email).first()
 
-def create_user(db: Session, username: str, password: str, email: str) -> Optional[User]:
+def create_user(db: Session, username: str, password: str, email: str, gemini_api_key: str = None) -> Optional[User]:
     """Create a new user in the database. Returns None if user already exists."""
     if get_user(db, username) or get_user_by_email(db, email):
         return None
     
     hashed_password = get_password_hash(password)
-    db_user = User(username=username, email=email, hashed_password=hashed_password)
+    db_user = User(username=username, email=email, hashed_password=hashed_password, gemini_api_key=gemini_api_key)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)

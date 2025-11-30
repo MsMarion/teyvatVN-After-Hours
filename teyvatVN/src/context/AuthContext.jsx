@@ -68,9 +68,9 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const register = async (username, password, email) => {
+    const register = async (username, password, email, apiKey) => {
         try {
-            const response = await api.post("/api/auth/register", { username, password, email });
+            const response = await api.post("/api/auth/register", { username, password, email, gemini_api_key: apiKey });
             const data = response.data;
 
             if (response.status !== 200) {
