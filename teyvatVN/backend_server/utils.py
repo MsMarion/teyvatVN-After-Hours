@@ -36,9 +36,12 @@ def get_next_chapter_id(username: str) -> str:
 
 def list_user_chapters(username: str) -> list[dict]:
     """
-    List all chapters for a user.
-    Returns a list of chapter metadata.
+    List all chapters for a user with metadata.
+    Returns a list of chapter metadata including title, characters, and creation time.
     """
+    import json
+    from datetime import datetime
+    
     user_dir = os.path.join(DATA_DIR, username)
     
     if not os.path.exists(user_dir):
@@ -50,10 +53,42 @@ def list_user_chapters(username: str) -> list[dict]:
         if os.path.isdir(chapter_path):
             output_file = os.path.join(chapter_path, "output.json")
             if os.path.exists(output_file):
-                chapters.append({
-                    "chapter_id": chapter_dir,
-                    "path": output_file
-                })
+                try:
+                    # Read the chapter data
+                    with open(output_file, "r", encoding="utf-8") as f:
+                        chapter_data = json.load(f)
+                    
+                    # Get file modification time
+                    mod_time = os.path.getmtime(output_file)
+                    created_at = datetime.fromtimestamp(mod_time).isoformat()
+                    
+                    chapters.append({
+                        "chapter_id": chapter_dir,
+                        "title": chapter_data.get("title", "Untitled Chapter"),
+                        "characters": chapter_data.get("characters", []),
+                        "backgrounds": chapter_data.get("backgrounds", []),
+                        "created_at": created_at,
+                        "path": output_file
+                    })
+                except Exception as e:
+                    print(f"Error reading chapter {chapter_dir}: {e}")
+                    # Still include the chapter but with minimal info
+                    chapters.append({
+                        "chapter_id": chapter_dir,
+                        "title": "Error Loading Chapter",
+                        "characters": [],
+                        "backgrounds": [],
+                        "created_at": None,
+                        "path": output_file
+                    })
+    
+    # Sort by chapter number (newest/highest number first)
+    def get_chapter_number(chapter):
+        """Extract numeric value from chapter_id like 'chapter19' -> 19"""
+        match = re.search(r'chapter(\d+)', chapter.get("chapter_id", ""))
+        return int(match.group(1)) if match else 0
+    
+    chapters.sort(key=get_chapter_number, reverse=True)
     
     return chapters
 

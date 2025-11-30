@@ -1,0 +1,71 @@
+{
+  "title": "Whispers of Yesteryear at the Statue",
+  "characters": [
+    "Diluc",
+    "Venti"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The Statue of the Seven stands majestically atop a hill overlooking Mondstadt. The evening breeze carries the scent of cecilias, and the city lights twinkle below like fallen stars. Diluc stands, arms crossed, gazing out at the panorama, while Venti sits cross-legged on the statue's base, idly plucking a tune on his lyre.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "A comfortable, yet heavy silence hangs between the two, broken only by the soft notes from Venti's lyre."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Venti",
+      "expression_action": "(sighing softly, then looking up at Diluc)",
+      "line": "The winds today carry a bittersweet tune, don't they, Master Diluc? Full of nostalgia."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(without turning, voice low)",
+      "line": "You read too much into the wind, bard. It is simply a breeze."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Venti",
+      "expression_action": "(a knowing smile plays on his lips)",
+      "line": "Perhaps. But sometimes, a simple breeze can stir forgotten memories... like the scent of a lover's perfume, or the echo of a laugh."
+    },
+    {
+      "type": "narration",
+      "text": "Diluc's shoulders tense almost imperceptibly. He remains silent for a long moment, the city lights reflecting in his eyes."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(turning slowly, his gaze distant)",
+      "line": "Some memories are best left undisturbed, Venti. They are burdens that weigh heavily."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Venti",
+      "expression_action": "(standing up, walking closer to the edge)",
+      "line": "Yet, even burdens can shape us. They remind us of the warmth we once held. Tell me, Master Diluc, has the wind ever whispered a name to you that made your heart ache?"
+    },
+    {
+      "type": "narration",
+      "text": "A profound sadness flickers across Diluc's face, a rare breach in his usual stoicism. He looks away, clenching his jaw."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(his voice barely above a whisper)",
+      "line": "The past holds many regrets, bard. And some pains are not meant for sharing."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Venti",
+      "expression_action": "(placing a gentle hand on Diluc's shoulder, expression soft)",
+      "line": "Perhaps. But remember, the wind carries away sorrows just as it carries joy. And even in silence, we are not alone."
+    },
+    {
+      "type": "narration",
+      "text": "Diluc gives a subtle nod, his gaze fixed on the distant horizon, as Venti gently strums a final, melancholic chord on his lyre, the sound drifting into the cool Mondstadt night."
+    }
+  ]
+}

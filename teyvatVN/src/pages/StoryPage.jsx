@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { FiArrowRight, FiRefreshCcw } from "react-icons/fi";
 import toast from "react-hot-toast";
 import "./StoryPage.css";
@@ -37,12 +37,34 @@ export default function StoryPage() {
   const [generatedStory, setGeneratedStory] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const { selectedCharacters } = useCharacters();
 
+  // Build backgrounds array from configuration with proper image mapping
+  const backgrounds = BACKGROUND_OPTIONS.map(bg => ({
+    id: bg.id,
+    name: bg.displayName,
+    src: backgroundImages[bg.id]
+  }));
+
+  // Load chapter from URL parameter if present
+  useEffect(() => {
+    const chapterId = searchParams.get("chapter");
+    if (chapterId) {
+      loadChapter(chapterId);
+    }
+  }, [searchParams]);
+
   // Redirect if no characters are selected (check localStorage first for persistence)
   useEffect(() => {
+    // Skip character check if we're loading a chapter from URL
+    const chapterId = searchParams.get("chapter");
+    if (chapterId) {
+      return; // Don't check for characters if loading existing chapter
+    }
+
     // Check if characters are in localStorage (persisted selection)
     const char1 = localStorage.getItem("character1");
     const char2 = localStorage.getItem("character2");
@@ -53,14 +75,47 @@ export default function StoryPage() {
       toast.error("Please select your characters first!");
       navigate("/characters");
     }
-  }, [selectedCharacters, navigate]);
+  }, [selectedCharacters, navigate, searchParams]);
 
-  // Build backgrounds array from configuration with proper image mapping
-  const backgrounds = BACKGROUND_OPTIONS.map(bg => ({
-    id: bg.id,
-    name: bg.displayName,
-    src: backgroundImages[bg.id]
-  }));
+  // Function to load an existing chapter
+  const loadChapter = async (chapterId) => {
+    const username = localStorage.getItem("currentUser") || "dawn";
+    setIsLoading(true);
+
+    try {
+      console.log(`Loading chapter: ${chapterId} for user: ${username}`);
+      const response = await fetch(`http://localhost:4000/api/chapter/${username}/${chapterId}`);
+
+      if (!response.ok) {
+        throw new Error("Failed to load chapter");
+      }
+
+      const result = await response.json();
+      console.log("Chapter loaded:", result);
+
+      if (result.message === "Loaded" && result.data) {
+        setGeneratedStory(result.data);
+        toast.success(`Chapter loaded: ${result.data.title}`);
+
+        // Auto-select background based on chapter data
+        if (result.data.backgrounds && result.data.backgrounds.length > 0) {
+          const bgId = result.data.backgrounds[0];
+          const matchedBg = backgrounds.find(bg => bg.id === bgId);
+          if (matchedBg) {
+            setSelectedBackground(matchedBg);
+            console.log(`Auto-selected background: ${bgId}`);
+          }
+        }
+      } else {
+        toast.error("Chapter not found");
+      }
+    } catch (error) {
+      console.error("Error loading chapter:", error);
+      toast.error(`Failed to load chapter: ${error.message}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleGenerate = async () => {
     const username = localStorage.getItem("currentUser") || "dawn";
@@ -221,20 +276,24 @@ export default function StoryPage() {
               )}
 
               {/* This now dynamically displays the correct story sprite */}
-              {selectedBackground &&
-                selectedCharacters &&
-                selectedCharacters.map((char, index) => {
+              {selectedBackground && generatedStory && generatedStory.characters &&
+                generatedStory.characters.map((charName, index) => {
                   // Look up the character in our database to get the correct story sprite
-                  const charData = characterDatabase[char.name];
+                  const charData = characterDatabase[charName];
                   const storySprite = charData
                     ? Object.values(charData.storySprites)[0]
-                    : char.image; // Fallback to card image
+                    : null; // Fallback to null if not found
+
+                  if (!storySprite) {
+                    console.warn(`No sprite found for character: ${charName}`);
+                    return null;
+                  }
 
                   return (
                     <img
-                      key={char.name}
+                      key={charName}
                       src={storySprite}
-                      alt={char.name}
+                      alt={charName}
                       className={`character-sprite pos-${index + 1}`}
                     />
                   );

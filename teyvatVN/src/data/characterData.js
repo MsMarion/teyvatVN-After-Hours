@@ -63,5 +63,17 @@ export const characterDatabase = {
       Neutral: sucroseCard, // Using card as a placeholder
     },
   },
+  Amber: {
+    cardImage: amberCard,
+    storySprites: {
+      Neutral: amberCard, // Using card as a placeholder
+    },
+  },
+  Barbara: {
+    cardImage: barbaraCard,
+    storySprites: {
+      Neutral: barbaraCard, // Using card as a placeholder
+    },
+  },
   // --- Add all other characters below in the same format ---
 };
