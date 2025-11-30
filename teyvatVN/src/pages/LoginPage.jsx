@@ -50,7 +50,8 @@ export default function LoginPage() {
     }
 
     if (success) {
-      navigate(from, { replace: true });
+      // Force a full page reload to ensure auth state is correctly picked up
+      window.location.replace(from);
     }
   };
 
@@ -66,6 +67,8 @@ export default function LoginPage() {
             <label className="form-label">Username</label>
             <input
               type="text"
+              id="username"
+              name="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="form-input"
@@ -79,6 +82,8 @@ export default function LoginPage() {
               <label className="form-label">Email</label>
               <input
                 type="email"
+                id="email"
+                name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="form-input"
@@ -93,6 +98,8 @@ export default function LoginPage() {
               <label className="form-label">Gemini API Key (Optional)</label>
               <input
                 type="text"
+                id="apiKey"
+                name="apiKey"
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
                 className="form-input"
@@ -105,6 +112,8 @@ export default function LoginPage() {
             <label className="form-label">Password</label>
             <input
               type="password"
+              id="password"
+              name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="form-input"

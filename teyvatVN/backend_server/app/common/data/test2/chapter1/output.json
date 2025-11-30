@@ -1,0 +1,75 @@
+{
+  "title": "Echoes Under the Archon's Gaze",
+  "characters": [
+    "Diluc",
+    "Kaeya"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The Statue of the Seven stands majestically, overlooking Mondstadt as twilight paints the sky in hues of orange and purple. A cool, gentle breeze rustles through the surrounding trees, carrying the faint sounds of the city below. Diluc stands by the statue, his gaze fixed on the horizon, while Kaeya approaches with an unhurried, almost predatory grace.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "The air around the Anemo Archon's statue hums with a quiet, almost reverent energy. Diluc, typically found within the walls of his tavern or estate, seems out of place here, his silhouette stark against the fading light."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(a wry smile)",
+      "line": "Fancy meeting you here, Master Diluc. Contemplating the divine? Or perhaps just enjoying the rare solitude?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(without turning, voice flat)",
+      "line": "I could ask you the same, Cavalry Captain. Or are you merely scouting for new information?"
+    },
+    {
+      "type": "narration",
+      "text": "A brief, uncomfortable silence hangs between them, thick with years of unspoken history. The wind picks up slightly, rustling the leaves of the cypress trees nearby."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(leaning against the statue's base, thoughtful)",
+      "line": "Sometimes, even I seek a moment of quiet reflection. It makes one think of... what was. Of paths not taken, and faces long gone."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(his jaw tensing)",
+      "line": "The past is best left undisturbed. It offers little but regret."
+    },
+    {
+      "type": "narration",
+      "text": "Kaeya's single eye glints in the dim light, a hint of curiosity mingled with something deeper. He watches Diluc, probing for a reaction."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(a soft, almost melancholic tone)",
+      "line": "Perhaps. But even you, Master Diluc, must have your own ghosts. Whispers of old affections, forgotten smiles... the sting of a love lost, or never truly found."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(finally turning, his eyes cold and hard)",
+      "line": "That is none of your concern, Kaeya. My past is my own."
+    },
+    {
+      "type": "narration",
+      "text": "The air crackles with unspoken tension, a raw nerve exposed. Diluc's gaze is unwavering, a silent warning."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(a faint, sad smile playing on his lips)",
+      "line": "Indeed. A heavy burden, I'm sure. Some stories are simply too precious—or too painful—to share, aren't they?"
+    },
+    {
+      "type": "narration",
+      "text": "Kaeya pushes off the statue, turning to leave, his steps light. Diluc remains, unmoving, his silhouette once again facing the darkening horizon, the city lights beginning to twinkle below like distant, unfeeling stars."
+    }
+  ]
+}
