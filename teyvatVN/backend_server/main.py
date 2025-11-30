@@ -4,6 +4,9 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from starlette.responses import RedirectResponse
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 import json
 from sqlalchemy.orm import Session
 from starlette.responses import RedirectResponse
@@ -43,9 +46,14 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 # Allow frontend to access this backend
+# Load environment variables
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:6001")
+BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
+
+# Allow frontend to access this backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:6001","https://updates-limitations-favors-effectively.trycloudflare.com", "*"],  # your React app
+    allow_origins=[FRONTEND_URL, "https://updates-limitations-favors-effectively.trycloudflare.com", "*"],  # your React app
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -135,14 +143,14 @@ async def google_callback(code: str, db: Session = Depends(get_db)):
     # If user already exists, log them in directly
     if user:
         access_token = jwt_utils.create_access_token(data={"sub": user.username})
-        frontend_url = f"http://localhost:6001/login?token={access_token}&username={user.username}"
+        frontend_url = f"{FRONTEND_URL}/login?token={access_token}&username={user.username}"
         return RedirectResponse(url=frontend_url)
 
     # If user does not exist, create a partial token and redirect to complete registration
     else:
         partial_token_data = {"email": email, "name": name}
         partial_token = jwt_utils.create_partial_token(data=partial_token_data)
-        frontend_url = f"http://localhost:6001/complete-registration?token={partial_token}"
+        frontend_url = f"{FRONTEND_URL}/complete-registration?token={partial_token}"
         return RedirectResponse(url=frontend_url)
 
 @app.post("/api/auth/register")

@@ -7,7 +7,7 @@ const AuthContext = createContext(null);
 
 // Create an Axios instance for API calls
 const api = axios.create({
-    baseURL: API_URL.replace("/api/generate", ""), // Base URL for authentication endpoints
+    baseURL: import.meta.env.VITE_API_BASE_URL, // Base URL for authentication endpoints
     headers: {
         "Content-Type": "application/json",
     },
@@ -89,7 +89,7 @@ export const AuthProvider = ({ children }) => {
     const googleLogin = async () => {
         try {
             // Redirect to backend's Google login endpoint
-            window.location.href = `${API_URL.replace("/api/generate", "")}/api/auth/google/login`;
+            window.location.href = `${import.meta.env.VITE_API_BASE_URL}/api/auth/google/login`;
         } catch (error) {
             console.error("Google login initiation error:", error);
             toast.error("Failed to initiate Google login.");
