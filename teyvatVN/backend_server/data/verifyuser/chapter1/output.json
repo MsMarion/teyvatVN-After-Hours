@@ -1,0 +1,71 @@
+{
+  "title": "Whispers Over Mead",
+  "characters": [
+    "Kael",
+    "Lyra"
+  ],
+  "backgrounds": [
+    "angels_share"
+  ],
+  "setting_narration": "The warm, inviting glow of the Angel's Share tavern envelops the evening air. The low hum of distant conversations and the clinking of glasses create a comforting backdrop. Kael and Lyra sit at a corner table, their mugs of mead half-finished, the day's events weighing slightly on their minds.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "The amber liquid in their mugs reflects the soft lamplight, casting dancing shadows on the worn wooden table."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kael",
+      "expression_action": "(taking a long sip, then sighing contentedly)",
+      "line": "Another day, another victory against... well, whatever came our way. Cheers."
+    },
+    {
+      "type": "narration",
+      "text": "Lyra stirs her mead with a finger, her gaze distant, not quite meeting Kael's."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Lyra",
+      "expression_action": "(frowning slightly)",
+      "line": "It feels like more than usual lately, doesn't it? The sheer number of hilichurls, the weird energy surges near the Whispering Woods..."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kael",
+      "expression_action": "(shrugging good-naturedly)",
+      "line": "Mondstadt always has its share of quirks. Keeps us on our toes, eh? Maybe the wind's just particularly restless."
+    },
+    {
+      "type": "narration",
+      "text": "The bartender, Charles, walks by, wiping down the counter, a silent guardian of the tavern's peace."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Lyra",
+      "expression_action": "(leans forward, voice hushed)",
+      "line": "But even the Knights seem more stressed. I overheard Captain Kaeya talking about unusual ley line disruptions. It feels... bigger than just 'quirks'."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kael",
+      "expression_action": "(his expression softening, more serious now)",
+      "line": "Ley lines? That's a different tune. Alright, you have a point. If even the ground beneath us is grumbling, maybe we should pay closer attention."
+    },
+    {
+      "type": "narration",
+      "text": "A moment of shared quiet passes between them, the jovial tavern sounds fading into a soft hum as they contemplate the unspoken implications."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Lyra",
+      "expression_action": "(nods slowly, a glimmer of resolve in her eyes)",
+      "line": "Perhaps a 'quiet pint' isn't quite enough for tonight. We should map out those unusual sightings tomorrow."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kael",
+      "expression_action": "(a small, determined smile)",
+      "line": "Sounds like a plan. For now, let's just finish these before Diluc decides to personally escort us out for overthinking."
+    }
+  ]
+}

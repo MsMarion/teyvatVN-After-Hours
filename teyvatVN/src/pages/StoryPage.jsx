@@ -14,7 +14,7 @@ import { useCharacters } from "../context/CharacterContext";
 import { characterDatabase } from "../data/characterData.js";
 import SegmentNavigator from "../components/SegmentNavigator";
 import { BACKGROUND_OPTIONS } from "../config/backgrounds.js";
-import { API_URL } from "../config/api";
+import { API_URL, API_BASE_URL } from "../config/api";
 
 // Assets
 import quillIcon from "../assets/images/quill.png";
@@ -84,7 +84,7 @@ export default function StoryPage() {
 
     try {
       console.log(`Loading chapter: ${chapterId} for user: ${username}`);
-      const response = await fetch(`http://localhost:4000/api/chapter/${username}/${chapterId}`);
+      const response = await fetch(`${API_BASE_URL}/api/chapter/${username}/${chapterId}`);
 
       if (!response.ok) {
         throw new Error("Failed to load chapter");

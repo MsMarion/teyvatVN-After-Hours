@@ -1,11 +1,12 @@
 import os
-import json
 import bcrypt
 from typing import Optional
+from sqlalchemy.orm import Session
+from fastapi import Depends
+from datetime import datetime
 
-# Path to users file
-DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
-USERS_FILE = os.path.join(DATA_DIR, "users.json")
+from database import get_db
+from models import User
 
 def get_password_hash(password: str) -> str:
     """Hash a password using bcrypt."""
@@ -23,45 +24,31 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     except Exception:
         return False
 
-def load_users() -> dict:
-    """Load users from the JSON file."""
-    if not os.path.exists(USERS_FILE):
-        return {}
-    try:
-        with open(USERS_FILE, "r", encoding="utf-8") as f:
-            data = json.load(f)
-            return data.get("users", {})
-    except Exception as e:
-        print(f"Error loading users: {e}")
-        return {}
+def get_user(db: Session, username: str) -> Optional[User]:
+    """Get a user by username from the database."""
+    return db.query(User).filter(User.username == username).first()
 
-def save_users(users: dict):
-    """Save users to the JSON file."""
-    os.makedirs(DATA_DIR, exist_ok=True)
-    with open(USERS_FILE, "w", encoding="utf-8") as f:
-        json.dump({"users": users}, f, indent=2)
+def get_user_by_email(db: Session, email: str) -> Optional[User]:
+    """Get a user by email from the database."""
+    return db.query(User).filter(User.email == email).first()
 
-def get_user(username: str) -> Optional[dict]:
-    """Get a user by username."""
-    users = load_users()
-    return users.get(username)
-
-def create_user(username: str, password: str) -> bool:
-    """Create a new user. Returns False if user already exists."""
-    users = load_users()
-    if username in users:
-        return False
+def create_user(db: Session, username: str, password: str, email: str) -> Optional[User]:
+    """Create a new user in the database. Returns None if user already exists."""
+    if get_user(db, username) or get_user_by_email(db, email):
+        return None
     
-    users[username] = {
-        "password_hash": get_password_hash(password),
-        "created_at": "now" # You might want to use datetime.now().isoformat()
-    }
-    save_users(users)
-    return True
+    hashed_password = get_password_hash(password)
+    db_user = User(username=username, email=email, hashed_password=hashed_password)
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
 
-def authenticate_user(username: str, password: str) -> bool:
-    """Authenticate a user. Returns True if credentials are valid."""
-    user = get_user(username)
+def authenticate_user(db: Session, username: str, password: str) -> Optional[User]:
+    """Authenticate a user. Returns the User object if credentials are valid."""
+    user = get_user(db, username)
     if not user:
-        return False
-    return verify_password(password, user["password_hash"])
+        return None
+    if not verify_password(password, user.hashed_password):
+        return None
+    return user

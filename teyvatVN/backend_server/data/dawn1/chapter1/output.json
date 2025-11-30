@@ -1,0 +1,71 @@
+{
+  "title": "Echoes by the Archon's Gaze",
+  "characters": [
+    "Diluc",
+    "Kaeya"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The Statue of the Seven stands majestically on Starsnatch Cliff, its form silhouetted against the deepening twilight. A cool breeze, carrying the scent of sea-salt and distant wildflowers, rustles through the grass. The air is quiet, save for the gentle hum of Anemo energy radiating from the colossal statue, a silent witness to the world below.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "Diluc stands before the Anemo Archon's statue, his arms crossed, gaze fixed on the horizon. The last vestiges of the sun paint his usually grim expression with a melancholic glow."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(walking up, a slight smirk)",
+      "line": "Fancy meeting you here, Master Diluc. Contemplating the Archons, or just enjoying the view of your city from above?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(without turning, voice low)",
+      "line": "Neither. Some places simply offer a modicum of peace from the city's din. Though it seems even that is fleeting."
+    },
+    {
+      "type": "narration",
+      "text": "Kaeya chuckles, moving to stand beside Diluc, though keeping a comfortable distance. His gaze also drifts over Mondstadt, a thoughtful expression momentarily replacing his usual glibness."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(softly, almost reflective)",
+      "line": "Peace, yes. Or perhaps, solitude for reflection. It's a place where one might think of... past affections, wouldn't you say?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(a muscle twitching in his jaw)",
+      "line": "I wouldn't. Such things are best left buried, not exhumed by the wind."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(a knowing glance at Diluc)",
+      "line": "Ah, but the heart remembers, doesn't it? Even if the mind wishes to forget. I recall a time when I... felt a certain fondness for someone. A fleeting warmth, like a winter sunbeam."
+    },
+    {
+      "type": "narration",
+      "text": "A silence settles between them, punctuated only by the distant calls of nocturnal birds. Diluc remains unmoving, yet a subtle shift in his posture suggests he's listening intently."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(turns slowly to face Kaeya, eyes narrowed slightly)",
+      "line": "And what did that warmth leave behind, Kaeya? More warmth, or simply ashes?"
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(a wry smile, looking away)",
+      "line": "A lesson, perhaps. That some fires, no matter how bright, were never meant to burn forever. And some, Master Diluc, are best extinguished before they consume everything."
+    },
+    {
+      "type": "narration",
+      "text": "Diluc stares at him, a flicker of something unreadable in his crimson eyes before he turns back to the city, the weight of unspoken history heavy in the twilight air between them."
+    }
+  ]
+}

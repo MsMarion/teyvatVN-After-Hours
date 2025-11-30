@@ -13,6 +13,7 @@ import PromptInputPage from "./pages/prompt_input_page.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import StoryPage from "./pages/StoryPage.jsx";
 import LayoutSamplePage from "./pages/LayoutSamplePage.jsx";
+import CompleteRegistrationPage from "./pages/CompleteRegistrationPage.jsx"; // Import the new page
 import LibraryPage from "./pages/LibraryPage.jsx";
 import EditorPage from "./pages/EditorPage.jsx";
 
@@ -31,6 +32,7 @@ function App() {
             <Route path="/" element={<LoadingPage />} />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/complete-registration" element={<CompleteRegistrationPage />} />
             <Route path="/layout_sample" element={<LayoutSamplePage />} />
 
             {/* Protected Routes */}

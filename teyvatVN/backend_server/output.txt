@@ -1,0 +1,6 @@
+NFO:     127.0.0.1:58247 - "GET /api/auth/google/login HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:58247 - "GET /api/auth/google/callback?code=4%2F0Ab32j91oCXDVr9-U7lBo6phPx2h3hAoRgQawmObqPqDsaKon2uI9bodNNAHrtgJdAJerEg&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=0&prompt=none HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:54670 - "GET /api/auth/google/login HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:54670 - "GET /api/auth/google/callback?code=4%2F0Ab32j92sSZEogdFcIkcm5LJ1Tdlgp-0H4FhpNR07dfd2pzF-VXgIweNrs3rPXG144UX5RA&scope=email+profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&authuser=0&prompt=none HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:57894 - "GET /api/auth/google/login HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:49735 - "GET /api/auth/google/callback?code=4%2F0Ab32j91Aq6E6cYfREvrAVCFC7boFw37BxORYd_WuczACMvOdErn-TgajK-fJrT9qUpgA7g&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid&authuser=2&prompt=consent HTTP/1.1" 307 Temporary Redirect

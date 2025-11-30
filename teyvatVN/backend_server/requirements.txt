@@ -4,3 +4,7 @@ pydantic
 python-dotenv
 openai
 bcrypt
+SQLAlchemy
+alembic
+httpx
+python-jose

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-
+import api from "../api/axios"; // Import the shared Axios instance
 
 export default function PromptInputPage() {
   const [prompt, setPrompt] = useState("");
@@ -28,25 +27,13 @@ export default function PromptInputPage() {
     setError(null);
 
     try {
-      const username = localStorage.getItem("currentUser") || "dawn";
-
-      const response = await fetch("http://localhost:4000/api/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          prompt: prompt,
-          username: username,
-        }),
+      // The username is no longer needed in the request body.
+      // The backend will get the user from the JWT.
+      const response = await api.post("/api/generate", {
+        prompt: prompt,
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || "Generation failed");
-      }
-
-      const result = await response.json();
+      const result = response.data;
 
       // Save to localStorage for TestScenePage to display
       localStorage.setItem("latestResult", JSON.stringify(result.data));
@@ -57,7 +44,7 @@ export default function PromptInputPage() {
 
     } catch (err) {
       console.error("Generation error:", err);
-      setError(err.message || "Failed to generate scene. Please try again.");
+      setError(err.response?.data?.detail || err.message || "Failed to generate scene. Please try again.");
     } finally {
       setLoading(false);
     }

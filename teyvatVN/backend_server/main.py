@@ -1,21 +1,59 @@
-from fastapi import FastAPI, Request, HTTPException, Depends
+from fastapi import FastAPI, Request, HTTPException, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+from starlette.responses import RedirectResponse
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 import json
+from sqlalchemy.orm import Session
+from starlette.responses import RedirectResponse
+from fastapi.security import OAuth2PasswordBearer
 
 # custom libs
 import generate_ai_calls
 import utils
-import auth
+import auth # Re-import auth
+import google_auth # New import for Google OAuth2
+from database import get_db, engine, Base # Import get_db, engine, and Base
+import jwt_utils # Import jwt_utils
+from models import User # Import User model
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
+
+async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    payload = jwt_utils.verify_token(token)
+    if payload is None:
+        raise credentials_exception
+    username: str = payload.get("sub")
+    if username is None:
+        raise credentials_exception
+    user = auth.get_user(db, username=username)
+    if user is None:
+        raise credentials_exception
+    return user
+
+# Create tables
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
 # Allow frontend to access this backend
+# Load environment variables
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:6001")
+BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:6002")
+
+# Allow frontend to access this backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5137","https://updates-limitations-favors-effectively.trycloudflare.com", "*"],  # your React app
+    allow_origins=[FRONTEND_URL, "https://updates-limitations-favors-effectively.trycloudflare.com", "*"],  # your React app
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -42,6 +80,12 @@ class GenerateRequest(BaseModel):
 class AuthRequest(BaseModel):
     username: str
     password: str
+    email: str
+
+# Pydantic model for completing registration
+class CompleteRegistrationRequest(BaseModel):
+    token: str
+    username: str
 
 # Helper: get path to output.json for a chapter
 def get_chapter_path(username: str, chapter_id: str) -> str:
@@ -51,35 +95,95 @@ def get_chapter_path(username: str, chapter_id: str) -> str:
 
 # --- AUTH ENDPOINTS ---
 
-@app.post("/api/auth/register")
-async def register(request: AuthRequest):
-    if not request.username or not request.password:
-        raise HTTPException(status_code=400, detail="Username and password required")
+@app.post("/api/auth/complete-registration")
+async def complete_registration(request: CompleteRegistrationRequest, db: Session = Depends(get_db)):
+    token = request.token
+    username = request.username
+
+    # Verify the partial token
+    payload = jwt_utils.verify_token(token)
+    if not payload or payload.get("scope") != "partial_registration":
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid or expired token.")
+
+    email = payload.get("email")
+    if not email:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Token is missing email information.")
+
+    # Check if username or email already exist
+    if auth.get_user(db, username=username):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Username is already taken.")
+    if auth.get_user_by_email(db, email=email):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email is already registered.")
+
+    # Create the new user
+    user = auth.create_user(db, username=username, password=os.urandom(16).hex(), email=email)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to create user.")
+
+    # Generate a full access token
+    access_token = jwt_utils.create_access_token(data={"sub": user.username})
+    return {"status": "success", "username": user.username, "token": access_token}
+
+@app.get("/api/auth/google/login")
+async def google_login():
+    google_oauth_url = await google_auth.get_google_oauth_url()
+    return RedirectResponse(google_oauth_url)
+
+@app.get("/api/auth/google/callback")
+async def google_callback(code: str, db: Session = Depends(get_db)):
+    user_info = await google_auth.google_callback(code)
+    email = user_info.get("email")
+    name = user_info.get("name")
+
+    if not email:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Google did not provide an email.")
+
+    user = auth.get_user_by_email(db, email)
     
-    success = auth.create_user(request.username, request.password)
-    if not success:
-        raise HTTPException(status_code=400, detail="User already exists")
+    # If user already exists, log them in directly
+    if user:
+        access_token = jwt_utils.create_access_token(data={"sub": user.username})
+        frontend_url = f"{FRONTEND_URL}/login?token={access_token}&username={user.username}"
+        return RedirectResponse(url=frontend_url)
+
+    # If user does not exist, create a partial token and redirect to complete registration
+    else:
+        partial_token_data = {"email": email, "name": name}
+        partial_token = jwt_utils.create_partial_token(data=partial_token_data)
+        frontend_url = f"{FRONTEND_URL}/complete-registration?token={partial_token}"
+        return RedirectResponse(url=frontend_url)
+
+@app.post("/api/auth/register")
+async def register(request: AuthRequest, db: Session = Depends(get_db)):
+    if not request.username or not request.password or not request.email:
+        raise HTTPException(status_code=400, detail="Username, password, and email are required")
+    
+    user = auth.create_user(db, request.username, request.password, request.email)
+    if not user:
+        raise HTTPException(status_code=400, detail="User with this username or email already exists")
     
     return {"status": "success", "message": "User created"}
 
 @app.post("/api/auth/login")
-async def login(request: AuthRequest):
-    if not auth.authenticate_user(request.username, request.password):
+async def login(request: AuthRequest, db: Session = Depends(get_db)):
+    user = auth.authenticate_user(db, request.username, request.password)
+    if not user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
     
-    return {"status": "success", "username": request.username, "token": "dummy-token-for-mvp"}
+    access_token = jwt_utils.create_access_token(data={"sub": user.username})
+    return {"status": "success", "username": user.username, "token": access_token}
 
 
 # --- LIBRARY ENDPOINTS ---
 
 @app.get("/api/library/{username}")
-def get_library(username: str):
+def get_library(username: str, db: Session = Depends(get_db)):
     """
     Get all chapters for a user.
     Returns a list of chapter metadata.
     """
     # In a real app, we would validate the token here to ensure the requester is the user
-    if not auth.get_user(username):
+    if not auth.get_user(db, username):
         raise HTTPException(status_code=404, detail="User not found")
     
     chapters = utils.list_user_chapters(username)
@@ -252,6 +356,12 @@ async def generate_chapter(request: GenerateRequest):
     Generate a new chapter from a simple prompt.
     Auto-increments chapter ID and uses simplified generation.
     """
+    # print("--- /api/generate endpoint called ---")  
+    # print(request)
+    #print("Request Headers:", request.headers)
+    # print("Request Body:", request.body)
+
+    # print("Request JSON:", request.json())
     try:
         prompt = request.prompt
         username = request.username
@@ -263,8 +373,8 @@ async def generate_chapter(request: GenerateRequest):
             raise HTTPException(status_code=400, detail="Username cannot be empty")
             
         # Validate user exists
-        if not auth.get_user(username):
-             raise HTTPException(status_code=401, detail="User not found")
+        # if not auth.get_user(username):
+        #      raise HTTPException(status_code=401, detail="User not found")
         
         # Get next chapter ID
         chapter_id = utils.get_next_chapter_id(username)
@@ -300,4 +410,4 @@ app.mount("/data", StaticFiles(directory=DATA_DIR), name="data")
 # ---- MAIN ENTRY ----
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="127.0.0.1", port=4000, reload=True)
+    uvicorn.run("main:app", host="127.0.0.1", port=6002, reload=True)

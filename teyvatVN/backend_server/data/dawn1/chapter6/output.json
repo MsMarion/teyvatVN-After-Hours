@@ -1,0 +1,77 @@
+{
+  "title": "Echoes by the Archon's Gaze",
+  "characters": [
+    "Diluc",
+    "Kaeya"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The air at the Statue of the Seven in Windrise is crisp, carrying the scent of pine and distant wildflowers. The setting sun casts long, purplish shadows across the vast plains, painting the Anemo Archon's statue in a solemn, golden glow. Diluc stands stoically, gazing out, while Kaeya leans casually against the base of the statue, a faint smile playing on his lips.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "A comfortable, yet heavy, silence hangs between the half-brothers for a long moment, broken only by the whisper of the wind."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(calmly, without turning)",
+      "line": "Even after all these years, some things linger. Like the scent of a forgotten wine."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(amused, a hint of melancholy)",
+      "line": "Ah, are we delving into the sentimental archives tonight, Master Diluc? I didn't take you for one to reminisce on old flames."
+    },
+    {
+      "type": "narration",
+      "text": "Diluc finally turns, his crimson eyes meeting Kaeya's one visible eye. There's an unreadable depth in his gaze."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(sternly)",
+      "line": "It's not about 'flames.' It's about choices. And the people who shaped them. You must have your own ghosts."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(shrugging playfully, but his smile doesn't quite reach his eyes)",
+      "line": "Ghosts, specters, phantoms... Mondstadt is quite rich in such things. But to dwell on them is hardly productive, wouldn't you say?"
+    },
+    {
+      "type": "narration",
+      "text": "A brief, sharp gust of wind sweeps through, rustling the leaves of the nearby trees. The air seems to grow colder as the last rays of sunlight fade."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(quietly, a rare vulnerability)",
+      "line": "Some memories aren't meant to be forgotten, only understood. They teach you who you are, and who you choose not to be."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(looking up at the statue, a genuine sigh escaping him)",
+      "line": "Perhaps. Or perhaps they simply remind us of what could never be. Or what should have never been."
+    },
+    {
+      "type": "narration",
+      "text": "Kaeya pushes off the statue, a distant look in his eye. Diluc watches him, a silent understanding passing between them, heavier than any spoken word."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(a final, weary tone)",
+      "line": "Goodnight, Kaeya."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(a ghost of a smile, turning to leave)",
+      "line": "And to you, Master Diluc. May your dreams be less… haunted."
+    }
+  ]
+}

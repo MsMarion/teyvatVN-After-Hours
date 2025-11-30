@@ -1,0 +1,77 @@
+{
+  "title": "Echoes by the Anemo Archon",
+  "characters": [
+    "Diluc",
+    "Kaeya"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The setting sun casts long shadows over the towering Statue of the Seven, its serene gaze overlooking Mondstadt. A gentle breeze, carrying the scent of Cecilia flowers, rustles through the grass. Diluc stands, arms crossed, gazing out at the horizon, while Kaeya leans casually against the base of the statue, a knowing smirk playing on his lips. The air between them is thick with unspoken history.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "The sky above Mondstadt bleeds into hues of orange and violet. Diluc, ever stoic, stands rigid by the Anemo Archon's statue, his back to the city lights beginning to twinkle. Kaeya, in contrast, appears entirely at ease, observing his brother with an almost predatory amusement."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(lightly sarcastic)",
+      "line": "A pensive mood, brother? Or merely admiring the view? The Archon must be pleased with such devout contemplation."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(without turning)",
+      "line": "My presence here is my own affair, Kaeya. Unlike some, I don't seek an audience for my thoughts."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(a soft chuckle)",
+      "line": "Ah, but isn't that the point of a shared moment? To reflect, perhaps, on the company we once kept. The hearts we might have... swayed."
+    },
+    {
+      "type": "narration",
+      "text": "Diluc's shoulders tense ever so slightly. He slowly turns, his crimson eyes narrowed, meeting Kaeya's unblinking gaze. A flicker of something unreadable crosses his face."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(sternly)",
+      "line": "My past is not a topic for your idle speculation."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(feigning innocence)",
+      "line": "Idle? Never. Just thinking of how many hearts you must have inadvertently broken with that fiery intensity. Or perhaps, how many you simply... walked away from."
+    },
+    {
+      "type": "narration",
+      "text": "The wind picks up, rustling Diluc's coat. He remains silent, but his jaw is set. Kaeya’s smirk softens, a touch of something akin to genuine reflection in his single visible eye."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(more subdued)",
+      "line": "We all carry our ghosts, Diluc. Lovers lost, paths not taken. Even you, for all your stoicism, must have had... someone."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(a low sigh)",
+      "line": "The past holds little for the present. What matters is now."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(looking up at the statue)",
+      "line": "Perhaps. But sometimes, it's those echoes that truly shape who we are in the 'now.' Don't you agree, brother?"
+    },
+    {
+      "type": "narration",
+      "text": "Diluc offers no reply, turning his gaze back to the fading light. The silence that follows is not entirely comfortable, but it holds a rare, fragile understanding between the two, each lost in their own history, under the watchful eyes of the Anemo Archon."
+    }
+  ]
+}
