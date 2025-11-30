@@ -4,12 +4,10 @@ import toast from "react-hot-toast";
 import "./StoryPage.css"; // Reusing StoryPage styles
 
 // Components
-import VNTextBox from "../components/VNTextBox";
+import VNScene from "../components/VNScene";
 import Layout from "../components/Layout";
-import SegmentNavigator from "../components/SegmentNavigator";
 
 // Config & Context
-import { characterDatabase } from "../data/characterData.js";
 import { BACKGROUND_OPTIONS } from "../config/backgrounds.js";
 import { API_BASE_URL } from "../config/api";
 
@@ -47,10 +45,6 @@ export default function PlayPage() {
         if (chapterId) {
             loadChapter(chapterId);
         } else {
-            // Optional: Load latest story if no chapter provided? 
-            // Or just show a message.
-            // For now, let's try to load from localStorage if available as a fallback, 
-            // or just do nothing and show "No story loaded".
             const latest = localStorage.getItem("latestResult");
             if (latest) {
                 try {
@@ -110,11 +104,6 @@ export default function PlayPage() {
         <Layout backgroundImage={pageBg} className="story-page-container">
             <div className="story-content-container">
                 <main className="story-content-wrapper" style={{ maxWidth: '100%', padding: '2rem' }}>
-                    {/* We want to focus on the player, so maybe hide the title or make it smaller? 
-                The user said "holds just that component". 
-                I'll center the player and remove the extra fluff.
-            */}
-
                     {isLoading && (
                         <div className="loading-indicator">Loading story...</div>
                     )}
@@ -126,67 +115,14 @@ export default function PlayPage() {
                         </div>
                     )}
 
-                    {/* Fullscreen Visual Novel Viewer */}
-                    <div className={`vn-fullscreen-wrapper ${isFullscreen ? 'fullscreen-active' : ''}`} style={{ display: generatedStory ? 'block' : 'none' }}>
-                        {isFullscreen && (
-                            <button
-                                className="fullscreen-exit-btn"
-                                onClick={() => setIsFullscreen(false)}
-                                title="Exit Fullscreen (ESC)"
-                            >
-                                ✕ Exit Fullscreen
-                            </button>
-                        )}
-
-                        <section
-                            className={`visual-novel-ui ${isFullscreen ? 'fullscreen' : ''}`}
-                            style={{
-                                backgroundImage: selectedBackground
-                                    ? `url(${selectedBackground.src})`
-                                    : "none",
-                                height: isFullscreen ? '100vh' : '80vh', // Make it bigger by default
-                                margin: '0 auto'
-                            }}
-                        >
-                            {!selectedBackground && <span>Visual novel UI</span>}
-
-                            {/* Fullscreen toggle button */}
-                            {generatedStory && !isFullscreen && (
-                                <button
-                                    className="fullscreen-toggle-btn"
-                                    onClick={() => setIsFullscreen(true)}
-                                    title="Enter Fullscreen"
-                                >
-                                    ⛶ Fullscreen
-                                </button>
-                            )}
-
-                            {/* Character Sprites */}
-                            {selectedBackground && generatedStory && generatedStory.characters &&
-                                generatedStory.characters.map((charName, index) => {
-                                    const charData = characterDatabase[charName];
-                                    const storySprite = charData
-                                        ? Object.values(charData.storySprites)[0]
-                                        : null;
-
-                                    if (!storySprite) return null;
-
-                                    return (
-                                        <img
-                                            key={charName}
-                                            src={storySprite}
-                                            alt={charName}
-                                            className={`character-sprite pos-${index + 1}`}
-                                        />
-                                    );
-                                })}
-
-                            {/* Visual Novel Text Box Overlay */}
-                            {generatedStory && (
-                                <VNTextBox segments={generatedStory.segments} />
-                            )}
-                        </section>
-                    </div>
+                    {/* Reusable Visual Novel Scene */}
+                    <VNScene
+                        story={generatedStory}
+                        backgroundImage={selectedBackground?.src}
+                        isFullscreen={isFullscreen}
+                        onToggleFullscreen={() => setIsFullscreen(true)}
+                        onExitFullscreen={() => setIsFullscreen(false)}
+                    />
                 </main>
             </div>
         </Layout>

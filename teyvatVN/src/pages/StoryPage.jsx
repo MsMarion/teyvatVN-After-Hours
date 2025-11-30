@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import "./StoryPage.css";
 
 // Components
-import VNTextBox from "../components/VNTextBox";
+import VNScene from "../components/VNScene";
 import BackgroundSelector from "../components/BackgroundSelector";
 import Layout from "../components/Layout";
 
@@ -242,69 +242,14 @@ export default function StoryPage() {
             )}
           </section>
 
-          {/* Fullscreen Visual Novel Viewer */}
-          <div className={`vn-fullscreen-wrapper ${isFullscreen ? 'fullscreen-active' : ''}`}>
-            {isFullscreen && (
-              <button
-                className="fullscreen-exit-btn"
-                onClick={() => setIsFullscreen(false)}
-                title="Exit Fullscreen (ESC)"
-              >
-                ✕ Exit Fullscreen
-              </button>
-            )}
-
-            <section
-              className={`visual-novel-ui ${isFullscreen ? 'fullscreen' : ''}`}
-              style={{
-                backgroundImage: selectedBackground
-                  ? `url(${selectedBackground.src})`
-                  : "none",
-              }}
-            >
-              {!selectedBackground && <span>Visual novel UI</span>}
-
-              {/* Fullscreen toggle button (only show when story is generated) */}
-              {generatedStory && !isFullscreen && (
-                <button
-                  className="fullscreen-toggle-btn"
-                  onClick={() => setIsFullscreen(true)}
-                  title="Enter Fullscreen"
-                >
-                  ⛶ Fullscreen
-                </button>
-              )}
-
-              {/* This now dynamically displays the correct story sprite */}
-              {selectedBackground && generatedStory && generatedStory.characters &&
-                generatedStory.characters.map((charName, index) => {
-                  // Look up the character in our database to get the correct story sprite
-                  const charData = characterDatabase[charName];
-                  const storySprite = charData
-                    ? Object.values(charData.storySprites)[0]
-                    : null; // Fallback to null if not found
-
-                  if (!storySprite) {
-                    console.warn(`No sprite found for character: ${charName}`);
-                    return null;
-                  }
-
-                  return (
-                    <img
-                      key={charName}
-                      src={storySprite}
-                      alt={charName}
-                      className={`character-sprite pos-${index + 1}`}
-                    />
-                  );
-                })}
-
-              {/* Visual Novel Text Box Overlay */}
-              {generatedStory && (
-                <VNTextBox segments={generatedStory.segments} />
-              )}
-            </section>
-          </div>
+          {/* Reusable Visual Novel Scene */}
+          <VNScene
+            story={generatedStory}
+            backgroundImage={selectedBackground?.src}
+            isFullscreen={isFullscreen}
+            onToggleFullscreen={() => setIsFullscreen(true)}
+            onExitFullscreen={() => setIsFullscreen(false)}
+          />
 
           {/* Background Selection - Moved below VN UI */}
           <BackgroundSelector
