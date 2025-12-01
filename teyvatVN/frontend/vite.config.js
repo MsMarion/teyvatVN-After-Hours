@@ -12,9 +12,16 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react(), tailwindcss()],
     server: {
-      allowedHosts: env.ALLOWED_HOSTS ? env.ALLOWED_HOSTS.split(',') : ['dept-spoken-neon-marilyn.trycloudflare.com', 'localhost'],
+      allowedHosts: env.ALLOWED_HOSTS ? env.ALLOWED_HOSTS.split(',') : ['armstrong-composition-bringing-mini.trycloudflare.com', 'localhost'],
       host: env.HOST || 'localhost',
-      port: parseInt(env.PORT) || 6001
+      port: parseInt(env.PORT) || 6001,
+      proxy: {
+        '/api': {
+          target: 'http://127.0.0.1:8000',
+          changeOrigin: true,
+          secure: false,
+        }
+      }
     }
   }
 });

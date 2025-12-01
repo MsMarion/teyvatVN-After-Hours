@@ -21,7 +21,11 @@ router = APIRouter()
 # --- Data Models (Request Bodies) ---
 # These classes define what data we expect the Frontend to send us.
 
-class AuthRequest(BaseModel):
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+class RegisterRequest(BaseModel):
     username: str
     password: str
     email: str
@@ -114,7 +118,7 @@ async def google_callback(code: str, db: Session = Depends(get_db)):
         return RedirectResponse(url=frontend_url)
 
 @router.post("/api/auth/register")
-async def register(request: AuthRequest, db: Session = Depends(get_db)):
+async def register(request: RegisterRequest, db: Session = Depends(get_db)):
     """
     Register a new user with username and password.
     """
@@ -129,7 +133,7 @@ async def register(request: AuthRequest, db: Session = Depends(get_db)):
     return {"status": "success", "message": "User created"}
 
 @router.post("/api/auth/login")
-async def login(request: AuthRequest, db: Session = Depends(get_db)):
+async def login(request: LoginRequest, db: Session = Depends(get_db)):
     """
     Authenticate a user with username and password.
     Returns a JWT access token upon success.
