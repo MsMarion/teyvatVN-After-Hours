@@ -7,7 +7,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
-    allowedHosts: ['dept-spoken-neon-marilyn.trycloudflare.com', 'localhost', ''],
+    allowedHosts: process.env.ALLOWED_HOSTS ? process.env.ALLOWED_HOSTS.split(',') : ['dept-spoken-neon-marilyn.trycloudflare.com', 'localhost'],
     host: process.env.HOST || 'localhost',
     port: parseInt(process.env.PORT) || 6001
   }
