@@ -10,12 +10,7 @@ import os
 import time
 import json
 import re
-from dotenv import load_dotenv
-
-load_dotenv()
-
-DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+from app.core.config import GEMINI_API_KEY, GEMINI_MODEL_NAME
 
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
@@ -135,7 +130,7 @@ def generate_beat_details(beats, chapter_data, api_key=None):
         if api_key:
             genai.configure(api_key=api_key)
         
-        model = genai.GenerativeModel("gemini-2.5-flash-lite")
+        model = genai.GenerativeModel(GEMINI_MODEL_NAME)
         
         try:
             responses = model.generate_content(
@@ -241,7 +236,7 @@ def generate_beats(chapter_data, api_key=None):
     if api_key:
         genai.configure(api_key=api_key)
 
-    model = genai.GenerativeModel("gemini-2.5-flash-lite")
+    model = genai.GenerativeModel(GEMINI_MODEL_NAME)
     
     try:
         responses = model.generate_content(
@@ -372,7 +367,7 @@ Remember to output ONLY the JSON object, nothing else."""
         genai.configure(api_key=api_key)
 
     model = genai.GenerativeModel(
-        "gemini-2.5-flash",
+        GEMINI_MODEL_NAME,
         system_instruction=system_instructions
     )
     

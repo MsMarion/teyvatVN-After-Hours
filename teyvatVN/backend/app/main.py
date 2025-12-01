@@ -15,15 +15,14 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import os
-from dotenv import load_dotenv
+from app.core.config import FRONTEND_URL, BACKEND_URL, ALLOWED_ORIGINS
 
 # Import our database connection and models
 from app.core.database import engine, Base
 # Import our API routers (groups of related endpoints)
 from app.routers import auth, story, ai
 
-# Load environment variables from .env file (like API keys and passwords)
-load_dotenv()
+
 
 # --- Database Initialization ---
 # This line looks at all our Python data models (in app/models/sql.py)
@@ -44,19 +43,14 @@ app = FastAPI(
 # By default, a website on port 3000 (Frontend) can't talk to a server on port 8000 (Backend).
 # We need to explicitly tell the browser: "It's okay, trust requests from these URLs."
 
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:6001")
-BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:6002")
+
 
 # Configure CORS (Cross-Origin Resource Sharing)
 # This allows the frontend application to communicate with this backend.
 app.add_middleware(
     CORSMiddleware,
     # allow_origins: List of URLs that are allowed to talk to this API.
-    allow_origins=[
-        FRONTEND_URL, 
-        "https://updates-limitations-favors-effectively.trycloudflare.com", 
-        "*" # WARNING: Allowing '*' (everyone) is fine for dev, but risky for production!
-    ],
+    allow_origins=ALLOWED_ORIGINS + ["*"],
     allow_credentials=True,
     allow_methods=["*"], # Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
     allow_headers=["*"], # Allow all headers (like Authorization tokens)
@@ -88,4 +82,6 @@ app.include_router(ai.router)    # Handles AI Generation requests
 # Usually, we run it via the terminal command 'uvicorn app.main:app --reload'.
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)
+    host = os.getenv("HOST", "127.0.0.1")
+    port = int(os.getenv("PORT", "8000"))
+    uvicorn.run("app.main:app", host=host, port=port, reload=True)

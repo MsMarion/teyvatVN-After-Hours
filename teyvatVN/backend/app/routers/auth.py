@@ -36,7 +36,7 @@ class CompleteRegistrationRequest(BaseModel):
     username: str
     gemini_api_key: str | None = None
 
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:6001")
+from app.core.config import FRONTEND_URL
 
 @router.post("/api/auth/complete-registration")
 async def complete_registration(request: CompleteRegistrationRequest, db: Session = Depends(get_db)):

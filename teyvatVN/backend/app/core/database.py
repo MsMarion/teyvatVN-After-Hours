@@ -13,11 +13,12 @@ Key Concepts:
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from app.core.config import DATABASE_URL
 
 # --- Database URL ---
 # This tells SQLAlchemy where to find our database file.
 # "sqlite:///./sql_app.db" means "use SQLite and look for a file named 'sql_app.db' in the current folder".
-SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
+SQLALCHEMY_DATABASE_URL = DATABASE_URL
 
 # --- Create Engine ---
 # The engine is the starting point for any SQLAlchemy application.

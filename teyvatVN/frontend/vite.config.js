@@ -7,7 +7,8 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
-    allowedHosts: ['updates-limitations-favors-effectively.trycloudflare.com'],
-    port: 6001
+    allowedHosts: ['dept-spoken-neon-marilyn.trycloudflare.com', 'localhost', ''],
+    host: process.env.HOST || 'localhost',
+    port: parseInt(process.env.PORT) || 6001
   }
 });
