@@ -3,9 +3,13 @@
 /**
  * Main Application Component
  * 
- * This component sets up the routing for the application using React Router.
- * It also wraps the application with necessary context providers (Auth, Character)
- * and the Toast notification provider.
+ * This is the "root" component that holds our entire application together.
+ * Think of it as the skeleton of the website.
+ * 
+ * Its main jobs are:
+ * 1. **Routing**: Deciding which page to show based on the URL (e.g., show Login page when URL is /login).
+ * 2. **Context Providers**: Wrapping the app with global data (like User Auth and Character choices) so every page can access them.
+ * 3. **Notifications**: Setting up the 'Toaster' so we can pop up messages (like "Saved successfully!") anywhere.
  */
 
 import React from "react";
@@ -21,7 +25,7 @@ import PromptInputPage from "./pages/prompt_input_page.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import StoryPage from "./pages/StoryPage.jsx";
 import LayoutSamplePage from "./pages/LayoutSamplePage.jsx";
-import CompleteRegistrationPage from "./pages/CompleteRegistrationPage.jsx"; // Import the new page
+import CompleteRegistrationPage from "./pages/CompleteRegistrationPage.jsx";
 import LibraryPage from "./pages/LibraryPage.jsx";
 import EditorPage from "./pages/EditorPage.jsx";
 import PlayPage from "./pages/PlayPage.jsx";
@@ -33,21 +37,34 @@ import ProtectedRoute from "./components/auth/ProtectedRoute.jsx";
 
 function App() {
   return (
+    // <Router> enables navigation without reloading the page (Single Page Application behavior)
     <Router>
-      {/* Context Providers wrap the application to provide global state */}
+
+      {/* <AuthProvider> makes 'user' and 'login/logout' functions available everywhere */}
       <AuthProvider>
+
+        {/* <CharacterProvider> makes 'selectedCharacters' available everywhere */}
         <CharacterProvider>
+
+          {/* <Toaster> is the popup notification system. We place it here once, and it works globally. */}
           <Toaster position="top-center" />
+
+          {/* <Routes> acts like a switch statement. It looks at the URL and picks ONE <Route> to render. */}
           <Routes>
-            {/* Public Routes - Accessible by anyone */}
+
+            {/* --- Public Routes --- */}
+            {/* These pages can be visited by anyone, even if they aren't logged in. */}
+
             <Route path="/" element={<LoadingPage />} />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/complete-registration" element={<CompleteRegistrationPage />} />
             <Route path="/layout_sample" element={<LayoutSamplePage />} />
 
-            {/* Protected Routes - Require authentication */}
-            {/* Wrapped in ProtectedRoute component which redirects to login if not authenticated */}
+            {/* --- Protected Routes --- */}
+            {/* These pages require the user to be logged in. */}
+            {/* We wrap them in <ProtectedRoute>. If the user isn't logged in, ProtectedRoute kicks them to /login. */}
+
             <Route
               path="/characters"
               element={
@@ -113,7 +130,8 @@ function App() {
               }
             />
 
-            {/* 404 fallback - Matches any URL not defined above */}
+            {/* --- 404 Not Found --- */}
+            {/* The path="*" matches ANYTHING that wasn't matched above. */}
             <Route
               path="*"
               element={

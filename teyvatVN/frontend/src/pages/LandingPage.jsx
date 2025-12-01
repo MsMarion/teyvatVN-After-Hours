@@ -28,18 +28,28 @@ import { useAuth } from "../context/AuthContext";
  * Uses smooth scrolling for internal navigation.
  */
 export default function LandingPage() {
+  // --- Refs ---
+  // 'videoRef' gives us direct access to the <video> DOM element.
+  // We use this to pause the video programmatically.
   const videoRef = useRef(null);
+
   const { user, logout } = useAuth();
 
+  // --- Side Effects ---
   useEffect(() => {
+    // 1. Scroll to top on load
     window.scrollTo(0, 0);
-    // ... existing useEffect code ...
+
+    // 2. Auto-scroll and pause video logic
+    // We set a timer to perform actions after 2 seconds.
     const timer = setTimeout(() => {
+      // Pause the background video to save resources/attention
       if (videoRef.current) {
         videoRef.current.pause();
       }
 
       // --- CHANGED: Use the scroller to animate over a custom duration ---
+      // Smoothly scroll down to the "mainContent" section
       scroller.scrollTo("mainContent", {
         // The name must match the element's 'name' or 'id' prop
         duration: 1000, // Duration in milliseconds (1 second)
@@ -48,6 +58,7 @@ export default function LandingPage() {
       });
     }, 2000);
 
+    // Cleanup: Clear the timer if the user leaves the page before 2 seconds
     return () => clearTimeout(timer);
   }, []);
 
@@ -58,18 +69,23 @@ export default function LandingPage() {
         <div className="logo">teyvat.vn</div>
         <nav className="nav-links">
           {/* --- CHANGED: These are now ScrollLink components --- */}
+          {/* They scroll to sections on the SAME page instead of navigating to a new URL */}
           <ScrollLink to="how-to" smooth={true} duration={800}>
             How To Play
           </ScrollLink>
           <ScrollLink to="about" smooth={true} duration={800}>
             About
           </ScrollLink>
+
+          {/* Standard RouterLinks for navigating to OTHER pages */}
           <RouterLink to="/library">
             Library
           </RouterLink>
           <RouterLink to="/characters" className="nav-cta">
             Start Story
           </RouterLink>
+
+          {/* Conditional Rendering: Show Logout if logged in, Login if not */}
           {user ? (
             <button onClick={logout} className="nav-link-btn" style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', fontSize: 'inherit', fontFamily: 'inherit', fontWeight: '500' }}>
               Logout
@@ -84,10 +100,12 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <section className="hero">
+        {/* Background Video */}
         <video ref={videoRef} className="hero-video" autoPlay muted playsInline>
           <source src={heroVideo} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
+
         <div className="hero-content">
           <h1>Your story. Their world. Any universe.</h1>
           <p>
