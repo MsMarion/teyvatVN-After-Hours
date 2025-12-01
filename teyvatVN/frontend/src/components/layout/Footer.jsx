@@ -6,12 +6,19 @@ import "../../styles/Footer.css";
 /**
  * Footer Component
  * 
- * Displays the application footer with branding, sitemap links, and credits.
+ * The bottom section of the website.
+ * It stays consistent across all pages (thanks to the Layout component).
+ * Contains:
+ * 1. Brand info (Logo, Tagline, Copyright)
+ * 2. Sitemap (Links to main pages)
+ * 3. Credits (Attribution for icons/assets used)
  */
 export default function Footer() {
     return (
         <footer className="footer-container">
             <div className="footer-content">
+
+                {/* --- Brand Section --- */}
                 <div className="footer-section brand-section">
                     <div className="footer-logo">teyvat.vn</div>
                     <p className="footer-tagline">
@@ -22,6 +29,7 @@ export default function Footer() {
                     </p>
                 </div>
 
+                {/* --- Sitemap Section --- */}
                 <div className="footer-section sitemap-section">
                     <h4>Sitemap</h4>
                     <ul>
@@ -32,6 +40,7 @@ export default function Footer() {
                     </ul>
                 </div>
 
+                {/* --- Credits Section --- */}
                 <div className="footer-section credits-section">
                     <h4>Credits</h4>
                     <div className="credits-content">

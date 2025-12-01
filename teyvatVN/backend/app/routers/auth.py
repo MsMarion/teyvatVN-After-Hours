@@ -18,6 +18,9 @@ from app.models.sql import User
 
 router = APIRouter()
 
+# --- Data Models (Request Bodies) ---
+# These classes define what data we expect the Frontend to send us.
+
 class AuthRequest(BaseModel):
     username: str
     password: str

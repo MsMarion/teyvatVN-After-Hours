@@ -1,39 +1,48 @@
 """
-Security utilities for encryption and decryption.
+Security Utilities (Encryption)
 
-This module provides functions to encrypt and decrypt sensitive data (like API keys)
-using the Fernet symmetric encryption algorithm.
+This file handles the encryption and decryption of sensitive data, like API keys.
+We use a method called "Fernet" (from the 'cryptography' library), which is a standard, secure way to encrypt text.
+
+How it works:
+1.  We have a secret "Key" (like a password) stored in our .env file.
+2.  **Encrypt**: We take plain text ("my-secret-key") + the Key -> Scrambled text ("gAAAAABl...").
+3.  **Decrypt**: We take Scrambled text + the Key -> Plain text ("my-secret-key").
 """
 
 from cryptography.fernet import Fernet
 import os
 import base64
 
-# Load key from env or generate a new one (for dev convenience, though in prod it must be persistent)
-# In a real app, this MUST be persistent.
-# We will try to read from env. If not found, we warn.
+# --- Load Encryption Key ---
+# We try to get the key from the environment variables (.env file).
+# This key MUST be kept secret! If someone gets it, they can decrypt all our data.
 ENCRYPTION_KEY = os.getenv("ENCRYPTION_KEY")
 
 if not ENCRYPTION_KEY:
     print("WARNING: ENCRYPTION_KEY not found in environment variables.")
     print("Generating a temporary key for this session (or for you to save to .env).")
+    # Generate a random key if one doesn't exist (useful for first-time setup)
     key = Fernet.generate_key()
     ENCRYPTION_KEY = key.decode()
     print(f"Generated Key: {ENCRYPTION_KEY}")
     print("Please add this to your .env file as ENCRYPTION_KEY=...")
 
-# Initialize the Fernet cipher suite
+# --- Initialize Cipher ---
+# The 'cipher_suite' is the tool that actually does the locking and unlocking using our key.
 cipher_suite = Fernet(ENCRYPTION_KEY.encode() if isinstance(ENCRYPTION_KEY, str) else ENCRYPTION_KEY)
 
 def encrypt_value(value: str) -> str:
     """
-    Encrypts a string value.
+        Encrypts a string value.
 
     Args:
         value (str): The plaintext string to encrypt.
 
     Returns:
         str: The encrypted string (base64 encoded).
+    
+    Example: encrypt_value("hello") -> "gAAAAAB..."
     """
     if not value:
         return value
@@ -42,13 +51,13 @@ def encrypt_value(value: str) -> str:
 
 def decrypt_value(value: str) -> str:
     """
-    Decrypts a string value.
-
+    Decrypts a scrambled string back to plain text.
     Args:
         value (str): The encrypted string to decrypt.
-
     Returns:
         str: The decrypted plaintext string.
+
+    Example: decrypt_value("gAAAAAB...") -> "hello"
     """
     if not value:
         return value

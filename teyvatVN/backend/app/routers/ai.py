@@ -1,8 +1,12 @@
 """
-AI generation router.
+AI Router (API Endpoints)
 
-This module defines API endpoints for generating story content using AI.
-It handles requests for creating new chapters and generating story segments.
+This file defines the "web addresses" (URLs) that the Frontend uses to generate stories.
+It acts as the bridge between the user's prompt and our AI Service.
+
+Key Endpoints:
+1.  **POST /api/generate**: The main "Quick Start" endpoint. Takes a prompt, makes a chapter.
+2.  **POST /api/{username}/{chapter_id}**: A more detailed endpoint for saving specific chapter configurations.
 """
 
 from fastapi import APIRouter, Depends, HTTPException, Request
@@ -18,10 +22,13 @@ from app.common import utils
 
 router = APIRouter()
 
+# --- Data Models ---
 class GenerateRequest(BaseModel):
     prompt: str
     username: str
     api_key: str | None = None
+
+# --- Endpoints ---
 
 @router.post("/api/{username}/{chapter_id}")
 async def save_chapter(username: str, chapter_id: str, request: Request, db: Session = Depends(get_db)):
@@ -39,6 +46,17 @@ async def save_chapter(username: str, chapter_id: str, request: Request, db: Ses
 
     Returns:
         dict: Status and data of the generated chapter.
+
+        
+    Advanced Generation Endpoint.
+    
+    Used when the user provides specific details like:
+    - Character 1 Name
+    - Character 2 Name
+    - Specific Background
+    - Story Direction
+    
+    It calls the AI Service to generate the story and then saves it to a file.
     """
     try:
         body = await request.json()
@@ -57,25 +75,30 @@ async def save_chapter(username: str, chapter_id: str, request: Request, db: Ses
     print(f"char2 is {char2}")
     print(f"background is is {background}")
 
+    # Prepare data for the AI
     chapter_input = {
         "characters": [char1, char2],
         "start_setting": background if isinstance(background, str) else background.get("name", "Unknown"),
         "story_direction": prompt
     }
 
+    # Get the user's API key
     user = auth_service.get_user(db, username)
     api_key = security.decrypt_value(user.gemini_api_key) if user else None
     
+    # Fallback to dev key if allowed
     use_dev_key = os.getenv("USE_DEV_KEY", "false").lower() == "true"
     if not api_key and not use_dev_key:
         raise HTTPException(status_code=400, detail="Please configure your Gemini API Key in Settings.")
     
+    # Generate the story!
     try:
         story_segments = ai_service.generate_story(chapter_input, api_key=api_key)
     except Exception as e:
         print(f"Generation failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+    # Construct the final JSON structure
     final_output = {
         "title": "Generated Story",
         "characters": [char1, char2],
@@ -84,6 +107,7 @@ async def save_chapter(username: str, chapter_id: str, request: Request, db: Ses
         "segments": story_segments
     }
 
+    # Save to disk
     path = utils.get_chapter_path(username, chapter_id)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(final_output, f, indent=2, ensure_ascii=False)
@@ -104,6 +128,15 @@ async def generate_chapter(request: GenerateRequest, db: Session = Depends(get_d
 
     Returns:
         dict: Status and data of the generated chapter.
+
+        
+    Quick Start Generation Endpoint.
+    
+    Used by the main "Prompt Input" page.
+    1. Checks inputs.
+    2. Finds the next available Chapter ID (e.g., "chapter_5").
+    3. Calls the AI to generate the story.
+    4. Saves the result.
     """
     try:
         prompt = request.prompt
@@ -115,10 +148,12 @@ async def generate_chapter(request: GenerateRequest, db: Session = Depends(get_d
         if not username or not username.strip():
             raise HTTPException(status_code=400, detail="Username cannot be empty")
             
+        # Auto-increment chapter ID
         chapter_id = utils.get_next_chapter_id(username)
         print(f"Generating chapter {chapter_id} for user {username}")
         print(f"Prompt: {prompt}")
         
+        # Get API Key
         user = auth_service.get_user(db, username)
         api_key = security.decrypt_value(user.gemini_api_key) if user else None
         
@@ -126,8 +161,10 @@ async def generate_chapter(request: GenerateRequest, db: Session = Depends(get_d
         if not api_key and not use_dev_key:
             raise HTTPException(status_code=400, detail="Please configure your Gemini API Key in Settings.")
         
+        # Generate!
         chapter_data = ai_service.generate_chapter_from_prompt(prompt, api_key=api_key)
         
+        # Save!
         path = utils.get_chapter_path(username, chapter_id)
         with open(path, "w", encoding="utf-8") as f:
             json.dump(chapter_data, f, indent=2, ensure_ascii=False)

@@ -1,9 +1,19 @@
 // src/data/characterData.js
 
+/**
+ * Character Data Database
+ * 
+ * This file acts as a central database for all character-related assets.
+ * It maps character names to their corresponding images (both for the selection card and the story sprites).
+ * 
+ * Structure:
+ * - Imports: We import all the image files at the top.
+ * - characterDatabase: A big object where the key is the character's name.
+ */
+
 // --- Import all the images you will need ---
 
 // Card Images (for the character selection page)
-
 import albedoCard from "../assets/character-sprites/albedo.webp";
 import amberCard from "../assets/character-sprites/amber.webp";
 import barbaraCard from "../assets/character-sprites/barbara.webp";
@@ -22,58 +32,68 @@ import sucroseCard from "../assets/character-sprites/sucrose.png";
 import ventiCard from "../assets/character-sprites/venti.webp";
 
 // Story Sprites (for the story page)
-// You will need to create and add these new image files to your assets folder
+// These are the images that appear on screen during the visual novel.
+// Ideally, you would have different sprites for different emotions (Happy, Sad, Angry).
 import kaeyaNeutral from "../assets/character-sprites/Kaeya-Neutral.png";
 import jeanNeutral from "../assets/character-sprites/Jean-Neutral.png";
 import dilucNeutral from "../assets/character-sprites/Diluc-Neutral.png";
 
 // --- The Character Database ---
-// This object maps a character's name to all their data.
 export const characterDatabase = {
-  // Each key MUST EXACTLY match the 'name' from your allCharacters array
+  // Each key MUST EXACTLY match the 'name' used in your character list (e.g., in CharacterContext or characters.js)
+
   Diluc: {
-    cardImage: dilucCard,
+    cardImage: dilucCard, // The image shown on the "Select Character" screen
     storySprites: {
+      // A dictionary of sprites for different emotions.
+      // "Neutral" is the default fallback if no specific emotion is requested.
       Neutral: dilucNeutral,
     },
-    // You can add other data like bio, element, etc. here in the future
   },
+
   Kaeya: {
     cardImage: kaeyaCard,
     storySprites: {
       Neutral: kaeyaNeutral,
     },
-    // You can add other data like bio, element, etc. here in the future
   },
+
   Jean: {
     cardImage: jeanCard,
     storySprites: {
       Neutral: jeanNeutral,
     },
   },
+
+  // For characters where we don't have specific story sprites yet, 
+  // we are reusing the card image as a placeholder.
   Keqing: {
     cardImage: keqingCard,
     storySprites: {
-      Neutral: keqingCard, // Using card as a placeholder, replace with actual sprite
+      Neutral: keqingCard,
     },
   },
+
   Sucrose: {
     cardImage: sucroseCard,
     storySprites: {
-      Neutral: sucroseCard, // Using card as a placeholder
+      Neutral: sucroseCard,
     },
   },
+
   Amber: {
     cardImage: amberCard,
     storySprites: {
-      Neutral: amberCard, // Using card as a placeholder
+      Neutral: amberCard,
     },
   },
+
   Barbara: {
     cardImage: barbaraCard,
     storySprites: {
-      Neutral: barbaraCard, // Using card as a placeholder
+      Neutral: barbaraCard,
     },
   },
-  // --- Add all other characters below in the same format ---
+
+  // Note: Any character NOT listed here will likely show a broken image or default placeholder in the app.
 };

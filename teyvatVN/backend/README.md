@@ -10,9 +10,9 @@ This is the FastAPI backend for the TeyvatVN application. It handles user authen
 
 ### Installation
 
-1. Navigate to the `backend_server` directory:
+1. Navigate to the `backend` directory:
    ```bash
-   cd backend_server
+   cd backend
    ```
 
 2. Install dependencies:
@@ -20,7 +20,7 @@ This is the FastAPI backend for the TeyvatVN application. It handles user authen
    pip install -r requirements.txt
    ```
 
-3. Ensure you have a `.env` file in this directory (`backend_server/.env`) with the necessary environment variables:
+3. Ensure you have a `.env` file in this directory (`backend/.env`) with the necessary environment variables:
    - `GEMINI_API_KEY`
    - `DATABASE_URL` (if using a specific DB, defaults to SQLite)
    - `SECRET_KEY`
@@ -45,7 +45,7 @@ The server will start at `http://127.0.0.1:8000`.
 The backend has been refactored into a modular `app` package structure:
 
 ```
-backend_server/
+backend/
 ├── app/
 │   ├── main.py              # Application entry point. Configures FastAPI, CORS, and includes routers.
 │   ├── core/                # Core configuration and security logic.

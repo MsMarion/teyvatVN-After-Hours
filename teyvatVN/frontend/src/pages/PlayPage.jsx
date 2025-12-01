@@ -25,11 +25,21 @@ const backgroundImages = {
     "angels_share": pageBg
 };
 
+/**
+ * Play Page Component
+ * 
+ * This page is dedicated to "Playing" (reading) a story.
+ * It is different from StoryPage because it doesn't have the generation tools.
+ * It just loads an existing story (from the URL or local storage) and shows it.
+ */
 export default function PlayPage() {
+    // --- State Management ---
     const [selectedBackground, setSelectedBackground] = useState(null);
     const [generatedStory, setGeneratedStory] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
+
+    // 'useSearchParams' lets us read data from the URL (like ?chapter=123)
     const [searchParams] = useSearchParams();
 
     // Build backgrounds array from configuration with proper image mapping
@@ -39,17 +49,23 @@ export default function PlayPage() {
         src: backgroundImages[bg.id]
     }));
 
-    // Load chapter from URL parameter
+    // --- Side Effects ---
+    // When the page loads (or URL changes), check if we need to load a specific chapter
     useEffect(() => {
         const chapterId = searchParams.get("chapter");
+
         if (chapterId) {
+            // If URL has ?chapter=123, load that chapter from the server
             loadChapter(chapterId);
         } else {
+            // Otherwise, try to load the last generated story from local storage (for quick testing)
             const latest = localStorage.getItem("latestResult");
             if (latest) {
                 try {
                     const data = JSON.parse(latest);
                     setGeneratedStory(data);
+
+                    // If the story has a background setting, apply it
                     if (data.backgrounds && data.backgrounds.length > 0) {
                         const bgId = data.backgrounds[0];
                         const matchedBg = backgrounds.find(bg => bg.id === bgId);
@@ -62,7 +78,9 @@ export default function PlayPage() {
         }
     }, [searchParams]);
 
-    // Function to load an existing chapter
+    /**
+     * Fetches a specific chapter from the backend API.
+     */
     const loadChapter = async (chapterId) => {
         const username = localStorage.getItem("currentUser") || "dawn";
         setIsLoading(true);
@@ -115,7 +133,10 @@ export default function PlayPage() {
                         </div>
                     )}
 
-                    {/* Reusable Visual Novel Scene */}
+                    {/* 
+                      VNScene is the core component that renders the Visual Novel.
+                      We pass it the story data and background, and it handles the rest.
+                    */}
                     <VNScene
                         story={generatedStory}
                         backgroundImage={selectedBackground?.src}

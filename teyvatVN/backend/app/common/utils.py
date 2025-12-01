@@ -1,8 +1,11 @@
 """
-Common utility functions.
+Common Utility Functions
 
-This module contains helper functions for file system operations,
-such as managing user chapters and data directories.
+This file handles the boring but necessary stuff: File Management.
+Since we store stories as JSON files on the disk (not in a database), we need helpers to:
+1.  Find where to save files.
+2.  List all the files a user has.
+3.  Figure out what to name the next file (chapter1, chapter2, etc.).
 """
 
 import os
@@ -11,7 +14,9 @@ from typing import Optional
 
 # Base data directory
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
-
+# Base data directory: Where all user stories live.
+# We go up 3 levels from here (backend/app/common -> backend/app -> backend -> data)
+# DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data")
 
 def get_next_chapter_id(username: str) -> str:
     """
@@ -19,10 +24,10 @@ def get_next_chapter_id(username: str) -> str:
     
     Checks the user's data directory for existing chapters and returns
     the next sequential ID (e.g., 'chapter1', 'chapter2').
-
+    
     Args:
         username (str): The username of the user.
-
+    
     Returns:
         str: The next available chapter ID (e.g., 'chapterN+1').
     """
@@ -38,14 +43,14 @@ def get_next_chapter_id(username: str) -> str:
     if not chapters:
         return "chapter1"
     
-    # Extract numbers from chapter names
+    # Extract numbers from chapter names (e.g., "chapter5" -> 5)
     numbers = []
     for chapter in chapters:
         match = re.search(r'chapter(\d+)', chapter)
         if match:
             numbers.append(int(match.group(1)))
     
-    # Get next number
+    # Get next number (max + 1)
     next_num = max(numbers) + 1 if numbers else 1
     return f"chapter{next_num}"
 
@@ -73,6 +78,7 @@ def list_user_chapters(username: str) -> list[dict]:
         return []
     
     chapters = []
+    # Loop through every folder in the user's directory
     for chapter_dir in os.listdir(user_dir):
         chapter_path = os.path.join(user_dir, chapter_dir)
         if os.path.isdir(chapter_path):
@@ -83,7 +89,7 @@ def list_user_chapters(username: str) -> list[dict]:
                     with open(output_file, "r", encoding="utf-8") as f:
                         chapter_data = json.load(f)
                     
-                    # Get file modification time
+                    # Get file modification time (when was it last saved?)
                     mod_time = os.path.getmtime(output_file)
                     created_at = datetime.fromtimestamp(mod_time).isoformat()
                     
@@ -97,7 +103,7 @@ def list_user_chapters(username: str) -> list[dict]:
                     })
                 except Exception as e:
                     print(f"Error reading chapter {chapter_dir}: {e}")
-                    # Still include the chapter but with minimal info
+                    # Still include the chapter but with minimal info so the user sees *something*
                     chapters.append({
                         "chapter_id": chapter_dir,
                         "title": "Error Loading Chapter",
