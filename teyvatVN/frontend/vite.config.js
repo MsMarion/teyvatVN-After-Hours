@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react(), tailwindcss()],
     server: {
-      allowedHosts: env.ALLOWED_HOSTS ? env.ALLOWED_HOSTS.split(',') : ['armstrong-composition-bringing-mini.trycloudflare.com', 'localhost'],
+      allowedHosts: env.ALLOWED_HOSTS ? env.ALLOWED_HOSTS.split(',') : ['acres-given-vinyl-street.trycloudflare.com', 'localhost'],
       host: env.HOST || 'localhost',
       port: parseInt(env.PORT) || 6001,
       proxy: {

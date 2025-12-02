@@ -4,8 +4,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # App URLs
+print(f"DEBUG: Loading config.py. .env loaded? {load_dotenv()}")
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:6001")
 BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:6002")
+print(f"DEBUG: Config BACKEND_URL: {BACKEND_URL}")
 
 # Database
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./sql_app.db")

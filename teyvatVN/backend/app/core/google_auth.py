@@ -21,10 +21,11 @@ load_dotenv()
 
 # --- Configuration ---
 # These keys come from the Google Cloud Console.
-GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
-GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+from app.core.config import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, BACKEND_URL, FRONTEND_URL
+
 # Where Google sends the user after they log in. Must match exactly what's set in Google Console.
-GOOGLE_REDIRECT_URI = f"{os.getenv('BACKEND_URL', 'http://localhost:6002')}/api/auth/google/callback"
+GOOGLE_REDIRECT_URI = f"{FRONTEND_URL}/api/auth/google/callback"
+print(f"DEBUG: GOOGLE_REDIRECT_URI set to: {GOOGLE_REDIRECT_URI}")
 
 # Google's official URLs
 GOOGLE_AUTHORIZATION_URL = "https://accounts.google.com/o/oauth2/v2/auth"

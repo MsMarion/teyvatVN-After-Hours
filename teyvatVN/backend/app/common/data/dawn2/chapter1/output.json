@@ -1,0 +1,73 @@
+{
+  "title": "A Chilling Ember",
+  "characters": [
+    "Diluc",
+    "Kaeya"
+  ],
+  "backgrounds": [
+    "statue_of_seven"
+  ],
+  "setting_narration": "The Statue of the Seven stands majestically under a waxing crescent moon, casting long, serene shadows across the plaza. A cool Mondstadt breeze rustles through the surrounding trees, carrying the faint scent of cecilias. Yet, the tranquility feels thin, stretched over a taut, unspoken tension between two figures who rarely seek solace in each other's company here.",
+  "segments": [
+    {
+      "type": "narration",
+      "text": "Diluc stands with his back to the statue, gazing out over the sleeping city. His usual stoic calm is ruffled by the unexpected arrival of another."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(a soft, teasing chuckle)",
+      "line": "Well, well. Brother. A rather... pious choice for a late-night stroll, wouldn't you say?"
+    },
+    {
+      "type": "narration",
+      "text": "Diluc's shoulders tense. He turns slowly, his crimson eyes narrowing slightly as they meet Kaeya's playful gaze."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(stoically, voice low)",
+      "line": "I prefer the quiet. Unlike some who thrive on unnecessary chatter."
+    },
+    {
+      "type": "narration",
+      "text": "Kaeya saunters closer, his movements languid and deliberate, stopping just a few feet from Diluc. The moonlight catches a glint in his eye."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(a knowing smirk playing on his lips)",
+      "line": "Perhaps. Or perhaps you enjoy the solitude for… other reasons. To contemplate things best left unsaid, perhaps?"
+    },
+    {
+      "type": "narration",
+      "text": "A silence descends, heavy and charged. The air between them crackles, not with animosity, but with a different, more dangerous kind of heat. Diluc clenches his jaw."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(voice strained, barely above a whisper)",
+      "line": "Do not presume to know my thoughts, Kaeya."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Kaeya",
+      "expression_action": "(taking another step closer, eyes locked on Diluc's)",
+      "line": "Don't I? A shame. I always found it rather… illuminating, to see how deep your passions run, beneath that frosty exterior."
+    },
+    {
+      "type": "narration",
+      "text": "Diluc's gaze is a turbulent mix of defiance and something else, something dangerously close to raw desire. He holds Kaeya's stare, unwilling to break the tension, but unable to surrender to it either."
+    },
+    {
+      "type": "dialogue",
+      "speaker": "Diluc",
+      "expression_action": "(a low growl escaping his throat)",
+      "line": "You play a dangerous game, Kaeya."
+    },
+    {
+      "type": "narration",
+      "text": "Kaeya's smirk widens, and a shiver, not entirely from the cool night air, runs down Diluc's spine as Kaeya's eyes linger for a beat too long before he finally turns and melts back into the shadows of the city, leaving Diluc alone with the echo of his words and a burning unease."
+    }
+  ]
+}
