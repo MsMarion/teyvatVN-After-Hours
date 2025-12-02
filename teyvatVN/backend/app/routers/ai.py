@@ -17,6 +17,7 @@ import json
 
 from app.core.database import get_db
 from app.core import security
+from app.core.config import USE_PUBLIC_API
 from app.services import ai_service, auth_service
 from app.common import utils
 
@@ -86,10 +87,13 @@ async def save_chapter(username: str, chapter_id: str, request: Request, db: Ses
     user = auth_service.get_user(db, username)
     api_key = security.decrypt_value(user.gemini_api_key) if user else None
     
-    # Fallback to dev key if allowed
-    use_dev_key = os.getenv("USE_DEV_KEY", "false").lower() == "true"
-    if not api_key and not use_dev_key:
-        raise HTTPException(status_code=400, detail="Please configure your Gemini API Key in Settings.")
+    # Fallback to public key if allowed
+    if not api_key:
+        if USE_PUBLIC_API:
+            # If allowed, we pass None as the api_key, and the service will use the default env key
+            api_key = None 
+        else:
+            raise HTTPException(status_code=400, detail="Please configure your Gemini API Key in Settings.")
     
     # Generate the story!
     try:
@@ -157,9 +161,11 @@ async def generate_chapter(request: GenerateRequest, db: Session = Depends(get_d
         user = auth_service.get_user(db, username)
         api_key = security.decrypt_value(user.gemini_api_key) if user else None
         
-        use_dev_key = os.getenv("USE_DEV_KEY", "false").lower() == "true"
-        if not api_key and not use_dev_key:
-            raise HTTPException(status_code=400, detail="Please configure your Gemini API Key in Settings.")
+        if not api_key:
+            if USE_PUBLIC_API:
+                api_key = None
+            else:
+                raise HTTPException(status_code=400, detail="Please configure your Gemini API Key in Settings.")
         
         # Generate!
         chapter_data = ai_service.generate_chapter_from_prompt(prompt, api_key=api_key)

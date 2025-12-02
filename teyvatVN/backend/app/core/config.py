@@ -19,8 +19,11 @@ if not ALLOWED_ORIGINS:
     ALLOWED_ORIGINS = [FRONTEND_URL, "https://updates-limitations-favors-effectively.trycloudflare.com"]
 
 # AI Configuration
+# To hardcode a key for testing, use: os.getenv("GEMINI_API_KEY", "your-key-here")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 GEMINI_MODEL_NAME = os.getenv("GEMINI_MODEL_NAME", "gemini-2.5-flash")
+# Feature flag to allow users without a key to use the server's key
+USE_PUBLIC_API = os.getenv("USE_PUBLIC_API", "false").lower() == "true"
 
 # Auth
 SECRET_KEY = os.getenv("SECRET_KEY")
